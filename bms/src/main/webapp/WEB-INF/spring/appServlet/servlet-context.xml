@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans:beans xmlns="http://www.springframework.org/schema/mvc"
+<beans:beans
+	xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
@@ -42,11 +43,19 @@
 			value="classpath:tiles/*.xml" />
 	</beans:bean>
 
+	<beans:bean id="multipartResolver"
+		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<beans:property name="maxUploadSize" value="52428800" />
+		<beans:property name="maxInMemorySize" value="52428800" />
+		<beans:property name="defaultEncoding" value="utf-8" />
+	</beans:bean>
+
 	<!-- spring security -->
 	<beans:bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<aop:aspectj-autoproxy />
-	<context:component-scan base-package="com.spring.bms" />
+	<context:component-scan
+		base-package="com.spring.bms" />
 
 </beans:beans>
