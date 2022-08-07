@@ -24,12 +24,12 @@
 		<put-attribute name="title" value="blog"></put-attribute>
 	</definition>
 	
-	<definition name="/login" extends="mainLayout"> <!-- 회원 로그인 -->
+	<definition name="member/login" extends="mainLayout"> <!-- 회원 로그인 -->
 		<put-attribute name="content" value="/WEB-INF/views/login.jsp"></put-attribute>
 		<put-attribute name="title" value="심플로그 로그인"></put-attribute>
 	</definition>
 	
-	<definition name="/register" extends="mainLayout">	<!-- 회원가입 -->
+	<definition name="member/register" extends="mainLayout">	<!-- 회원가입 -->
 		<put-attribute name="content" value="/WEB-INF/views/register.jsp"></put-attribute>
 		<put-attribute name="title" value="심플로그 회원가입"></put-attribute>
 	</definition>

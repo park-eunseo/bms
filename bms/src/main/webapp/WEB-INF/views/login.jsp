@@ -77,7 +77,7 @@
               </form>
 
               <p class="text-center">
-                <a href="${contextPath }/register">
+                <a href="${contextPath }/member/register">
                   <span> 회원가입 </span>
                 </a>
               </p>

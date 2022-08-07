@@ -20,6 +20,7 @@
  			
  			if(id.value.length < 5 || id.value.length > 12){
  				document.getElementById("idAlert").innerText = "5~12자의 영문 소문자, 숫자를 입력해 주세요."
+ 				document.getElementById("idAlert").style.color = "red"
  			} else {
  				document.getElementById("idAlert").innerText = ""
  			} 		
@@ -48,6 +49,40 @@
  			}
  		}
  		
+ 		function nameAlert(){
+ 			var name = document.getElementById("name")
+ 			
+ 			if(name.value != ""){
+ 				document.getElementById("nameAlert").innerText = ""
+ 			}
+ 		}
+ 		
+ 		function telAlert(){
+ 			var tel = document.getElementById("tel")
+ 			
+ 			if(tel.value == "" || tel.value.length < 11){
+ 				document.getElementById("telAlert").innerText = "전화번호 11자리 이상 입력해 주세요."
+ 			} else {
+ 				document.getElementById("telAlert").innerText = ""
+ 			}
+ 		}
+ 		
+ 		function emailAlert(){
+ 			var email = document.getElementById("email")
+ 			
+ 			if(email.value != ""){
+ 				document.getElementById("emailAlert").innerText = ""
+ 			}
+ 		}
+ 		
+ 		function birthAlert(){
+ 			var birth = document.getElementById("birth")
+ 			
+ 			if(birth.value != ""){
+ 				document.getElementById("birthAlert").innerText = ""
+ 			}
+ 		}
+ 		
  		function inputCheck(){
  			var id = document.inputForm.id
  			var pw = document.inputForm.password
@@ -56,10 +91,11 @@
  			var tel = document.inputForm.tel
  			var email = document.inputForm.email
  			var birth = document.inputForm.birth
- 			var gender = document.inputForm.gender
+ 			var terms =  document.inputForm.terms
  			
  			if(id.value == "") {
  				document.getElementById("idAlert").innerText = "ID는 필수 입력값입니다."
+ 				document.getElementById("idAlert").style.color = "red"
  				id.focus()
  				return false
  			}
@@ -94,11 +130,43 @@
  				return false
  			}
  			
- 			if(gender.value == "") {
- 				document.getElementById("genderAlert").innerText = "성별은 필수 선택값입니다."
+ 			if(birth.value == "") {
+ 				document.getElementById("birthAlert").innerText = "생년월일은 필수 입력값입니다."
+ 				birth.focus()
+ 				return false
+ 			}		
+ 			
+ 			if(terms.checked == false ){
+ 				document.getElementById("termAlert").innerText = "약관에 동의해야 가입할 수 있습니다."
+ 				terms.focus()
  				return false
  			}
+ 		}
+ 		
+ 		function isIdCheck(){ // 회원 아이디 중복 확인
+ 			var id = document.getElementById("id")
  			
+ 			if(id.value.length < 5 || id.value.length > 12){
+ 				document.getElementById("idAlert").innerText = "5~12자의 영문 소문자, 숫자를 입력해 주세요."
+ 				document.getElementById("idAlert").style.color = "red"
+ 	 			id.focus()
+ 	 			
+ 	 			return
+ 			}
+ 		
+ 			$.ajax({
+ 				type : "get", // HTTP 요청 방식(GET, POST)
+ 				url : "${contextPath}/member/registerIdCheck?id=" + id.value, // 요청이 전송될 URL 주소
+ 				success : function(data){ // 통신 성공할 경우 실행되는 함수
+ 					if(data){
+ 						document.getElementById("idAlert").innerText = '사용 가능한 ID입니다.'
+ 		 				document.getElementById("idAlert").style.color = "green"
+ 					} else {
+ 	 					document.getElementById("idAlert").innerText = '중복된 ID입니다.'
+ 	 	 	 			document.getElementById("idAlert").style.color = "red"
+ 	 	 			}
+ 				}
+ 			})
  		}
  	</script>
   <body>
@@ -120,10 +188,12 @@
               <h4 class="mb-2">회원가입 🚀</h4>
               <p class="mb-4">가입하고 다양한 친구들과 소통해 보세요.</p>
 
-              <form id="formAuthentication" class="mb-3"  name="inputForm" onsubmit="return inputCheck()" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3"  name="inputForm" 
+              		onsubmit="return inputCheck()" action="${contextPath }/member/register" method="post">
                 <div class="mb-3">
                   <label for="userId" class="form-label">ID</label>
                   <span style="color:#e44444">*</span>
+                  <br>
                   <input
                     type="text"
                     class="form-control"
@@ -131,8 +201,13 @@
                     name="id"
                     onblur="idAlert()"
                     autofocus
-                  /><small id="idAlert" style="color:red"></small>
+                    style="width:470px; display: inline-block;"
+                  />
+                   <button type="button" class="btn btn-primary" onclick="isIdCheck()"
+                   		style="padding: 0.4rem 1rem; font-size: 0.8rem;display: inline-block;">Check</button>
+                   <br><small id="idAlert"></small>
                 </div>
+               
                 
                 <div class="mb-3 form-password-toggle">
                   <label class="form-label" for="password">Password</label>
@@ -178,6 +253,7 @@
                     id="name"
                     name="name"
                     placeholder="심플로그"
+                    onblur="nameAlert()"
                   />
                   <small id="nameAlert" style="color:red"></small>
                 </div>
@@ -191,6 +267,7 @@
                     id="tel"
                     name="tel"
                     placeholder="'-'는 제외하고 입력해 주세요."
+                    onblur="telAlert()"
                   />
                   <small id="telAlert" style="color:red"></small>
                 </div>
@@ -198,14 +275,14 @@
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <span style="color:#e44444">*</span>
-                  <input type="email" class="form-control" id="email" name="email" placeholder="simplog@naver.com" />
+                  <input type="email" class="form-control" id="email" name="email" onblur="emailAlert()"placeholder="simplog@naver.com" />
                   <small id="emailAlert" style="color:red"></small>
                 </div>
                 
                 <div class="mb-3">
                	  <label for="birth" class="form-label">Birth</label>
                	  <span style="color:#e44444">*</span>
-                  <input class="form-control" type="date" id="html5-date-input" name="birth">
+                  <input class="form-control" type="date" id="html5-date-input" name="birth" onblur="birthAlert()">
                   <small id="birthAlert" style="color:red"></small>
                 </div>
                 
@@ -213,7 +290,7 @@
                	  <label for="gender" class="form-label">Gender</label>
                	  <span style="color:#e44444">*</span><br>
                      <div class="form-check form-check-inline mt-3">
-                        <input class="form-check-input" type="radio" name="gender" value="F">
+                        <input class="form-check-input" type="radio" name="gender" value="F" checked="checked">
                         <label class="form-check-label" for="inlineRadio1">여자</label>
                      </div> &ensp;&ensp;
                      <div class="form-check form-check-inline">
@@ -252,10 +329,11 @@
                 
                 <div class="mb-3">
                   <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="terms-conditions" name="terms" />
+                    <input class="form-check-input" type="checkbox" id="terms"/>
                     <label class="form-check-label" for="terms-conditions">
                       <a href="javascript:void(0);">개인정보 수집 및 소지 동의</a>
                     </label>
+                   	<br><small id="termAlert" style="color:red"></small>
                   </div>
                 </div>
                 <button class="btn btn-primary d-grid w-100">회원가입</button>
@@ -263,7 +341,7 @@
 
               <p class="text-center">
                 <span>이미 계정이 있으신가요? </span>
-                <a href="${contextPath }/login">
+                <a href="${contextPath }/member/login">
                   <span>로그인</span>
                 </a>
               </p>

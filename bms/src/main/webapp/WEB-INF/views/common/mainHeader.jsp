@@ -51,13 +51,13 @@
 			<!-- Place this tag where you want the button to render. -->
 
 			<!-- User -->
-			<li><a class="dropdown-item" href="${contextPath }/register"> <i
+			<li><a class="dropdown-item" href="${contextPath }/member/register"> <i
 					class="bx bxs-user me-2"></i> <span class="align-middle">회원가입</span>
 			</a></li>
 			<li><a class="dropdown-item" href="#"> <i
 					class="bx bx-key me-2"></i> <span class="align-middle">비밀번호 찾기</span>
 			</a></li>
-			<li><a class="dropdown-item" href="${contextPath }/login"> <i
+			<li><a class="dropdown-item" href="${contextPath }/member/login"> <i
 					class="bx bx-power-off me-2"></i> <span class="align-middle">로그인</span>
 			</a></li>
 		</ul>
