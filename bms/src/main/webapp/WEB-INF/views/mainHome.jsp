@@ -1,45 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html lang="en">
-<title><tiles:insertAttribute name="title"></tiles:insertAttribute> </title>
 <head>
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
     <meta content="" name="keywords">
     <meta content="" name="description">
-
-    <!-- Icon Font Stylesheet -->
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
-    
-    <!-- Fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap"
-      rel="stylesheet"
-    />
-    <!-- Icons. Uncomment required icon fonts -->
-    <link rel="stylesheet" href="${contextPath }/resources/bootstrap/fonts/boxicons.css" />
-    
-    <!-- Core CSS -->
-    <link rel="stylesheet" href="${contextPath }/resources/bootstrap/css/core.css" class="template-customizer-core-css" />
-    <link rel="stylesheet" href="${contextPath }/resources/bootstrap/css/theme-default.css" class="template-customizer-theme-css" />
-    <link rel="stylesheet" href="${contextPath }/resources/bootstrap/css/demo.css" />
-
-    <!-- Template Stylesheet -->
-    <link href="${contextPath }/resources/bootstrap/css/style.css" rel="stylesheet">
 </head>
-
 <body>
-    
-	<!-- header -->
-	<tiles:insertAttribute name="header"></tiles:insertAttribute>
-
 	<!-- Service Start -->
 		<div class="container">
 			<div class="text-center mx-auto mb-5 fadeInUp"
@@ -97,19 +68,8 @@
 
 	<!-- Service End -->
 
-	<!-- footer -->
-	<tiles:insertAttribute name="footer"></tiles:insertAttribute>
-
-    <!-- Back to Top -->
+	<!-- Back to Top -->
     <a href="#" class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i class="bi bi-arrow-up"></i></a>
-
-
-    <!-- JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="${contextPath }/resources/bootstrap/js/main.js"></script>
 </body>
 
 </html>

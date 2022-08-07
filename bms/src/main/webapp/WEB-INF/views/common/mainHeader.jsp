@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
@@ -19,7 +21,7 @@
 	<!-- Navbar Start -->
 	<nav
 		class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
-		<a href="index.html"
+		<a href="${contextPath }/main"
 			class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
 			<span class="app-brand-text demo menu-text fw-bolder ms-2">simplog</span>
 		</a>
@@ -49,28 +51,19 @@
 			<!-- Place this tag where you want the button to render. -->
 
 			<!-- User -->
-			<li><a class="dropdown-item" href="#"> <i
+			<li><a class="dropdown-item" href="${contextPath }/register"> <i
 					class="bx bxs-user me-2"></i> <span class="align-middle">회원가입</span>
 			</a></li>
 			<li><a class="dropdown-item" href="#"> <i
-					class="bx bx-key me-2"></i> <span class="align-middle">ID/PW
-						찾기</span>
+					class="bx bx-key me-2"></i> <span class="align-middle">비밀번호 찾기</span>
 			</a></li>
-			<li><a class="dropdown-item" href="auth-login-basic.html"> <i
+			<li><a class="dropdown-item" href="${contextPath }/login"> <i
 					class="bx bx-power-off me-2"></i> <span class="align-middle">로그인</span>
 			</a></li>
 		</ul>
 		<!--/ User -->
 	</nav>
 	<!-- Navbar End -->
-
-
-	<!-- Page Header Start -->
-	<div class="container-fluid page-header py-5 mb-5">
-		<div class="container py-5">
-			<h1 class="display-3 text-white mb-3 animated slideInDown">simPLOG</h1>
-		</div>
-	</div>
-	<!-- Page Header End -->
+	<br><br>
 </body>
 </html>
