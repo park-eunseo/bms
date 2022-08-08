@@ -33,21 +33,21 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="${contextPath }/main" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bolder">simplog</span>
+                  <span class="app-brand-text demo text-body fw-bolder">sim8log</span>
                 </a>
               </div>
               <!-- /Logo -->
-              <h4 class="mb-2">Welcome to simPLOG! 👋</h4>
+              <h4 class="mb-2">Welcome to sim8log! 👋</h4>
 			  <p class="mb-4">로그인하고 심플로그를 이용해 보세요.</p>
 			  
-              <form id="formAuthentication" class="mb-3" action="index.html" method="POST">
+              <form id="formAuthentication" class="mb-3" action="${contextPath }/member/login" method="post">
                 <div class="mb-3">
                   <label for="userId" class="form-label">ID</label>
                   <input
                     type="text"
                     class="form-control"
-                    id="userId"
-                    name="userId"
+                    id="id"
+                    name="id"
                     placeholder="ID를 입력하세요."
                     autofocus
                   />

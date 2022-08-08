@@ -1,6 +1,7 @@
 package com.spring.bms.member.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.spring.bms.member.dao.MemberDao;
@@ -20,5 +21,15 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public void addMember(MemberDto memberDto) throws Exception {
 		memberDao.insertMember(memberDto);
+	}
+
+	@Override
+	public MemberDto selectMember(MemberDto memberDto) throws Exception {
+		return memberDao.selectMember(memberDto);
+	}
+
+	@Override
+	public MemberDto selectOneMember(String id) throws Exception {
+		return memberDao.selectOneMember(id);
 	}
 }

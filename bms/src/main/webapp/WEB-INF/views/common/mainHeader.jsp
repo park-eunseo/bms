@@ -23,7 +23,7 @@
 		class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
 		<a href="${contextPath }/main"
 			class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
-			<span class="app-brand-text demo menu-text fw-bolder ms-2">simplog</span>
+			<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a>
 		<!-- Search -->
 		<div class="navbar-nav align-items-center">
@@ -49,17 +49,60 @@
 
 		<ul class="navbar-nav flex-row align-items-center ms-auto">
 			<!-- Place this tag where you want the button to render. -->
-
 			<!-- User -->
-			<li><a class="dropdown-item" href="${contextPath }/member/register"> <i
-					class="bx bxs-user me-2"></i> <span class="align-middle">회원가입</span>
-			</a></li>
-			<li><a class="dropdown-item" href="#"> <i
-					class="bx bx-key me-2"></i> <span class="align-middle">비밀번호 찾기</span>
-			</a></li>
-			<li><a class="dropdown-item" href="${contextPath }/member/login"> <i
-					class="bx bx-power-off me-2"></i> <span class="align-middle">로그인</span>
-			</a></li>
+			<c:choose>
+				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->
+					<li class="nav-item">
+                        <a class="nav-link" style="display: inline-block;" href="${contextPath }/member/register">
+                        <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>회원가입</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#" style="display: inline-block;">
+                        <i class="bx bx-key me-2" style="color:#878787; display: inline-block; "></i>ID/PW 찾기</a>
+                    </li>
+					<li class="nav-item">
+						<a class="nav-link" style="display: inline-block;"href="${contextPath }/member/login">
+						<i class="bx bx-power-off me-2" style="display: inline-block;"></i> 로그인</a>
+					</li>		
+				</c:when>
+				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->			
+					<ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 13px">
+                      <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>${sessionScope.memberNickname } 님
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}"><i class="bx bx-user me-2"></i>내 정보 수정</a></li>
+                          <li><a class="dropdown-item" href="${contextPath }/member/logout">
+								<i class="bx bx-power-off me-2"></i>로그아웃</a>
+						  </li>
+                        </ul>
+                      </li>
+                      <li class="nav-item">
+                        <a class="nav-link" href="${contextPath }/blog">내 블로그</a>
+                      </li>
+                    </ul>
+				</c:when>
+				<c:otherwise> <!-- 세션이 있고 관리자 계정이라면 -->
+					<li><a class="dropdown-item" href="#"> 
+						<i class="bx bxs-user me-2"></i> <span class="align-middle">회원 관리</span>
+					</a></li>
+					<li class="nav-item navbar-dropdown dropdown-user dropdown">
+						<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"> 
+							<span>${sessionScope.memberId } 님</span>
+						</a>
+					<ul class="dropdown-menu dropdown-menu-end">
+						<li>
+							<a class="dropdown-item" href="#"> 
+								<i class="bx bx-user me-2"></i> 
+								<span class="align-middle">내 정보 수정</span>
+						</a></li>
+						<li><a class="dropdown-item" href="${contextPath }/member/logout">
+								<i class="bx bx-power-off me-2"></i> <span class="align-middle">로그아웃</span>
+						</a></li>
+					</ul></li>
+				</c:otherwise>
+			</c:choose>
 		</ul>
 		<!--/ User -->
 	</nav>

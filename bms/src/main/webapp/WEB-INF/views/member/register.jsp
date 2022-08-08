@@ -93,9 +93,17 @@
  			var birth = document.inputForm.birth
  			var terms =  document.inputForm.terms
  			
+ 			var idMsg = document.getElementById("idAlert")
+ 			
  			if(id.value == "") {
  				document.getElementById("idAlert").innerText = "ID는 필수 입력값입니다."
  				document.getElementById("idAlert").style.color = "red"
+ 				id.focus()
+ 				return false
+ 			}
+ 			
+ 			if(idMsg.style.color != "green"){
+ 				alert("ID를 다시 확인해 주세요.")
  				id.focus()
  				return false
  			}
@@ -141,6 +149,8 @@
  				terms.focus()
  				return false
  			}
+ 			
+ 			
  		}
  		
  		function isIdCheck(){ // 회원 아이디 중복 확인
@@ -158,7 +168,7 @@
  				type : "get", // HTTP 요청 방식(GET, POST)
  				url : "${contextPath}/member/registerIdCheck?id=" + id.value, // 요청이 전송될 URL 주소
  				success : function(data){ // 통신 성공할 경우 실행되는 함수
- 					if(data){
+ 					if(data == "true"){
  						document.getElementById("idAlert").innerText = '사용 가능한 ID입니다.'
  		 				document.getElementById("idAlert").style.color = "green"
  					} else {
@@ -181,7 +191,7 @@
               <!-- Logo -->
               <div class="app-brand justify-content-center">
                 <a href="${contextPath }/main" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bolder">simplog</span>
+                  <span class="app-brand-text demo text-body fw-bolder">sim8log</span>
                 </a>
               </div>
               <!-- /Logo -->
@@ -200,11 +210,11 @@
                     id="id"
                     name="id"
                     onblur="idAlert()"
-                    autofocus
-                    style="width:470px; display: inline-block;"
+                    placeholder="ID"
+                    style="width:460px; display: inline-block;"
                   />
                    <button type="button" class="btn btn-primary" onclick="isIdCheck()"
-                   		style="padding: 0.4rem 1rem; font-size: 0.8rem;display: inline-block;">Check</button>
+                   		style="padding: 0.4rem 1rem; font-size: 0.8rem;display: inline-block;">ID Check</button>
                    <br><small id="idAlert"></small>
                 </div>
                
@@ -275,7 +285,7 @@
                 <div class="mb-3">
                   <label for="email" class="form-label">Email</label>
                   <span style="color:#e44444">*</span>
-                  <input type="email" class="form-control" id="email" name="email" onblur="emailAlert()"placeholder="simplog@naver.com" />
+                  <input type="email" class="form-control" id="email" name="email" onblur="emailAlert()"placeholder="sim8log@naver.com" />
                   <small id="emailAlert" style="color:red"></small>
                 </div>
                 
@@ -300,6 +310,10 @@
                      <small id="genderAlert" style="color:red"></small>
                 </div>
                 
+                <br>
+                <div class="dropdown-divider"></div>
+                <br>
+                
                 <div class="mb-3">
                   <label for="blogName" class="form-label">블로그명</label>
                   <input
@@ -323,7 +337,7 @@
                 </div>
                 <div class="mb-3">
                   <label for="intro" class="form-label">INTRO</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" 
+                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="intro"
                   		placeholder="간단한 소개글을 남겨주세요." style="resize: none"></textarea>
                 </div>
                 

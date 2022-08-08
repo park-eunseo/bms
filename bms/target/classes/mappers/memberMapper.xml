@@ -3,6 +3,15 @@
 
 <mapper namespace="member">
 
+	<select id="selectLoginMember" parameterType="MemberDto" resultType="MemberDto">
+		SELECT
+				*
+		FROM 
+				MEMBER
+		WHERE 
+				ID = #{id }
+	</select>
+	
 	<select id="selectIdCheck" parameterType="String" resultType="String">
 		SELECT
 				ID
@@ -16,8 +25,8 @@
 		INSERT INTO 
 					MEMBER
 		VALUES(
-				#{id },
-				#{password },
+				#{id},
+				#{password},
 				#{name},
 				#{tel},
 				#{email},
@@ -29,4 +38,13 @@
 		)
 				
 	</insert>
+	
+	<select id="selectOneMember" parameterType="String" resultType="MemberDto">
+		SELECT
+				*
+		FROM
+				MEMBER
+		WHERE
+				ID = #{id}
+	</select>
 </mapper>

@@ -12,7 +12,7 @@ public class MemberDto {
 	private String name;
 	private String tel;
 	private String email;
-	private Date birth;
+	private String birth;
 	private String gender;
 	private String blogName;
 	private String nickname;
@@ -48,10 +48,10 @@ public class MemberDto {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public Date getBirth() {
+	public String getBirth() {
 		return birth;
 	}
-	public void setBirth(Date birth) {
+	public void setBirth(String birth) {
 		this.birth = birth;
 	}
 	public String getGender() {

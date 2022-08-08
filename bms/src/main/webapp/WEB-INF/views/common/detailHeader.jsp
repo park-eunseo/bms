@@ -51,23 +51,20 @@
 				<li>
 					<div class="avatar">
 						<img src="${contextPath }/resources/bootstrap/img/profile/1.png"
-							class="w-px-40 h-auto rounded-circle" />
+							class="w-px-40 h-auto rounded-circle"/>
 					</div>
 				</li> &ensp;&ensp;
-				<li class="nav-item navbar-dropdown dropdown-user dropdown">
-					<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown"> 
-					<span>Admin 님</span>
-				</a>
-					<ul class="dropdown-menu dropdown-menu-end">
-						<li>
-							<a class="dropdown-item" href="#"> 
-								<i class="bx bx-user me-2"></i> 
-								<span class="align-middle">내 정보 수정</span>
-						</a></li>
-						<li><a class="dropdown-item" href="auth-login-basic.html">
-								<i class="bx bx-power-off me-2"></i> <span class="align-middle">로그아웃</span>
-						</a></li>
-					</ul></li>
+				<li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" style="margin-right: 0px;" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                          	${sessionScope.memberNickname } 님
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                          <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}"><i class="bx bx-user me-2"></i>내 정보 수정</a></li>
+                          <li><a class="dropdown-item" href="${contextPath }/member/logout">
+								<i class="bx bx-power-off me-2"></i>로그아웃</a>
+						  </li>
+                        </ul>
+                      </li>
 				<!--/ User -->
 			</ul>
 		</div>

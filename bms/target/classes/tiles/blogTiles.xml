@@ -25,12 +25,18 @@
 	</definition>
 	
 	<definition name="member/login" extends="mainLayout"> <!-- 회원 로그인 -->
-		<put-attribute name="content" value="/WEB-INF/views/login.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/member/login.jsp"></put-attribute>
 		<put-attribute name="title" value="심플로그 로그인"></put-attribute>
 	</definition>
 	
 	<definition name="member/register" extends="mainLayout">	<!-- 회원가입 -->
-		<put-attribute name="content" value="/WEB-INF/views/register.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/member/register.jsp"></put-attribute>
 		<put-attribute name="title" value="심플로그 회원가입"></put-attribute>
 	</definition>
+	
+	<definition name="member/modify" extends="mainLayout">	<!-- 회원 정보 수정 -->
+		<put-attribute name="content" value="/WEB-INF/views/member/modify.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 정보 수정"></put-attribute>
+	</definition>
+	
 </tiles-definitions>
