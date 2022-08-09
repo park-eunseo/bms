@@ -43,7 +43,7 @@
 <body>
 	<div class="layout-wrapper layout-content-navbar">
 		<div class="layout-container">
-			<tiles:insertAttribute name="side"></tiles:insertAttribute>
+			<tiles:insertAttribute name="leftSide"></tiles:insertAttribute>
 
 			<div class="layout-page">
 				<tiles:insertAttribute name="header"></tiles:insertAttribute>
@@ -53,6 +53,7 @@
 					<div class="content-backdrop fade"></div>
 				</div>
 			</div>
+			<tiles:insertAttribute name="rightSide"></tiles:insertAttribute>
 		</div>
 		<div class="layout-overlay layout-menu-toggle"></div>
 	</div>

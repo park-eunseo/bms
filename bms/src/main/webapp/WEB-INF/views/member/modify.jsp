@@ -62,6 +62,7 @@
  			var pw2 = document.inputForm.password2
  			var tel = document.inputForm.tel
  			var email = document.inputForm.email
+ 			var intro = document.inputForm.intro
  			
  			if(pw.value == "") {
  				document.getElementById("pwAlert").innerText = "비밀번호는 필수 입력값입니다."
@@ -86,6 +87,27 @@
  				email.focus()
  				return false
  			}	
+ 			
+ 			if(intro.value.length > 50){
+ 	 			document.getElementById("intro").focus()
+ 	 			return false
+ 			}
+ 		}
+ 		
+ 		function checkIntro(obj){ // 소개글 작성 글자수 체크
+ 			var max = 50 
+ 			var text_len = obj.value.length
+ 			
+ 			var msg = document.getElementById("introAlert")
+ 			var len = document.getElementById("introLen")
+ 				
+			if(text_len > max){
+ 				len.innerText = "(50/50byte)"
+ 				msg.innerText = "50byte 이하로 작성해 주세요."			
+ 			} else {
+ 				len.innerText = "(" + text_len + "/50byte)"
+ 				msg.innerText = ""
+ 			}
  		}
  	</script>
   <body>
@@ -106,9 +128,11 @@
               <!-- /Logo -->
               <h4 class="mb-2">정보 수정 📝</h4>
               <br>
-              
-              <form id="formAuthentication" class="mb-3"  name="inputForm" 
-              		onsubmit="return inputCheck()" action="${contextPath }/member/modify" method="post">
+              <div class="divider">
+          			<div class="divider-text">PERSONAL INFO</div>
+        	  </div>
+        		
+              <form id="formAuthentication" class="mb-3"  name="inputForm" onsubmit="return inputCheck()" action="${contextPath }/member/modify" method="post">
                 <div class="mb-3">
                   <label for="userId" class="form-label">ID</label>
                   <span style="color:#e44444">*</span>
@@ -124,7 +148,7 @@
                 </div>           
                 
                 <div class="mb-3 form-password-toggle">
-                  <label class="form-label" for="password">Password</label>
+                  <label class="form-label" for="password">PASSWORD</label>
                   <span style="color:#e44444">*</span>
                   <div class="input-group input-group-merge">
                     <input
@@ -142,7 +166,7 @@
                 </div>
                 
                 <div class="mb-3 form-password-toggle"> <!-- 비밀번호 2차 확인 -->
-                  <label class="form-label" for="password">Check Password</label>
+                  <label class="form-label" for="password">CHECK PASSWORD</label>
                   <span style="color:#e44444">*</span>
                   <div class="input-group input-group-merge">
                     <input
@@ -159,7 +183,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="userName" class="form-label">이름</label>
+                  <label for="userName" class="form-label">NAME</label>
                   <span style="color:#e44444">*</span>
                   <input
                     type="text"
@@ -173,7 +197,7 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="userTel" class="form-label">Tel</label>
+                  <label for="userTel" class="form-label">TEL</label>
                   <span style="color:#e44444">*</span>
                   <input
                     type="text"
@@ -188,38 +212,53 @@
                 </div>
                 
                 <div class="mb-3">
-                  <label for="email" class="form-label">Email</label>
+                  <label for="email" class="form-label">EMAIL</label>
                   <span style="color:#e44444">*</span>
-                  <input type="email" class="form-control" value = "${memberDto.email }"
+                  <input type="email" class="form-control" value="${memberDto.email }"
                   		id="email" name="email" onblur="emailAlert()"placeholder="sim8log@naver.com" />
                   <small id="emailAlert" style="color:red"></small>
                 </div>
                 
                 <div class="mb-3">
-               	  <label for="birth" class="form-label">Birth</label>
+               	  <label for="birth" class="form-label">BIRTH</label>
                	  <span style="color:#e44444">*</span>
-                  <input class="form-control" type="date" value = "${memberDto.birth }"
+                  <input class="form-control" type="date" value="${memberDto.birth }"
                   		id="html5-date-input" name="birth" onblur="birthAlert()" readonly="readonly" />
                   <small id="birthAlert" style="color:red"></small>
                 </div>
                 
                 <div class="mb-3">
-               	  <label for="gender" class="form-label">Gender</label>
+               	  <label for="gender" class="form-label">GENDER</label>
                	  <span style="color:#e44444">*</span><br>
                      <div class="form-check form-check-inline mt-3">
-                        <input class="form-check-input" type="radio" name="gender" value="F" checked="checked" readonly="readonly">
+                        <input class="form-check-input" type="radio" name="gender" value="F" checked="checked" disabled="disabled">
                         <label class="form-check-label" for="inlineRadio1">여자</label>
                      </div> &ensp;&ensp;
                      <div class="form-check form-check-inline">
-                         <input class="form-check-input" type="radio" name="gender" value="M" readonly="readonly">
+                         <input class="form-check-input" type="radio" name="gender" value="M" disabled="disabled">
                          <label class="form-check-label" for="inlineRadio2">남자</label>
                      </div>
                      <small id="genderAlert" style="color:red"></small>
                 </div>
                 <br>
-                <div class="dropdown-divider"></div>
-                <br>
-                <div class="mb-3">
+				<div class="divider">
+					<div class="divider-text">BLOG INFO</div>
+				</div>
+				<br>
+				<div class="d-flex align-items-start align-items-sm-center gap-4">
+			       <img src="${contextPath }/resources/bootstrap/img/profile/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+			          <div class="button-wrapper">
+			            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
+			              <span class="d-none d-sm-block">Upload new photo</span>
+			              <i class="bx bx-upload d-block d-sm-none"></i>
+			              <input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg">
+			            </label>
+			            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+			         </div>
+			    </div>
+			    <br>
+			    
+				<div class="mb-3">
                   <label for="blogName" class="form-label">블로그명</label>
                   <input
                     type="text"
@@ -244,8 +283,11 @@
                 </div>
                 <div class="mb-3">
                   <label for="intro" class="form-label">INTRO</label>
-                  <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" 
-                  		name="intro" placeholder="간단한 소개글을 남겨주세요." style="resize: none">${memberDto.intro }</textarea>
+                  <textarea class="form-control" id="intro" onkeyup="checkIntro(this)" rows="3" name="intro"
+                  		placeholder="간단한 소개글을 남겨주세요." style="resize: none">${memberDto.intro }</textarea>
+                  <small id="introLen">(0/50byte)</small>
+                  <br>
+                  <small id="introAlert" style="color:red"></small>
                 </div>
                 <br>
                <button class="btn btn-primary d-grid w-100">저장하기</button>

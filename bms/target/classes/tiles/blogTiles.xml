@@ -7,9 +7,10 @@
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>	<!-- 홈 하단 -->
 	</definition>
 	
-	<definition name="detailLayout" template="/WEB-INF/views/common/detailLayout.jsp"> <!-- 개인 블로그 레이아웃 -->
-		<put-attribute name="header" value="/WEB-INF/views/common/detailHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
-		<put-attribute name="side" value="/WEB-INF/views/common/detailSide.jsp"></put-attribute>
+	<definition name="detailLayout" template="/WEB-INF/views/common/blogLayout.jsp"> <!-- 개인 블로그 레이아웃 -->
+		<put-attribute name="header" value="/WEB-INF/views/common/blogHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
+		<put-attribute name="leftSide" value="/WEB-INF/views/common/blogLeftSide.jsp"></put-attribute>
+		<put-attribute name="rightSide" value="/WEB-INF/views/common/blogRightSide.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>
 	</definition>
 	
@@ -20,7 +21,7 @@
 	</definition>
 	
 	<definition name="/blog" extends="detailLayout">	<!-- 개인 블로그 -->
-		<put-attribute name="content" value="/WEB-INF/views/detailBlog.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/oneBlog.jsp"></put-attribute>
 		<put-attribute name="title" value="blog"></put-attribute>
 	</definition>
 	

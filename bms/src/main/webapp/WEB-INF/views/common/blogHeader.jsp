@@ -23,7 +23,7 @@
 
 			<!-- Search -->
 			<div class="navbar-nav align-items-center">
-				<div class="btn-group">
+				<div class="btn-group" style="display: inline-block;">
 					<button type="button"
 						class="btn btn-outline-primary dropdown-toggle"
 						data-bs-toggle="dropdown" aria-expanded="false">
@@ -36,7 +36,7 @@
 					</ul>
 				</div>
 				&ensp;&ensp;&ensp;&ensp;
-				<div class="nav-item d-flex align-items-center">
+				<div class="nav-item d-flex align-items-center"  style="display: inline-block;">
 					<i class="bx bx-search fs-4 lh-0"></i> <input type="text"
 						class="form-control border-0 shadow-none"
 						placeholder="검색어를 입력하세요." />
@@ -48,23 +48,8 @@
 				<!-- Place this tag where you want the button to render. -->
 
 				<!-- User -->
-				<li>
-					<div class="avatar">
-						<img src="${contextPath }/resources/bootstrap/img/profile/1.png"
-							class="w-px-40 h-auto rounded-circle"/>
-					</div>
-				</li> &ensp;&ensp;
-				<li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" style="margin-right: 0px;" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          	${sessionScope.memberNickname } 님
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}"><i class="bx bx-user me-2"></i>내 정보 수정</a></li>
-                          <li><a class="dropdown-item" href="${contextPath }/member/logout">
-								<i class="bx bx-power-off me-2"></i>로그아웃</a>
-						  </li>
-                        </ul>
-                      </li>
+
+
 				<!--/ User -->
 			</ul>
 		</div>

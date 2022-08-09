@@ -78,6 +78,7 @@ public class MemberController {
 				HttpSession session = request.getSession(); // 세션 객체 생성
 				session.setAttribute("memberId", loginMember.getId());
 				session.setAttribute("memberNickname", loginMember.getNickname());
+				session.setAttribute("memberIntro", loginMember.getIntro());
 				session.setAttribute("role", "client"); // 관리자인지 회원인지 구분하기 위해
 				
 			    jsScript = "<script>"
@@ -124,5 +125,27 @@ public class MemberController {
 		mv.setViewName("member/modify");
 		
 		return mv;
+	}
+	
+	@PostMapping("/modify")
+	public ResponseEntity<Object> modify(MemberDto memberDto, HttpServletRequest request) throws Exception {
+		memberDto.setPassword(pwEncoder.encode(memberDto.getPassword()));
+		
+		memberService.updateMember(memberDto);
+		
+		HttpSession session = request.getSession();
+		session.setAttribute("memberNickname", memberDto.getNickname());
+		session.setAttribute("memberBlogName", memberDto.getBlogName());
+		session.setAttribute("memberIntro", memberDto.getIntro());	
+		
+		String jsScript = "<script>"
+						+ "alert('수정이 완료되었습니다.');"
+						+ "location.href = '" + request.getContextPath() + "/main';"
+						+ "</script>";
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+	    
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 }

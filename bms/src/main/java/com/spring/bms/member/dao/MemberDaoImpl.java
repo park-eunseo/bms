@@ -36,4 +36,9 @@ public class MemberDaoImpl implements MemberDao {
 		return sqlSession.selectOne("member.selectOneMember", id);
 	}
 
+	@Override
+	public void updateMember(MemberDto memberDto) throws Exception {
+		sqlSession.update("member.updateMember", memberDto);
+	}
+
 }

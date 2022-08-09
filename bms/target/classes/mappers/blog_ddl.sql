@@ -1,5 +1,3 @@
-create database 
-
 CREATE TABLE MEMBER (
     id 			VARCHAR(20) PRIMARY KEY,
     password 	VARCHAR(1000) NOT NULL,
@@ -10,7 +8,7 @@ CREATE TABLE MEMBER (
     gender 		CHAR(1) CHECK ('M' OR 'F'),
     blogName 	VARCHAR(20),
     nickname 	VARCHAR(10),
-    intro 		VARCHAR(100)
+    intro 		VARCHAR(60)
 );
 
 select * from member;
