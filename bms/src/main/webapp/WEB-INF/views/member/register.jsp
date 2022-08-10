@@ -200,6 +200,10 @@
  				msg.innerText = ""
  			}
  		}
+ 		
+ 		function basicProfile() {
+ 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.jpg"
+ 		}
  	</script>
   <body>
     <!-- Content -->
@@ -224,7 +228,7 @@
           			<div class="divider-text">PERSONAL INFO</div>
         		</div>
         		
-              <form id="formAuthentication" class="mb-3"  name="inputForm" 
+              <form id="formAuthentication" class="mb-3"  name="inputForm" enctype="multipart/form-data"
               		onsubmit="return inputCheck()" action="${contextPath }/member/register" method="post">
                 <div class="mb-3">
                   <label for="userId" class="form-label">ID</label>
@@ -343,15 +347,18 @@
                 <br>
                 
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
-			       <img src="${contextPath }/resources/bootstrap/img/profile/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+			       <img src="${contextPath }/resources/bootstrap/img/profile/basicImg.jpg" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
 			          <div class="button-wrapper">
-			            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-			              <span class="d-none d-sm-block">Upload new photo</span>
-			              <i class="bx bx-upload d-block d-sm-none"></i>
-			              <input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg">
-			            </label>
-			            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-			         </div>
+           				<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0" style="display: inline-flex; ">
+              				<i class="bx bx-upload" style="align-self: center;"></i><span class="d-none d-sm-block" style="padding-left: 4px;">사진 선택</span>
+              				<input type="file" id="upload" name="profile" class="account-file-input" hidden="" accept="image/png, image/jpeg" >
+            			</label>
+            			<button type="button" class="btn btn-outline-secondary account-image-reset mb-4" onclick="basicProfile()" style="display: inline-flex;">
+              				<i class="bx bx-reset" style="align-self: center;"></i>
+              				<span class="d-none d-sm-block" style="padding-left: 4px;">기본 설정</span>
+            			</button>
+						<p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+          			</div>
 			    </div>
 			    <br>
                 <div class="mb-3">

@@ -8,7 +8,8 @@ CREATE TABLE MEMBER (
     gender 		CHAR(1) CHECK ('M' OR 'F'),
     blogName 	VARCHAR(20),
     nickname 	VARCHAR(10),
-    intro 		VARCHAR(60)
+    intro 		VARCHAR(60),
+    fileImage		VARCHAR(200)
 );
 
 select * from member;

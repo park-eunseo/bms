@@ -70,17 +70,12 @@
     content: "\f107";
     font-weight: 900;
     vertical-align: middle;
-    margin-left: 8px;
 }
 
 @media (max-width: 991.98px) {
     .navbar .navbar-nav .nav-link  {
         margin-right: 0;
         padding: 10px 0;
-    }
-
-    .navbar .navbar-nav {
-        border-top: 1px solid #EEEEEE;
     }
 }
 

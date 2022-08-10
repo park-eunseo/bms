@@ -27,12 +27,12 @@
 					class="w-px-40 h-auto rounded-circle"/>
 			</div>
 			<div class="card text-center mb-3">
-				<div class="card-body" style="padding-top: 2rem; padding-bottom: 2rem">
-                   <a class="nav-link dropdown-toggle" href="javascript:void(0)" style="font-size: 13px; font-weight: 550;"
+				<div class="card-body" style="padding-top:10px; padding-bottom: 2rem">
+                   <a class="nav-link dropdown-toggle" href="javascript:void(0)" style="font-size: 13px; font-weight: 500;"
                    		id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           	${sessionScope.memberNickname } 님
                    </a>
-                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-top: -5px; transform: translate3d(30px, 55px, 0px);">
                        <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}">
                        		<i class="bx bx-user me-2"></i>내 정보 수정</a></li>
                        <li><a class="dropdown-item" href="${contextPath }/member/logout">
@@ -67,7 +67,7 @@
 				<ul class="menu-sub">
 					<!-- 서브 카테고리 -->
 					<li class="menu-item">
-						<a href="layouts-without-menu.html" class="menu-link">
+						<a href="#" class="menu-link">
 							부산
 						</a>
 					</li>

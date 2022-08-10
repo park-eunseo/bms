@@ -109,6 +109,10 @@
  				msg.innerText = ""
  			}
  		}
+ 		
+ 		function basicProfile(){
+ 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.jpg"
+ 		}
  	</script>
   <body>
     <!-- Content -->
@@ -223,7 +227,7 @@
                	  <label for="birth" class="form-label">BIRTH</label>
                	  <span style="color:#e44444">*</span>
                   <input class="form-control" type="date" value="${memberDto.birth }"
-                  		id="html5-date-input" name="birth" onblur="birthAlert()" readonly="readonly" />
+                  		id="html5-date-input" name="birth" onblur="birthAlert()" disabled="disabled" />
                   <small id="birthAlert" style="color:red"></small>
                 </div>
                 
@@ -231,11 +235,13 @@
                	  <label for="gender" class="form-label">GENDER</label>
                	  <span style="color:#e44444">*</span><br>
                      <div class="form-check form-check-inline mt-3">
-                        <input class="form-check-input" type="radio" name="gender" value="F" checked="checked" disabled="disabled">
+                        <input class="form-check-input" type="radio" name="gender" value="F" 
+                        	<c:if test="${memberDto.gender eq 'F'}">checked</c:if> disabled="disabled">
                         <label class="form-check-label" for="inlineRadio1">여자</label>
                      </div> &ensp;&ensp;
                      <div class="form-check form-check-inline">
-                         <input class="form-check-input" type="radio" name="gender" value="M" disabled="disabled">
+                         <input class="form-check-input" type="radio" name="gender" value="M"
+                         	<c:if test="${memberDto.gender eq 'M'}">checked</c:if> disabled="disabled">
                          <label class="form-check-label" for="inlineRadio2">남자</label>
                      </div>
                      <small id="genderAlert" style="color:red"></small>
@@ -246,15 +252,18 @@
 				</div>
 				<br>
 				<div class="d-flex align-items-start align-items-sm-center gap-4">
-			       <img src="${contextPath }/resources/bootstrap/img/profile/1.png" alt="user-avatar" class="d-block rounded" height="100" width="100" id="uploadedAvatar">
+			       <img src="${contextPath }/resources/bootstrap/img/profile/1.png" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
 			          <div class="button-wrapper">
-			            <label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0">
-			              <span class="d-none d-sm-block">Upload new photo</span>
-			              <i class="bx bx-upload d-block d-sm-none"></i>
-			              <input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg">
-			            </label>
-			            <p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
-			         </div>
+           				<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0" style="display: inline-flex; ">
+              				<i class="bx bx-upload" style="align-self: center;"></i><span class="d-none d-sm-block" style="padding-left: 4px;">사진 선택</span>
+              				<input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg" >
+            			</label>
+            			<button type="button" class="btn btn-outline-secondary account-image-reset mb-4" onclick="basicProfile()" style="display: inline-flex;">
+              				<i class="bx bx-reset" style="align-self: center;"></i>
+              				<span class="d-none d-sm-block" style="padding-left: 4px;">기본 설정</span>
+            			</button>
+						<p class="text-muted mb-0">Allowed JPG, GIF or PNG. Max size of 800K</p>
+          			</div>
 			    </div>
 			    <br>
 			    
