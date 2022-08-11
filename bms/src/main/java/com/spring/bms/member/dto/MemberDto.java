@@ -7,17 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class MemberDto {
 	
-	private String id;
-	private String password;
-	private String name;
-	private String tel;
-	private String email;
-	private String birth;
-	private String gender;
-	private String blogName;
-	private String nickname;
-	private String intro;
-	
 	public String getId() {
 		return id;
 	}
@@ -60,6 +49,12 @@ public class MemberDto {
 	public void setGender(String gender) {
 		this.gender = gender;
 	}
+	public String getProfileName() {
+		return profileName;
+	}
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
 	public String getBlogName() {
 		return blogName;
 	}
@@ -78,4 +73,16 @@ public class MemberDto {
 	public void setIntro(String intro) {
 		this.intro = intro;
 	}
+	private String id;
+	private String password;
+	private String name;
+	private String tel;
+	private String email;
+	private String birth;
+	private String gender;
+	private String profileName;
+	private String blogName;
+	private String nickname;
+	private String intro;
+	
 }

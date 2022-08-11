@@ -52,18 +52,20 @@
 			<!-- User -->
 			<c:choose>
 				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->
-					<li class="nav-item">
-                        <a class="nav-link" style="display: inline-block;" href="${contextPath }/member/register">
-                        <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>회원가입</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#" style="display: inline-block;">
-                        <i class="bx bx-key me-2" style="color:#878787; display: inline-block; "></i>ID/PW 찾기</a>
-                    </li>
-					<li class="nav-item">
-						<a class="nav-link" style="display: inline-block;"href="${contextPath }/member/login">
-						<i class="bx bx-power-off me-2" style="display: inline-block;"></i> 로그인</a>
-					</li>		
+					<div style="display: flex; ">
+						<li class="nav-item">
+	                        <a class="nav-link" style="display: inline-block;" href="${contextPath }/member/register">
+	                        <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>회원가입</a>
+	                    </li>
+	                    <li class="nav-item">
+	                        <a class="nav-link" href="#" style="display: inline-block;">
+	                        <i class="bx bx-key me-2" style="color:#878787; display: inline-block; "></i>ID/PW 찾기</a>
+	                    </li>
+						<li class="nav-item">
+							<a class="nav-link" style="display: inline-block;"href="${contextPath }/member/login">
+							<i class="bx bx-power-off me-2" style="display: inline-block;"></i> 로그인</a>
+						</li>
+					</div>		
 				</c:when>
 				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->			
 					<ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 13px">

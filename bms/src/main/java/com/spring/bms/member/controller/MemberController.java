@@ -1,5 +1,9 @@
 package com.spring.bms.member.controller;
 
+import java.io.File;
+import java.util.Iterator;
+import java.util.UUID;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -14,6 +18,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -36,7 +42,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> register(MemberDto memberDto, HttpServletRequest request) throws Exception {
+	public ResponseEntity<Object> register(MemberDto memberDto, HttpServletRequest request, MultipartHttpServletRequest mpRequest) throws Exception {
 		memberDto.setPassword(pwEncoder.encode(memberDto.getPassword()));
 		
 		// 들어오는 값이 없을 때 공백 또는 null은 NaN으로 취급되어 저장될 필드가 없어 400 에러 일어남
@@ -44,7 +50,11 @@ public class MemberController {
 		if(memberDto.getNickname().equals("")) memberDto.setNickname(memberDto.getId());
 		if(memberDto.getIntro().equals("")) memberDto.setIntro("");
 		
+		
 		// 프로필 사진 파일
+		memberDto.setProfileName(profileUpdate(mpRequest));
+		
+		System.out.println(profileUpdate(mpRequest));
 		
 		memberService.addMember(memberDto);
 		
@@ -151,5 +161,30 @@ public class MemberController {
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 	    
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
+	public String profileUpdate(MultipartHttpServletRequest mpRequest) throws Exception {	
+		mpRequest.setCharacterEncoding("utf-8"); // 한글명을 처리한다.
+		
+		Iterator<String> file = mpRequest.getFileNames();
+		
+		String filePath = "C:\\Users\\Park\\git\\bms\\bms\\src\\main\\webapp\\resources\\bootstrap\\img\\profile\\";
+		String fileName = "";
+		
+		if(file.hasNext()) { // file element가 있으면
+			MultipartFile mpFile = mpRequest.getFile(file.next()); // 파일 저장
+			
+			if(!mpFile.getOriginalFilename().isEmpty()) {
+				// UUID: 파일명 중복되지 않게 고유 식별자 기능 사용
+				fileName = UUID.randomUUID() + "_" + mpFile.getOriginalFilename();
+				
+				File f = new File(filePath + fileName);
+				mpFile.transferTo(f);
+			} 
+		}
+		
+		if(fileName == "") fileName = "basicImg.png";
+		
+		return fileName;
 	}
 }

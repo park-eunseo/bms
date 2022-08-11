@@ -6,10 +6,10 @@ CREATE TABLE MEMBER (
     email 		VARCHAR(30) NOT NULL,
     birth 		DATE NOT NULL,
     gender 		CHAR(1) CHECK ('M' OR 'F'),
+    profileName VARCHAR(300),
     blogName 	VARCHAR(20),
     nickname 	VARCHAR(10),
-    intro 		VARCHAR(60),
-    fileImage		VARCHAR(200)
+    intro 		VARCHAR(60)
 );
 
 select * from member;
