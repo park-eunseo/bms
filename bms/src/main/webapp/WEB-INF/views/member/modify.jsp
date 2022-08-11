@@ -110,8 +110,20 @@
  			}
  		}
  		
- 		function basicProfile(){
- 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.jpg"
+ 		function basicProfile(){ // 프로필 초기화
+ 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.png"
+ 		}
+ 		
+ 		function profileChange(event){ // 프로필 변경
+ 			var reader = new FileReader() // 비동기적으로 파일의 내용을 읽은 데 사용
+ 			
+ 			reader.onload = function(event){ // 읽기 동작이 성공적으로 완료되었을 때
+ 				var img = document.getElementById("profileImg");
+ 				img.setAttribute("src", event.target.result);
+ 				
+ 			}
+ 			
+ 			reader.readAsDataURL(event.target.files[0]) // 바이너리 파일을 encode 문자열로 반환
  		}
  	</script>
   <body>
@@ -136,7 +148,7 @@
           			<div class="divider-text">PERSONAL INFO</div>
         	  </div>
         		
-              <form id="formAuthentication" class="mb-3"  name="inputForm" onsubmit="return inputCheck()" action="${contextPath }/member/modify" method="post">
+              <form id="formAuthentication" class="mb-3"  name="inputForm" enctype="multipart/form-data" onsubmit="return inputCheck()" action="${contextPath }/member/modify" method="post">
                 <div class="mb-3">
                   <label for="userId" class="form-label">ID</label>
                   <span style="color:#e44444">*</span>
@@ -252,11 +264,11 @@
 				</div>
 				<br>
 				<div class="d-flex align-items-start align-items-sm-center gap-4">
-			       <img src="${contextPath }/resources/bootstrap/img/profile/basicImg.png" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
+			       <img src="${contextPath }/resources/bootstrap/img/profile/${memberDto.profileName}" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
 			          <div class="button-wrapper">
            				<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0" style="display: inline-flex; ">
               				<i class="bx bx-upload" style="align-self: center;"></i><span class="d-none d-sm-block" style="padding-left: 4px;">사진 선택</span>
-              				<input type="file" id="upload" class="account-file-input" hidden="" accept="image/png, image/jpeg" >
+              				<input type="file" id="upload" name="profileName" onchange="profileChange(event)" class="account-file-input" hidden="" accept="image/png, image/jpeg" >
             			</label>
             			<button type="button" class="btn btn-outline-secondary account-image-reset mb-4" onclick="basicProfile()" style="display: inline-flex;">
               				<i class="bx bx-reset" style="align-self: center;"></i>

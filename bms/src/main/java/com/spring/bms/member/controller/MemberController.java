@@ -25,6 +25,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bms.member.dto.MemberDto;
 import com.spring.bms.member.service.MemberService;
+import com.sun.javadoc.MemberDoc;
 
 @Controller
 @RequestMapping("/member")
@@ -42,19 +43,45 @@ public class MemberController {
 	}
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> register(MemberDto memberDto, HttpServletRequest request, MultipartHttpServletRequest mpRequest) throws Exception {
-		memberDto.setPassword(pwEncoder.encode(memberDto.getPassword()));
+	public ResponseEntity<Object> register(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		
+		MemberDto memberDto = new MemberDto();
+		memberDto.setId(multipartRequest.getParameter("id"));
+		memberDto.setPassword(pwEncoder.encode(multipartRequest.getParameter("password")));
+		memberDto.setName(multipartRequest.getParameter("name"));
+		memberDto.setTel(multipartRequest.getParameter("tel"));
+		memberDto.setEmail(multipartRequest.getParameter("email"));
+		memberDto.setBirth(multipartRequest.getParameter("birth"));
+		memberDto.setGender(multipartRequest.getParameter("gender"));
+		
+		Iterator<String> file = multipartRequest.getFileNames();
+		String filePath = "C:\\Users\\Park\\git\\bms\\bms\\src\\main\\webapp\\resources\\bootstrap\\img\\profile\\";
+		
+		if(file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
+			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
+			
+			if(!multipartFile.getOriginalFilename().isEmpty()) {
+				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename(); // 이미지 이름이 중복되지 않도록 고유 식별 사용 
+				File f = new File(filePath + fileName);
+				
+				multipartFile.transferTo(f);
+				
+				memberDto.setProfileName(fileName);
+			} else {
+				memberDto.setProfileName("basicImg.png");
+			}
+		}
 		
 		// 들어오는 값이 없을 때 공백 또는 null은 NaN으로 취급되어 저장될 필드가 없어 400 에러 일어남
-		if(memberDto.getBlogName().equals("")) memberDto.setBlogName(memberDto.getId());
-		if(memberDto.getNickname().equals("")) memberDto.setNickname(memberDto.getId());
-		if(memberDto.getIntro().equals("")) memberDto.setIntro("");
+		if(multipartRequest.getParameter("blogName").equals("")) memberDto.setBlogName(memberDto.getId());
+		else memberDto.setBlogName(multipartRequest.getParameter("blogName"));
 		
+		if(multipartRequest.getParameter("nickname").equals("")) memberDto.setNickname(memberDto.getId());
+		else memberDto.setNickname(multipartRequest.getParameter("nickname"));
 		
-		// 프로필 사진 파일
-		memberDto.setProfileName(profileUpdate(mpRequest));
-		
-		System.out.println(profileUpdate(mpRequest));
+		if(multipartRequest.getParameter("intro").equals("")) memberDto.setIntro("");
+		else memberDto.setIntro(multipartRequest.getParameter("intro"));
 		
 		memberService.addMember(memberDto);
 		
@@ -62,7 +89,7 @@ public class MemberController {
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8"); // 한글 변환
 	    
 		String jsScript = "<script>";
-			   jsScript += "alert('가입이 완료되었습니다.');";
+			   jsScript += "alert('회원가입이 완료되었습니다.');";
 			   jsScript += "location.href='"+ request.getContextPath()+"/main'";
 			   jsScript += "</script>";
 	
@@ -93,6 +120,7 @@ public class MemberController {
 				session.setAttribute("memberId", loginMember.getId());
 				session.setAttribute("memberNickname", loginMember.getNickname());
 				session.setAttribute("memberIntro", loginMember.getIntro());
+				session.setAttribute("memberProfile", loginMember.getProfileName());
 				session.setAttribute("role", "client"); // 관리자인지 회원인지 구분하기 위해
 				
 			    jsScript = "<script>"
@@ -142,8 +170,42 @@ public class MemberController {
 	}
 	
 	@PostMapping("/modify")
-	public ResponseEntity<Object> modify(MemberDto memberDto, HttpServletRequest request) throws Exception {
-		memberDto.setPassword(pwEncoder.encode(memberDto.getPassword()));
+	public ResponseEntity<Object> modify(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
+		multipartRequest.setCharacterEncoding("utf-8");
+		
+		MemberDto memberDto = new MemberDto();
+		memberDto.setId(multipartRequest.getParameter("id"));
+		memberDto.setPassword(pwEncoder.encode(multipartRequest.getParameter("password")));
+		memberDto.setTel(multipartRequest.getParameter("tel"));
+		memberDto.setEmail(multipartRequest.getParameter("email"));
+		
+		Iterator<String> file = multipartRequest.getFileNames();
+		String filePath = "C:\\Users\\Park\\git\\bms\\bms\\src\\main\\webapp\\resources\\bootstrap\\img\\profile\\";
+		
+		if(file.hasNext()) {
+			MultipartFile multipartFile = multipartRequest.getFile(file.next());
+			
+			if(!multipartFile.getOriginalFilename().isEmpty()) {
+				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
+				File f = new File(filePath + fileName);
+				
+				multipartFile.transferTo(f);
+				
+				memberDto.setProfileName(fileName);
+			} else {
+				memberDto.setProfileName("basicImg.png");
+			}
+		}
+		
+		// 들어오는 값이 없을 때 공백 또는 null은 NaN으로 취급되어 저장될 필드가 없어 400 에러 일어남
+		if(multipartRequest.getParameter("blogName").equals("")) memberDto.setBlogName(memberDto.getId());
+		else memberDto.setBlogName(multipartRequest.getParameter("blogName"));
+		
+		if(multipartRequest.getParameter("nickname").equals("")) memberDto.setNickname(memberDto.getId());
+		else memberDto.setNickname(multipartRequest.getParameter("nickname"));
+		
+		if(multipartRequest.getParameter("intro").equals("")) memberDto.setIntro("");
+		else memberDto.setIntro(multipartRequest.getParameter("intro"));
 		
 		memberService.updateMember(memberDto);
 		
@@ -151,6 +213,7 @@ public class MemberController {
 		session.setAttribute("memberNickname", memberDto.getNickname());
 		session.setAttribute("memberBlogName", memberDto.getBlogName());
 		session.setAttribute("memberIntro", memberDto.getIntro());	
+		session.setAttribute("memberProfile", memberDto.getProfileName());
 		
 		String jsScript = "<script>"
 						+ "alert('수정이 완료되었습니다.');"
@@ -163,28 +226,4 @@ public class MemberController {
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 	
-	public String profileUpdate(MultipartHttpServletRequest mpRequest) throws Exception {	
-		mpRequest.setCharacterEncoding("utf-8"); // 한글명을 처리한다.
-		
-		Iterator<String> file = mpRequest.getFileNames();
-		
-		String filePath = "C:\\Users\\Park\\git\\bms\\bms\\src\\main\\webapp\\resources\\bootstrap\\img\\profile\\";
-		String fileName = "";
-		
-		if(file.hasNext()) { // file element가 있으면
-			MultipartFile mpFile = mpRequest.getFile(file.next()); // 파일 저장
-			
-			if(!mpFile.getOriginalFilename().isEmpty()) {
-				// UUID: 파일명 중복되지 않게 고유 식별자 기능 사용
-				fileName = UUID.randomUUID() + "_" + mpFile.getOriginalFilename();
-				
-				File f = new File(filePath + fileName);
-				mpFile.transferTo(f);
-			} 
-		}
-		
-		if(fileName == "") fileName = "basicImg.png";
-		
-		return fileName;
-	}
 }
