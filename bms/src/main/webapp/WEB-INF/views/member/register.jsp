@@ -175,10 +175,10 @@
  				url : "${contextPath}/member/registerIdCheck?id=" + id.value, // 요청이 전송될 URL 주소
  				success : function(data){ // 통신 성공할 경우 실행되는 함수
  					if(data == "true"){
- 						document.getElementById("idAlert").innerText = '사용 가능한 ID입니다.'
+ 						document.getElementById("idAlert").innerText = '사용 가능한 ID입니다.';
  		 				document.getElementById("idAlert").style.color = "green"
  					} else {
- 	 					document.getElementById("idAlert").innerText = '중복된 ID입니다.'
+ 	 					document.getElementById("idAlert").innerText = '중복된 ID입니다.';
  	 	 	 			document.getElementById("idAlert").style.color = "red"
  	 	 			}
  				}
@@ -200,9 +200,14 @@
  				msg.innerText = ""
  			}
  		}
- 		
+ 				
  		function basicProfile() {
- 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.png"
+ 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.png";
+ 			document.getElementById("upload").disabled = true
+ 		}
+ 		
+ 		function fileDisabled(){ // 기본 프로필 선택 시 file 요소 사용 불가능
+ 			document.getElementById("upload").disabled = false
  		}
  		
  		function profileChange(event){
@@ -210,12 +215,12 @@
  			
  			reader.onload = function(event){ // 읽기 동작이 성공적으로 완료되었을 때
  				var img = document.getElementById("profileImg");
- 				img.setAttribute("src", event.target.result);
- 				
+ 				img.setAttribute("src", event.target.result);	// 사용자가 가져온 파일로 img src 변경			
  			}
  			
  			reader.readAsDataURL(event.target.files[0]) // 바이너리 파일을 encode 문자열로 반환
  		}
+ 		
  	</script>
   <body>
     <!-- Content -->
@@ -253,7 +258,7 @@
                     name="id"
                     onblur="idAlert()"
                     placeholder="ID"
-                    style="width:460px; display: inline-block;"
+                    style="width:470px; display: inline-block;"
                   />
                    <button type="button" class="btn btn-primary" onclick="isIdCheck()"
                    		style="padding: 0.4rem 1rem; font-size: 0.8rem;display: inline-block;">ID Check</button>
@@ -361,7 +366,7 @@
                 <div class="d-flex align-items-start align-items-sm-center gap-4">
 			       <img src="${contextPath }/resources/bootstrap/img/profile/basicImg.png" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
 			          <div class="button-wrapper">
-           				<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0" style="display: inline-flex; ">
+           				<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0" onclick="fileDisabled()" style="display: inline-flex; ">
               				<i class="bx bx-upload" style="align-self: center;"></i><span class="d-none d-sm-block" style="padding-left: 4px;">사진 선택</span>
               				<input type="file" id="upload" name="profileName" onchange="profileChange(event)" class="account-file-input" hidden="" accept="image/png, image/jpeg" >
             			</label>

@@ -11,7 +11,7 @@ CREATE TABLE MEMBER (
     nickname 	VARCHAR(10),
     intro 		VARCHAR(60)
 );
-delete from member;
+
 select * from member;
 
 CREATE TABLE POST (

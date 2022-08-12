@@ -68,9 +68,9 @@ public class MemberController {
 				multipartFile.transferTo(f);
 				
 				memberDto.setProfileName(fileName);
-			} else {
-				memberDto.setProfileName("basicImg.png");
-			}
+			} 
+		} else { // 파일 요소가 없으면 기본 프로필 사용
+			memberDto.setProfileName("basicImg.png");
 		}
 		
 		// 들어오는 값이 없을 때 공백 또는 null은 NaN으로 취급되어 저장될 필드가 없어 400 에러 일어남
@@ -185,17 +185,18 @@ public class MemberController {
 		if(file.hasNext()) {
 			MultipartFile multipartFile = multipartRequest.getFile(file.next());
 			
-			if(!multipartFile.getOriginalFilename().isEmpty()) {
+			if(!multipartFile.getOriginalFilename().isEmpty()) { // 파일이 비어있으 true, !true
 				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
 				File f = new File(filePath + fileName);
 				
 				multipartFile.transferTo(f);
 				
 				memberDto.setProfileName(fileName);
-			} else {
-				memberDto.setProfileName("basicImg.png");
-			}
+			} 
+		} else {
+			memberDto.setProfileName("basicImg.png");
 		}
+	
 		
 		// 들어오는 값이 없을 때 공백 또는 null은 NaN으로 취급되어 저장될 필드가 없어 400 에러 일어남
 		if(multipartRequest.getParameter("blogName").equals("")) memberDto.setBlogName(memberDto.getId());

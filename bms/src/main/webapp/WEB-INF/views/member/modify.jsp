@@ -112,6 +112,11 @@
  		
  		function basicProfile(){ // 프로필 초기화
  			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.png"
+ 			document.getElementById("upload").disabled = true
+ 		}
+ 		
+ 		function fileDisabled(){ 
+ 			document.getElementById("upload").disabled = false
  		}
  		
  		function profileChange(event){ // 프로필 변경
@@ -119,8 +124,7 @@
  			
  			reader.onload = function(event){ // 읽기 동작이 성공적으로 완료되었을 때
  				var img = document.getElementById("profileImg");
- 				img.setAttribute("src", event.target.result);
- 				
+ 				img.setAttribute("src", event.target.result);	
  			}
  			
  			reader.readAsDataURL(event.target.files[0]) // 바이너리 파일을 encode 문자열로 반환
@@ -191,7 +195,7 @@
                       class="form-control"
                       aria-describedby="password"
                       placeholder = "Check password"
-                      onblur="pwAlert2()"
+                      onkeyup="pwAlert2()"
                     />
                     <span class="input-group-text cursor-pointer"><i class="bx bx-hide"></i></span>
                   </div>
@@ -266,7 +270,7 @@
 				<div class="d-flex align-items-start align-items-sm-center gap-4">
 			       <img src="${contextPath }/resources/bootstrap/img/profile/${memberDto.profileName}" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
 			          <div class="button-wrapper">
-           				<label for="upload" class="btn btn-primary me-2 mb-4" tabindex="0" style="display: inline-flex; ">
+           				<label for="upload" class="btn btn-primary me-2 mb-4" onclick="fileDisabled()" tabindex="0" style="display: inline-flex; ">
               				<i class="bx bx-upload" style="align-self: center;"></i><span class="d-none d-sm-block" style="padding-left: 4px;">사진 선택</span>
               				<input type="file" id="upload" name="profileName" onchange="profileChange(event)" class="account-file-input" hidden="" accept="image/png, image/jpeg" >
             			</label>
