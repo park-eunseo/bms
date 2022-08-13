@@ -23,7 +23,7 @@
 		<!-- 프로필(닉네임, 소개글) -->
 		<div style="flex-direction: column;">
 			<div class="avatar" style="justify-content: center; display: flex; ">
-				<img src="${contextPath }/resources/bootstrap/img/profile/${sessionScope.memberProfile}"
+				<img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}"
 					class="w-px-40 h-auto rounded-circle"/>
 			</div>
 			<div class="card text-center mb-3">

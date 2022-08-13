@@ -1,14 +1,16 @@
 package com.spring.bms.member.controller;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cglib.core.DefaultNamingPolicy;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +27,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bms.member.dto.MemberDto;
 import com.spring.bms.member.service.MemberService;
-import com.sun.javadoc.MemberDoc;
+
+import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping("/member")
@@ -56,7 +59,7 @@ public class MemberController {
 		memberDto.setGender(multipartRequest.getParameter("gender"));
 		
 		Iterator<String> file = multipartRequest.getFileNames();
-		String filePath = "C:\\Users\\Park\\git\\bms\\bms\\src\\main\\webapp\\resources\\bootstrap\\img\\profile\\";
+		String filePath = "C:\\profile\\";
 		
 		if(file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
 			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
@@ -180,7 +183,7 @@ public class MemberController {
 		memberDto.setEmail(multipartRequest.getParameter("email"));
 		
 		Iterator<String> file = multipartRequest.getFileNames();
-		String filePath = "C:\\Users\\Park\\git\\bms\\bms\\src\\main\\webapp\\resources\\bootstrap\\img\\profile\\";
+		String filePath = "C:\\profile\\";
 		
 		if(file.hasNext()) {
 			MultipartFile multipartFile = multipartRequest.getFile(file.next());
@@ -189,9 +192,8 @@ public class MemberController {
 				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
 				File f = new File(filePath + fileName);
 				
-				multipartFile.transferTo(f);
-				
-				memberDto.setProfileName(fileName);
+				multipartFile.transferTo(f);		
+				memberDto.setProfileName(fileName);			
 			} 
 		} else {
 			memberDto.setProfileName("basicImg.png");
@@ -211,6 +213,9 @@ public class MemberController {
 		memberService.updateMember(memberDto);
 		
 		HttpSession session = request.getSession();
+		
+		new File(filePath + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+		
 		session.setAttribute("memberNickname", memberDto.getNickname());
 		session.setAttribute("memberBlogName", memberDto.getBlogName());
 		session.setAttribute("memberIntro", memberDto.getIntro());	
@@ -226,5 +231,23 @@ public class MemberController {
 	    
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
+	
+	@GetMapping("/thumbnails")
+	public void thumbnails(@RequestParam("profileName") String profileName, HttpServletResponse response) throws IOException {
+		OutputStream out = response.getOutputStream();	 // 데이터를 출력할 메서드
+		String filePath = "C:\\profile\\" + profileName;
+		
+		File file = new File(filePath);
+		if(file.exists()) { // 받아온 파일이 존재한다면
+			Thumbnails.of(file).size(800, 800).outputFormat("png").toOutputStream(out);
+		} else {
+			System.out.println("파일없음");
+		}
+		
+		byte[] buffer = new byte[1024 * 8];
+		out.write(buffer); // 파일을 바이트 단위로 출력
+		out.close();
+	}
+	
 	
 }

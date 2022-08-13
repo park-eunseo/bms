@@ -111,7 +111,7 @@
  		}
  		
  		function basicProfile(){ // 프로필 초기화
- 			document.getElementById("profileImg").src = "${contextPath }/resources/bootstrap/img/profile/basicImg.png"
+ 			document.getElementById("profileImg").src = "${contextPath }/member/thumbnails?profileName=basicImg.png"
  			document.getElementById("upload").disabled = true
  		}
  		
@@ -268,7 +268,7 @@
 				</div>
 				<br>
 				<div class="d-flex align-items-start align-items-sm-center gap-4">
-			       <img src="${contextPath }/resources/bootstrap/img/profile/${memberDto.profileName}" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
+			       <img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}" id="profileImg" alt="user-avatar" class="d-block rounded" height="100" width="100" >
 			          <div class="button-wrapper">
            				<label for="upload" class="btn btn-primary me-2 mb-4" onclick="fileDisabled()" tabindex="0" style="display: inline-flex; ">
               				<i class="bx bx-upload" style="align-self: center;"></i><span class="d-none d-sm-block" style="padding-left: 4px;">사진 선택</span>
