@@ -4,8 +4,7 @@
 <%@ taglib prefix="tiles" uri="http://tiles.apache.org/tags-tiles"%>
 <c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
-<html>
-<head>
+<html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free">
 <meta charset="UTF-8">
 <title><tiles:insertAttribute name="title"></tiles:insertAttribute></title>
 
@@ -53,7 +52,6 @@
 					<div class="content-backdrop fade"></div>
 				</div>
 			</div>
-			<tiles:insertAttribute name="rightSide"></tiles:insertAttribute>
 		</div>
 		<div class="layout-overlay layout-menu-toggle"></div>
 	</div>

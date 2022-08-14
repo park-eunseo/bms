@@ -58,8 +58,8 @@
 	                        <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>회원가입</a>
 	                    </li>
 	                    <li class="nav-item">
-	                        <a class="nav-link" href="#" style="display: inline-block;">
-	                        <i class="bx bx-key me-2" style="color:#878787; display: inline-block; "></i>ID/PW 찾기</a>
+	                        <a class="nav-link" href="${contextPath }/member/forgotPassword" style="display: inline-block;">
+	                        <i class="bx bx-key me-2" style="color:#878787; display: inline-block; "></i>PW 찾기</a>
 	                    </li>
 						<li class="nav-item">
 							<a class="nav-link" style="display: inline-block;"href="${contextPath }/member/login">

@@ -40,4 +40,14 @@
 		<put-attribute name="title" value="심플로그 정보 수정"></put-attribute>
 	</definition>
 	
+	<definition name="member/forgotPassword" extends="mainLayout">	<!-- 비밀번호 찾기 -->
+		<put-attribute name="content" value="/WEB-INF/views/member/forgotPassword.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 비밀번호 찾기"></put-attribute>
+	</definition>
+	
+	<definition name="member/newPassword" extends="mainLayout">	<!-- 비밀번호 생성 -->
+		<put-attribute name="content" value="/WEB-INF/views/member/newPassword.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 새 비밀번호 생성"></put-attribute>
+	</definition>
+	
 </tiles-definitions>

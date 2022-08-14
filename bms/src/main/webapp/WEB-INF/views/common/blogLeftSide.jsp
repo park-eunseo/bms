@@ -9,7 +9,7 @@
 </head>
 <body>
 	<aside id="layout-menu"
-		class="layout-menu menu-vertical menu bg-menu-theme">
+		class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
 		<div class="app-brand demo">
 			<a href="${contextPath }/main" class="app-brand-link"> 
 				<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>

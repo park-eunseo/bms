@@ -249,5 +249,10 @@ public class MemberController {
 		out.close();
 	}
 	
+	@GetMapping("/forgotPassword")
+	public String forgotPassword() {
+		return "member/forgotPassword";
+	}
+	
 	
 }
