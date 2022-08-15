@@ -258,7 +258,7 @@
                     name="id"
                     onblur="idAlert()"
                     placeholder="ID"
-                    style="width:490px; display: inline-block;"
+                    style="width:460px; display: inline-block;"
                   />
                    <button type="button" class="btn btn-primary" onclick="isIdCheck()"
                    		style="padding: 0.4rem 1rem; font-size: 0.8rem;display: inline-block;">ID Check</button>

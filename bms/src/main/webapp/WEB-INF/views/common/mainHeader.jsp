@@ -20,25 +20,23 @@
 
 	<!-- Navbar Start -->
 	<nav
-		class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0">
+		class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0" style="margin-bottom: -35px;">
 		<a href="${contextPath }/main"
 			class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
 			<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a>
 		<!-- Search -->
 		<div class="navbar-nav align-items-center">
-			<div class="btn-group">
-				<button type="button"
-					class="btn btn-outline-primary dropdown-toggle"
-					data-bs-toggle="dropdown" aria-expanded="false">
-					전체</button>
-				<ul class="dropdown-menu">
-					<li><button class="dropdown-item">작성자</button></li>
-					<li><a class="dropdown-item" href="javascript:void(0);">블로그명</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0);">제목</a></li>
-					<li><a class="dropdown-item" href="javascript:void(0);">내용</a></li>
-				</ul>
-			</div>
+			<div class="btn-group" style="display: inline-block;">
+				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0.4rem 1rem;">
+						전체</button>
+					<ul class="dropdown-menu">
+						<li><button class="dropdown-item">작성자</button></li>
+						<li><a class="dropdown-item" href="javascript:void(0);">블로그명</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0);">제목</a></li>
+						<li><a class="dropdown-item" href="javascript:void(0);">내용</a></li>
+					</ul>
+				</div>
 			&ensp;&ensp;&ensp;&ensp;
 			<div class="nav-item d-flex align-items-center">
 				<i class="bx bx-search fs-4 lh-0"></i> <input type="text"

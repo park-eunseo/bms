@@ -55,7 +55,7 @@
 .navbar .navbar-nav .nav-link {
     margin-right: 20px;
     padding: 25px 0;
-    color: var(--dark);
+    color: #6c6c6c;
     font-weight: 500;
     outline: none;
 }

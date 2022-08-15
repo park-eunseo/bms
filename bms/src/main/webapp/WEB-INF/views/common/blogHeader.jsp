@@ -52,6 +52,9 @@
 				style="padding: 0.4375rem 0.7rem; margin-left: 0.8rem" onclick="location.href='#'">
 				<span class="tf-icons bx bxs-heart"></span>
 			</button>
+			<button type="button" class="btn btn-primary" style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #696cff;background: #fff;border-color: #fff;box-shadow: none;" onclick="location.href='#'">
+				<span class="tf-icons bx bxs-bell"></span>
+			</button>
 		</div>
 	</nav>
 </body>
