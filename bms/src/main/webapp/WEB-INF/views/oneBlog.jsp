@@ -29,6 +29,7 @@
         <div class="layout-page" style="padding-left: 0px;">
           <!-- Content wrapper -->
           <div class="content-wrapper">
+          <!-- 블로그 카드 시작 부분 -->
 			 <div class="container-xxl flex-grow-1 container-p-y">
 				<div class="row row-cols-1 row-cols-md-3 g-4 mb-5">
 				  <div class="col">

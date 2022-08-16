@@ -22,13 +22,13 @@
 		
 		<!-- 프로필(닉네임, 소개글) -->
 		<div style="flex-direction: column;">
-			<div class="avatar" style="justify-content: center; display: flex; ">
-				<img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}"
+			<div class="avatar" style="display: block;margin: auto;height: 80px;width: 80px;">
+				<img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}" 
 					class="w-px-40 h-auto rounded-circle"/>
 			</div>
-			<div class="card text-center mb-3">
-				<div class="card-body" style="padding-top:10px; padding-bottom: 2rem">
-                   <a class="nav-link dropdown-toggle" href="javascript:void(0)" style="font-size: 13px; font-weight: 500;"
+			<div class="text-center mb-3">
+				<div style="padding-top:10px; padding-bottom: 2rem">
+                   <a class="nav-link dropdown-toggle" href="javascript:void(0)" style="font-size: 14px; font-weight: 500;"
                    		id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                           	${sessionScope.memberNickname } 님
                    </a>

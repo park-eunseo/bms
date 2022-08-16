@@ -40,15 +40,15 @@
 								<label for="userTel" class="form-label">TEL</label> <br> 
 								<input type="text" class="form-control" id="tel" name="tel"
 									placeholder="'-'는 제외하고 입력해 주세요."
-									style="width: 472px; display: inline-block;" />
+									style="width: 444px; display: inline-block;" />
 								<button type="button" class="btn btn-primary"
 									onclick="isTelCheck()"
-									style="padding: 0.4rem 1rem; font-size: 0.8rem; display: inline-block;">인증번호 전송</button><!-- 번호 맞는지 확인 -->
+									style="padding: 0.4rem 1rem; font-size: 0.7rem; display: inline-block;">인증번호 전송</button><!-- 번호 맞는지 확인 -->
 								<br>
 							</div>
 							<div class="mb-3" style="text-align: left;">
 								<input type="text" class="form-control" id="checkNumber" 
-									name="checkNumber" placeholder="인증번호 6자리를 입력하세요." style="width: 180px; display: none;" />
+									name="checkNumber" placeholder="인증번호 6자리를 입력하세요." style="width: 250px; display: none;" />
 								<small id="checkAlert"></small>
 							</div>
 							<p>

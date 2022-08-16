@@ -25,85 +25,48 @@
 			class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
 			<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a>
+		
+		<button type="button" class="navbar-toggler me-4 collapsed" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-expanded="false">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 		<!-- Search -->
-		<div class="navbar-nav align-items-center">
-			<div class="btn-group" style="display: inline-block;">
-				<button type="button" class="btn btn-outline-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0.4rem 1rem;">
-						전체</button>
-					<ul class="dropdown-menu">
-						<li><button class="dropdown-item">작성자</button></li>
-						<li><a class="dropdown-item" href="javascript:void(0);">블로그명</a></li>
-						<li><a class="dropdown-item" href="javascript:void(0);">제목</a></li>
-						<li><a class="dropdown-item" href="javascript:void(0);">내용</a></li>
-					</ul>
-				</div>
-			&ensp;&ensp;&ensp;&ensp;
-			<div class="nav-item d-flex align-items-center">
-				<i class="bx bx-search fs-4 lh-0"></i> <input type="text"
-					class="form-control border-0 shadow-none" placeholder="검색어를 입력하세요." />
-			</div>
-		</div>
-		<!-- /Search -->
-
-		<ul class="navbar-nav flex-row align-items-center ms-auto">
-			<!-- Place this tag where you want the button to render. -->
-			<!-- User -->
+		<div class="navbar-collapse collapse" id="navbarCollapse" style="width: 0px;">
 			<c:choose>
 				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->
-					<div style="display: flex; ">
-						<li class="nav-item">
-	                        <a class="nav-link" style="display: inline-block;" href="${contextPath }/member/register">
-	                        <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>회원가입</a>
-	                    </li>
-	                    <li class="nav-item">
-	                        <a class="nav-link" href="${contextPath }/member/forgotPassword" style="display: inline-block;">
-	                        <i class="bx bx-key me-2" style="color:#878787; display: inline-block; "></i>PW 찾기</a>
-	                    </li>
-						<li class="nav-item">
-							<a class="nav-link" style="display: inline-block;"href="${contextPath }/member/login">
-							<i class="bx bx-power-off me-2" style="display: inline-block;"></i> 로그인</a>
-						</li>
-					</div>		
+		            <div class="navbar-nav ms-auto p-4 p-lg-0" style="">
+		                <a href="${contextPath }/member/register" class="nav-item nav-link">회원가입</a>
+		                <a href="${contextPath }/member/login" class="nav-item nav-link">로그인</a>        
+		            </div>
+		      </c:when>
+				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->
+					 <div class="navbar-nav ms-auto p-4 p-lg-0" style="">
+		                <a href="${contextPath }/blog" class="nav-item nav-link">내 블로그</a>
+		                <div class="nav-item dropdown">
+		                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
+		                    <div class="dropdown-menu bg-light m-0" style="right: 0px;">
+		                        <a href="#" class="dropdown-item">내 친구 관리</a>
+		                        <a href="${contextPath }/member/modify?id=${sessionScope.memberId}"class="dropdown-item">내 정보 수정</a>
+		                        <a href="${contextPath }/member/logout" class="dropdown-item">로그아웃</a>
+		                    </div>
+		                </div>         
+					 </div>
 				</c:when>
-				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->			
-					<ul class="navbar-nav me-auto mb-2 mb-lg-0" style="font-size: 13px">
-                      <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="javascript:void(0)" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          <i class="bx bxs-user me-2" style="color:#878787; display: inline-block;"></i>${sessionScope.memberNickname } 님
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                          <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}"><i class="bx bx-user me-2"></i>내 정보 수정</a></li>
-                          <li><a class="dropdown-item" href="${contextPath }/member/logout">
-								<i class="bx bx-power-off me-2"></i>로그아웃</a>
-						  </li>
-                        </ul>
-                      </li>
-                      <li class="nav-item">
-                        <a class="nav-link" href="${contextPath }/blog">내 블로그</a>
-                      </li>
-                    </ul>
-				</c:when>
-				<c:otherwise> <!-- 세션이 있고 관리자 계정이라면 -->
-					<li><a class="dropdown-item" href="#"> 
-						<i class="bx bxs-user me-2"></i> <span class="align-middle">회원 관리</span>
-					</a></li>
-					<li class="nav-item navbar-dropdown dropdown-user dropdown">
-						<a class="nav-link dropdown-toggle hide-arrow" href="javascript:void(0);" data-bs-toggle="dropdown" aria-expanded="false"> 
-							<span>${sessionScope.memberId } 님</span>
-						</a>
-					<ul class="dropdown-menu dropdown-menu-end">
-						<li>
-							<a class="dropdown-item" href="#"> 
-								<i class="bx bx-user me-2"></i> 
-								<span class="align-middle">내 정보 수정</span>
-						</a></li>
-						<li><a class="dropdown-item" href="${contextPath }/member/logout">
-								<i class="bx bx-power-off me-2"></i> <span class="align-middle">로그아웃</span>
-						</a></li>
-					</ul></li>
-				</c:otherwise>
+				<c:otherwise> <!-- 세션이 있고 관리자 계정이라면 -->	
+				 <div class="navbar-nav ms-auto p-4 p-lg-0" style="right: 0px;">
+		             <div class="nav-item dropdown">
+		                <a href="${contextPath }/blog" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
+		                  <div class="dropdown-menu bg-light m-0">
+		                      <a href="#" class="dropdown-item">회원 관리</a>
+		                      <a href="${contextPath }/member/modify?id=${sessionScope.memberId}">내 정보 수정</a>
+		                      <a href="${contextPath }/member/logout" class="dropdown-item">로그아웃</a>
+		                  </div>
+		              </div>         
+		         </div>
+		         </c:otherwise>
 			</c:choose>
-		</ul>
+          </div>
+		<!-- /Search -->
+
 		<!--/ User -->
 	</nav>
 	<!-- Navbar End -->

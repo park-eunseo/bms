@@ -132,22 +132,14 @@
  	</script>
   <body>
     <!-- Content -->
-
+	<div class="container-fluid page-header py-5 mb-5">
+        <div class="container py-5" >
+            <h1 class="display-3 text-white mb-3 animated slideInDown" style="font-size: 30px;">정보 수정 📝</h1>
+        </div>
+    </div>
     <div class="container-xxl">
       <div class="authentication-wrapper authentication-basic container-p-y">
         <div class="authentication-inner">
-          <!-- Register Card -->
-          <div class="card">
-            <div class="card-body">
-              <!-- Logo -->
-              <div class="app-brand justify-content-center">
-                <a href="${contextPath }/main" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bolder">sim8log</span>
-                </a>
-              </div>
-              <!-- /Logo -->
-              <h4 class="mb-2">정보 수정 📝</h4>
-              <br>
               <div class="divider">
           			<div class="divider-text">PERSONAL INFO</div>
         	  </div>

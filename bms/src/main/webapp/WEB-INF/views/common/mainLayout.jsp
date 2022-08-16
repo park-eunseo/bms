@@ -60,6 +60,14 @@
     <script src="${contextPath }/resources/bootstrap/libs/popper/popper.js"></script>
     <script src="${contextPath }/resources/bootstrap/js/bootstrap.js"></script>
     <script src="${contextPath }/resources/bootstrap/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
+    
+    <script src="${contextPath }/resources/bootstrap/libs/wow/wow.min.js"></script>
+    <script src="${contextPath }/resources/bootstrap/libs/easing/easing.min.js"></script>
+    <script src="${contextPath }/resources/bootstrap/libs/waypoints/waypoints.min.js"></script>
+    <script src="${contextPath }/resources/bootstrap/libs/counterup/counterup.min.js"></script>
+    <script src="${contextPath }/resources/bootstrap/libs/owlcarousel/owl.carousel.min.js"></script>
+    <script src="${contextPath }/resources/bootstrap/libs/isotope/isotope.pkgd.min.js"></script>
+    <script src="${contextPath }/resources/bootstrap/libs/lightbox/js/lightbox.min.js"></script>
 
     <script src="${contextPath }/resources/bootstrap/js/menu.js"></script>
     <!-- endbuild -->

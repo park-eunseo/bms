@@ -18,43 +18,46 @@
         	</a>
       	</div>
       
-		<div class="navbar-nav-right d-flex align-items-center"
-			id="navbar-collapse">
+		<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
 			<!-- Search -->
-			<div class="navbar-nav align-items-center">
-				<div class="btn-group" style="display: inline-block;">
-					<button type="button"
-						class="btn btn-outline-primary dropdown-toggle"
-						data-bs-toggle="dropdown" aria-expanded="false" style="padding: 0.4rem 1rem;">
-						전체</button>
-					<ul class="dropdown-menu">
-						<li><button class="dropdown-item">작성자</button></li>
-						<li><a class="dropdown-item" href="javascript:void(0);">블로그명</a></li>
-						<li><a class="dropdown-item" href="javascript:void(0);">제목</a></li>
-						<li><a class="dropdown-item" href="javascript:void(0);">내용</a></li>
-					</ul>
-				</div>
-				&ensp;
-				<form class="d-flex" onsubmit="return false">
-					<input class="form-control me-2" type="search" placeholder="Search"
-						aria-label="Search">
-					<button class="btn btn-outline-primary bx bx-search-alt-2" type="submit" style="padding: 0.4rem 0.8rem;"></button>
+			<div class="navbar-nav align-items-center" style="display: -webkit-inline-box;">
+
+				<form class="d-flex">
+					<div class="btn-group" style="display: inline-block;">
+						<button type="button"
+							class="btn btn-outline-primary dropdown-toggle"
+							data-bs-toggle="dropdown" aria-expanded="false"
+							style="padding: 0.4rem 1rem; border-left-width: 0px; padding-left: 1px; padding-right: 15px;">전체</button>
+						<ul class="dropdown-menu">
+							<li><button class="dropdown-item">작성자</button></li>
+							<li><a class="dropdown-item" href="javascript:void(0);">블로그명</a></li>
+							<li><a class="dropdown-item" href="javascript:void(0);">제목</a></li>
+							<li><a class="dropdown-item" href="javascript:void(0);">내용</a></li>
+						</ul>
+					</div>
+					<div class="input-group">
+						<input type="text" class="form-control" placeholder="Search...">
+						<button type="submit" class="input-group-text">
+							<i class="tf-icons bx bx-search"></i>
+						</button>
+					</div>
 				</form>
 			</div>
 			<!-- /Search -->
-
-			<button type="button" class="btn btn-primary"
-				style="padding: 0.4375rem 0.7rem; margin-left: auto;" onclick="location.href='#'">
-				<span class="tf-icons bx bx-pencil"></span>
-			</button>
-			<button type="button" class="btn btn-primary"
-				style="padding: 0.4375rem 0.7rem; margin-left: 0.8rem" onclick="location.href='#'">
-				<span class="tf-icons bx bxs-heart"></span>
-			</button>
-			<button type="button" class="btn btn-primary" style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #696cff;background: #fff;border-color: #fff;box-shadow: none;" onclick="location.href='#'">
-				<span class="tf-icons bx bxs-bell"></span>
-			</button>
+			<div class="navbar-nav align-items-center" style="display: -webkit-inline-box; margin-left: auto;">
+				<button type="button" class="btn btn-primary"
+					style="padding: 0.4375rem 0.7rem; margin-left: auto;" onclick="location.href='#'">
+					<span class="tf-icons bx bx-pencil"></span>
+				</button>
+				<button type="button" class="btn btn-primary"
+					style="padding: 0.4375rem 0.7rem; margin-left: 0.8rem" onclick="location.href='#'">
+					<span class="tf-icons bx bxs-heart"></span>
+				</button>
+				<button type="button" class="btn btn-primary" style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;" onclick="location.href='#'">
+					<span class="tf-icons bx bxs-bell"></span>
+				</button>
+			</div>
 		</div>
 	</nav>
 </body>

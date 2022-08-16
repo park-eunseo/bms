@@ -12,22 +12,22 @@
 </head>
 <body>
 	<div class="container-fluid page-header py-5 mb-5">
-		<div class="container py-5">
-			<h1 class="display-3 text-white mb-3 animated slideInDown">Services</h1>
-			<nav aria-label="breadcrumb animated slideInDown">
-				<ol class="breadcrumb">
-					<li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
-					<li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
-					<li class="breadcrumb-item text-white active" aria-current="page">Services</li>
-				</ol>
-			</nav>
-		</div>
-	</div>
+        <div class="container py-5" >
+            <h1 class="display-3 text-white mb-3 animated slideInDown" style="font-size: 30px;">심플한 나만의 일기를 써보세요.</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a class="text-white" href="#">Pages</a></li>
+                    <li class="breadcrumb-item text-white active" aria-current="page">Services</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
 	<!-- Service Start -->
-	<div class="container" style="width: 700px;">
+	<div class="container" style="width: 700px; background-color: white;">
 		<div class="text-center mx-auto mb-5 fadeInUp" data-wow-delay="0.1s"
 			style="max-width: 600px;">
-			<h1 class="mb-4" style="font-size: 2em;">친구들의 새로운 소식을 둘러보세요 🙌 </h1>
+			<h1 class="mb-4" style="font-size: 25px;">친구들의 새로운 소식을 둘러보세요 🙌 </h1>
 		</div>
 
 
@@ -37,7 +37,7 @@
 				<div class="card mb-3">
 					<div class="row g-0">
 						<div class="col-md-4">
-							<img class="card-img card-img-left" style=" height: 100%;"
+							<img class="card-img card-img-left" style="height: 100%;"
 								src="${contextPath }/resources/bootstrap/img/bridge-g0e9719a63_1920.jpg" alt="Card image">
 						</div>
 						<div class="col-md-8">
@@ -101,24 +101,5 @@
 
 	<!-- Service End -->
 
-	<!-- Back to Top -->
-	<a href="#"
-		class="btn btn-lg btn-primary btn-lg-square rounded-circle back-to-top"><i
-		class="bi bi-arrow-up"></i></a>
-		
-		    <!-- JavaScript Libraries -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="lib/wow/wow.min.js"></script>
-    <script src="lib/easing/easing.min.js"></script>
-    <script src="lib/waypoints/waypoints.min.js"></script>
-    <script src="lib/counterup/counterup.min.js"></script>
-    <script src="lib/owlcarousel/owl.carousel.min.js"></script>
-    <script src="lib/isotope/isotope.pkgd.min.js"></script>
-    <script src="lib/lightbox/js/lightbox.min.js"></script>
-
-    <!-- Template Javascript -->
-    <script src="js/main.js"></script>
 </body>
-
 </html>

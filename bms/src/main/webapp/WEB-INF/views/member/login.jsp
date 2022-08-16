@@ -22,23 +22,24 @@
   </head>
 
   <body>
+  	<div class="container-fluid page-header py-5 mb-5" >
+        <div class="container py-5" >
+            <h1 class="display-3 text-white mb-3 animated slideInDown" style="font-size: 30px;">Welcome back 🚀</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">로그인하고 심플로그를 이용해 보세요.</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <!-- Content -->
     <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
+        <div class="app-brand justify-content-center">           
+            <span class="app-brand-text demo text-body">로그인</span>
+        </div>
+      <div class="authentication-wrapper authentication-basic container-p-y" style="min-height: fit-content;">
         <div class="authentication-inner">
           <!-- Register -->
-          <div class="card">
-            <div class="card-body">
-            
-              <!-- Logo -->
-              <div class="app-brand justify-content-center">
-                <a href="${contextPath }/main" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bolder">sim8log</span>
-                </a>
-              </div>
-              <!-- /Logo -->
-              <h4 class="mb-2">Welcome to sim8log! 👋</h4>
-			  <p class="mb-4">로그인하고 심플로그를 이용해 보세요.</p>
 			  
               <form id="formAuthentication" class="mb-3" action="${contextPath }/member/login" method="post">
                 <div class="mb-3">
@@ -77,6 +78,7 @@
               </form>
 
               <p class="text-center">
+               <span>심플로그를 처음 이용하시나요? </span>
                 <a href="${contextPath }/member/register">
                   <span> 회원가입 </span>
                 </a>
@@ -85,8 +87,6 @@
           </div>
           <!-- /Register -->
         </div>
-      </div>
-    </div>
 
     <!-- / Content -->
 

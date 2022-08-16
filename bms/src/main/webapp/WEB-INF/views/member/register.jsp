@@ -224,23 +224,23 @@
  	</script>
   <body>
     <!-- Content -->
-
+  	<div class="container-fluid page-header py-5 mb-5">
+        <div class="container py-5" >
+            <h1 class="display-3 text-white mb-3 animated slideInDown" style="font-size: 30px;">Welcome to sim8log! 👋</h1>
+            <nav aria-label="breadcrumb animated slideInDown">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a class="text-white" href="#">가입하고 다양한 친구들과 소통해 보세요.</a></li>
+                </ol>
+            </nav>
+        </div>
+    </div>
     <div class="container-xxl">
-      <div class="authentication-wrapper authentication-basic container-p-y">
-        <div class="authentication-inner">
+        <div class="app-brand justify-content-center">           
+          <span class="app-brand-text demo text-body">회원가입</span>
+    	</div>
+      <div class="authentication-wrapper authentication-basic container-p-y" style="min-height: fit-content;">
+        <div>
           <!-- Register Card -->
-          <div class="card">
-            <div class="card-body">
-              <!-- Logo -->
-              <div class="app-brand justify-content-center">
-                <a href="${contextPath }/main" class="app-brand-link gap-2">
-                  <span class="app-brand-text demo text-body fw-bolder">sim8log</span>
-                </a>
-              </div>
-              <!-- /Logo -->
-              <h4 class="mb-2">회원가입 🚀</h4>
-              <p class="mb-4">가입하고 다양한 친구들과 소통해 보세요.</p>
-
                 <div class="divider">
           			<div class="divider-text">PERSONAL INFO</div>
         		</div>
@@ -431,9 +431,6 @@
           </div>
           <!-- Register Card -->
         </div>
-      </div>
-    </div>
-
     <!-- / Content -->
   </body>
 </html>
