@@ -11,7 +11,7 @@
 </head>
 <body>
 		<!-- HTML5 Inputs -->
-		<form action="#" onsubmit="" method="post">
+		<form action="#" onsubmit="" method="post" >
 		<div class="mb-4" style="width: max-content;">
 			<div class="card-body" style="width: max-content;">
 				<div class="mb-3 row">
@@ -27,7 +27,7 @@
 						<script type="text/javascript">
 							// 글쓰기 editor 및 사진 업로드 기능
 							    CKEDITOR.replace('content',{
-							        filebrowserUploadUrl: '/common/ckeditor/fileUpload', // 이미지 업로드 처리하는 컨트롤러명
+							        filebrowserUploadUrl:'${contextPath}/post/fileUpload', // 이미지 업로드 처리하는 컨트롤러명
 							        font_names : "맑은 고딕/Malgun Gothic;굴림/Gulim;돋움/Dotum;바탕/Batang;궁서/Gungsuh;Arial/Arial;Comic Sans MS/Comic Sans MS;Courier New/Courier New;Georgia/Georgia;Lucida Sans Unicode/Lucida Sans Unicode;Tahoma/Tahoma;Times New Roman/Times New Roman;MS Mincho/MS Mincho;Trebuchet MS/Trebuchet MS;Verdana/Verdana",
 							        font_defaultLabel : "맑은 고딕/Malgun Gothic",
 							        fontSize_defaultLabel : "12",

@@ -41,14 +41,6 @@ CREATE TABLE COMMEND (
         REFERENCES member (id)
 );
 
-CREATE TABLE FILE (
-    id 	 	INT AUTO_INCREMENT PRIMARY KEY,
-    type 	VARCHAR(20) NOT NULL,
-    name 	VARCHAR(100) NOT NULL,
-    path 	VARCHAR(100) NOT NULL,
-    size 	LONG NOT NULL
-);
-
 CREATE TABLE CATEGORY (
     id 			INT AUTO_INCREMENT PRIMARY KEY,
     member_id 	varchar(20),

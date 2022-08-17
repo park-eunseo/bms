@@ -4,11 +4,11 @@
  */
 
 CKEDITOR.editorConfig = function( config ) {
-	 config.extraPlugins = 'autogrow'; // 자동 길이 수정
-	 config.autoGrow_minHeight = 200;
-	 config.autoGrow_maxHeight = 600;
-	 config.autoGrow_bottomSpace = 50;
-	 config.autoGrow_onStartup = true;
+	config.extraPlugins = 'autogrow'; // 자동 길이 수정
+	config.autoGrow_minHeight = 200;
+	config.autoGrow_maxHeight = 600;
+	config.autoGrow_bottomSpace = 50;
+	config.autoGrow_onStartup = true;
 	   
 	
 };
