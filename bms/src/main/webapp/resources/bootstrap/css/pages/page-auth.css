@@ -26,7 +26,6 @@
 .authentication-wrapper.authentication-basic .authentication-inner:before {
   width: 148px;
   height: 148px;
-  content: " ";
   position: absolute;
   top: -40px;
   right: -40px;
@@ -34,7 +33,6 @@
 .authentication-wrapper.authentication-basic .authentication-inner:after {
   width: 243px;
   height: 240px;
-  content: " ";
   position: absolute;
   bottom: -68px;
   left: -46px;

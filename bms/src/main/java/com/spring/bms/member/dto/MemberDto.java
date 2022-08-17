@@ -1,6 +1,5 @@
 package com.spring.bms.member.dto;
 
-import java.util.Date;
 
 import org.springframework.stereotype.Component;
 

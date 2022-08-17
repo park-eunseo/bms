@@ -11,7 +11,7 @@
 	<aside id="layout-menu"
 		class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
 		<div class="app-brand demo">
-			<a href="${contextPath }/main" class="app-brand-link"> 
+			<a href="${contextPath }/" class="app-brand-link"> 
 				<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 			</a> 
 			<a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -23,7 +23,7 @@
 		<!-- 프로필(닉네임, 소개글) -->
 		<div style="flex-direction: column;">
 			<div class="avatar" style="display: block;margin: auto;height: 80px;width: 80px;">
-				<img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}" 
+				<img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}" onclick="location.href='${contextPath}/blog'"
 					class="w-px-40 h-auto rounded-circle"/>
 			</div>
 			<div class="text-center mb-3">

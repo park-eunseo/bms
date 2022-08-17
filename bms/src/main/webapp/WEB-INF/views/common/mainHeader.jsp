@@ -11,9 +11,8 @@
 	<!-- Spinner Start -->
 	<div id="spinner"
 		class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-		<div class="spinner-border text-primary"
-			style="width: 3rem; height: 3rem;" role="status">
-			<span class="sr-only">Loading</span>
+		<div class="spinner-border text-secondary" role="status">
+			<span class="visually-hidden">Loading...</span>
 		</div>
 	</div>
 	<!-- Spinner End -->
@@ -21,7 +20,7 @@
 	<!-- Navbar Start -->
 	<nav
 		class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0" style="margin-bottom: -35px;">
-		<a href="${contextPath }/main"
+		<a href="${contextPath }/"
 			class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
 			<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a>

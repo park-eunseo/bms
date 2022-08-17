@@ -93,7 +93,7 @@ public class MemberController {
 	    
 		String jsScript = "<script>";
 			   jsScript += "alert('회원가입이 완료되었습니다.');";
-			   jsScript += "location.href='"+ request.getContextPath()+"/main'";
+			   jsScript += "location.href='"+ request.getContextPath()+"/'";
 			   jsScript += "</script>";
 	
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
@@ -127,7 +127,7 @@ public class MemberController {
 				session.setAttribute("role", "client"); // 관리자인지 회원인지 구분하기 위해
 				
 			    jsScript = "<script>"
-				    	+ "location.href='"+ request.getContextPath()+"/main';"
+				    	+ "location.href='"+ request.getContextPath()+"/';"
 				    	+ "</script>";
 			} 
 		}
@@ -152,7 +152,7 @@ public class MemberController {
 		
 		String jsScript = "<script>"
 						+ "alert('로그아웃되었습니다.');"
-						+ "location.href = '" + request.getContextPath() + "/main';"
+						+ "location.href = '" + request.getContextPath() + "/';"
 						+ "</script>";			
 
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -176,6 +176,8 @@ public class MemberController {
 	public ResponseEntity<Object> modify(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
 		
+		HttpSession session = request.getSession();
+		
 		MemberDto memberDto = new MemberDto();
 		memberDto.setId(multipartRequest.getParameter("id"));
 		memberDto.setPassword(pwEncoder.encode(multipartRequest.getParameter("password")));
@@ -188,13 +190,17 @@ public class MemberController {
 		if(file.hasNext()) {
 			MultipartFile multipartFile = multipartRequest.getFile(file.next());
 			
-			if(!multipartFile.getOriginalFilename().isEmpty()) { // 파일이 비어있으 true, !true
+			if(!multipartFile.getOriginalFilename().isEmpty()) { // 파일이 비어있으면 true, !true
 				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
 				File f = new File(filePath + fileName);
 				
 				multipartFile.transferTo(f);		
-				memberDto.setProfileName(fileName);			
-			} 
+				memberDto.setProfileName(fileName);		
+				
+				new File(filePath + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+			} else { // 파일이 비어있으면(프로필 수정을 안 한 것이므로 그대로)
+				memberDto.setProfileName((String) session.getAttribute("memberProfile"));		
+			}
 		} else {
 			memberDto.setProfileName("basicImg.png");
 		}
@@ -210,11 +216,7 @@ public class MemberController {
 		if(multipartRequest.getParameter("intro").equals("")) memberDto.setIntro("");
 		else memberDto.setIntro(multipartRequest.getParameter("intro"));
 		
-		memberService.updateMember(memberDto);
-		
-		HttpSession session = request.getSession();
-		
-		new File(filePath + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+		memberService.updateMember(memberDto);	
 		
 		session.setAttribute("memberNickname", memberDto.getNickname());
 		session.setAttribute("memberBlogName", memberDto.getBlogName());
@@ -223,7 +225,7 @@ public class MemberController {
 		
 		String jsScript = "<script>"
 						+ "alert('수정이 완료되었습니다.');"
-						+ "location.href = '" + request.getContextPath() + "/main';"
+						+ "location.href = '" + request.getContextPath() + "/';"
 						+ "</script>";
 		
 		HttpHeaders responseHeaders = new HttpHeaders();

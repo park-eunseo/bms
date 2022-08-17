@@ -223,7 +223,7 @@
  		
  	</script>
   <body>
-    <!-- Content -->
+    <!-- Content -->Z
   	<div class="container-fluid page-header py-5 mb-5">
         <div class="container py-5" >
             <h1 class="display-3 text-white mb-3 animated slideInDown" style="font-size: 30px;">Welcome to sim8log! 👋</h1>

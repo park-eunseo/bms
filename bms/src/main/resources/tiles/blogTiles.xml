@@ -7,7 +7,7 @@
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>	<!-- 홈 하단 -->
 	</definition>
 	
-	<definition name="detailLayout" template="/WEB-INF/views/common/blogLayout.jsp"> <!-- 개인 블로그 레이아웃 -->
+	<definition name="detailLayout" template="/WEB-INF/views/common/blogMainLayout.jsp"> <!-- 개인 블로그 메인 레이아웃 -->
 		<put-attribute name="header" value="/WEB-INF/views/common/blogHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
 		<put-attribute name="leftSide" value="/WEB-INF/views/common/blogLeftSide.jsp"></put-attribute>
 		<put-attribute name="rightSide" value="/WEB-INF/views/common/blogRightSide.jsp"></put-attribute>
@@ -20,8 +20,8 @@
 		<put-attribute name="title" value="심플로그"></put-attribute>
 	</definition>
 	
-	<definition name="/blog" extends="detailLayout">	<!-- 개인 블로그 -->
-		<put-attribute name="content" value="/WEB-INF/views/oneBlog.jsp"></put-attribute>
+	<definition name="/blogHome" extends="detailLayout">	<!-- 블로그 메인 -->
+		<put-attribute name="content" value="/WEB-INF/views/blogHome.jsp"></put-attribute>
 		<put-attribute name="title" value="blog"></put-attribute>
 	</definition>
 	
@@ -48,6 +48,11 @@
 	<definition name="member/newPassword" extends="mainLayout">	<!-- 비밀번호 생성 -->
 		<put-attribute name="content" value="/WEB-INF/views/member/newPassword.jsp"></put-attribute>
 		<put-attribute name="title" value="심플로그 새 비밀번호 생성"></put-attribute>
+	</definition>
+	
+	<definition name="/writePost" extends="detailLayout">	<!-- 블로그 글 작성 -->
+		<put-attribute name="content" value="/WEB-INF/views/post/writePost.jsp"></put-attribute>
+		<put-attribute name="title" value="포스트 작성"></put-attribute>
 	</definition>
 	
 </tiles-definitions>
