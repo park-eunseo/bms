@@ -46,8 +46,8 @@ public class PostController {
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 	
-	@RequestMapping("/fileUpload") // 에디터에서 파일을 올렸을 때 저장하기
-	public void fileUpload(HttpServletRequest request, HttpServletResponse response, MultipartHttpServletRequest multipartRequest,
+	@PostMapping("/fileUpload") // 에디터에서 파일을 올렸을 때 저장하기
+	public void fileUpload(HttpServletResponse response, MultipartHttpServletRequest multipartRequest,
 				@RequestParam MultipartFile multipartFile) throws IOException {
 		
 		PrintWriter printWriter = null;
@@ -62,6 +62,8 @@ public class PostController {
 		
 		String filePath = "C:\\postFile\\";
 		String uploadPath = filePath + uuid + "_" + fileName;
+
+		System.out.println(uploadPath);
 		
 		out = new FileOutputStream(new File(uploadPath));
 		out.write(bytes);

@@ -407,17 +407,34 @@
                   <br>
                   <small id="introAlert" style="color:red"></small>
                 </div>
-                
-                <div class="mb-3">
-                  <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="terms"/>
-                    <label class="form-check-label" for="terms-conditions">
-                      <a href="javascript:void(0);">개인정보 수집 및 소지 동의</a>
-                    </label>
-                   	<br><small id="termAlert" style="color:red"></small>
-                  </div>
-                </div>
-                <br>
+				<div class="mb-3">
+					<div class="form-check" style="box-shadow: none;">
+						<input class="form-check-input" type="checkbox" id="terms" />
+						<button class="btn btn-primary" type="button" style="padding: revert; background-color: #00000000; color: #2e2e2e;"
+							data-bs-toggle="offcanvas" data-bs-target="#offcanvasStart"
+							aria-controls="offcanvasStart">개인 정보 수집 동의</button>
+						<br>
+						<small id="termAlert" style="color: red"></small>
+						<div class="offcanvas offcanvas-start" tabindex="-1"
+							id="offcanvasStart" aria-labelledby="offcanvasStartLabel"
+							style="visibility: hidden;" aria-hidden="true">
+							<div class="offcanvas-header">
+								<h5 id="offcanvasStartLabel" class="offcanvas-title">정보 수집 약관 어쩌고</h5>
+									<button type="button" class="btn-close text-reset"
+										data-bs-dismiss="offcanvas" aria-label="Close"></button>
+							</div>
+							<div class="offcanvas-body my-auto mx-0 flex-grow-0">
+								<p class="text-center">Lorem ipsum, or lipsum as it is
+									sometimes known, is dummy text used in laying out print,
+									graphic or web designs. The passage is attributed to an
+									unknown typesetter in the 15th century who is thought to have
+									scrambled parts of Cicero's De Finibus Bonorum et Malorum for
+									use in a type specimen book.</p>
+							</div>
+						</div>
+						</div>
+					</div>
+					<br>
                 <button class="btn btn-primary d-grid w-100">회원가입</button>
               </form>
 
