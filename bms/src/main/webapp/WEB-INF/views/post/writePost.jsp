@@ -29,23 +29,69 @@
 			}
 		});
 	}
+	
+	function postCheck(){
+		var title = document.getElementById("title")
+		var content = document.getElementById("content")	
+
+		if(title.value == ""){
+			document.getElementById("titleAlert").innerText = "제목을 입력해 주세요."
+			title.focus()
+			return false
+		}
+
+		if(title.value.length > 50){
+			document.getElementById("titleAlert").innerText = "제목은 50자 이하로 작성해 주세요."
+			title.focus()
+			return false
+		}	
+
+		if(content.value == ""){
+			document.getElementById("contentAlert").innerText = "내용을 입력해 주세요."
+			return false
+		}	
+	}
+	
+
+	function checkTitle(obj) {
+		var max = 50
+		var text_len = obj.value.length
+		
+		var msg = document.getElementById("titleAlert")
+		var len = document.getElementById("titleLen")
+
+		if (text_len > max) {
+			len.innerText = "(50/50byte)"
+			msg.innerText = "50자 이하로 작성해 주세요."
+		} else {
+			len.innerText = "(" + text_len + "/50byte)"
+			msg.innerText = ""
+		}
+	}
+
 </script>
 </head>
 <body>
 		<!-- HTML5 Inputs -->
-		<form action="#" onsubmit="" method="post" enctype="multipart/form-data">
-		<div class="mb-4" style="width: max-content;">
+		<form id="formAuthentication" action="${contextPath }/post/write" onsubmit="return postCheck()" name="postForm" method="post" >
+		  <div class="mb-4">
 			<div class="card-body" style="width: max-content;">
+				<input type="hidden" name="authorId" value="${sessionScope.memberId }">
 				<div class="mb-3 row">
 					<label class="col-md-2 col-form-label" style="width: 100%">제목</label>
 					<div class="col-md-10" style="width: 900px;">
-						<input class="form-control" type="text" placeholder="제목을 입력하세요." name="title" id="title">
+						<input class="form-control" onkeyup="checkTitle(this)" type="text" placeholder="제목을 입력하세요." name="title" id="title">
+						<small id="titleLen">(0/50byte)</small>
+	                	<br>
+	               		<small id="titleAlert" style="color:red"></small>
 					</div>
 				</div>
 				<div class="mb-3 row">
 					<label class="col-md-2 col-form-label" style="width: 100%">내용</label>
 					<div class="col-md-10" style="width: 900px;">
-						<textarea id="content" name="content" cols="50"></textarea>
+						<textarea id="content" name="content" onkeyup="checkContent(this)"></textarea>
+						<br>
+	               		<small id="contentAlert" style="color:red"></small>
 						<script type="text/javascript">
 							$("#content").summernote({
 								height : 500, // 에디터 높이
@@ -71,13 +117,29 @@
 										for(var i = files.length - 1; i >= 0; i--){
 											uploadSummernoteImageFile(files[i], this);
 										}
+									},
+									onKeyup : function(){
+										var text_len = content.value.length	
+
+										if (text_len > 0) {	
+											document.getElementById("contentAlert").innerText = ""
+										}
 									}
 								}	
 							});
 						</script>
 					</div>
 				</div>
-				<button type="submit" class="btn rounded-pill btn-outline-dark" >완료</button>
+				<div class="form-check form-check-inline mt-3" >
+					<input class="form-check-input" type="radio" name="postPrivate" value="N" checked="checked"> 
+						<label class="form-check-label" for="inlineRadio1">공개</label>
+				</div>
+				<div class="form-check form-check-inline">
+					<input class="form-check-input" type="radio" name="postPrivate"" value="Y"> 
+						<label class="form-check-label" for="inlineRadio2">비공개</label>
+				</div>
+				<br><br>
+				<button class="btn rounded-pill btn-outline-dark" >저장</button>
 			</div>
 		</div>
 	</form>

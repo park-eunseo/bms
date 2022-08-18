@@ -223,13 +223,13 @@
  		
  	</script>
   <body>
-    <!-- Content -->Z
+    <!-- Content -->
   	<div class="container-fluid page-header py-5 mb-5">
         <div class="container py-5" >
             <h1 class="display-3 text-white mb-3 animated slideInDown" style="font-size: 30px;">Welcome to sim8log! 👋</h1>
             <nav aria-label="breadcrumb animated slideInDown">
                 <ol class="breadcrumb">
-                    <li class="breadcrumb-item"><a class="text-white" href="#">가입하고 다양한 친구들과 소통해 보세요.</a></li>
+                    <li class="breadcrumb-item"><a class="text-white">가입하고 다양한 친구들과 소통해 보세요.</a></li>
                 </ol>
             </nav>
         </div>

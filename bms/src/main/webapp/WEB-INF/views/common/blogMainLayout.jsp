@@ -44,7 +44,7 @@
 		<div class="layout-container">
 			<tiles:insertAttribute name="leftSide"></tiles:insertAttribute>
 
-			<div class="layout-page">
+			<div class="layout-page" >
 				<tiles:insertAttribute name="header"></tiles:insertAttribute>
 				<div class="content-wrapper">
 					<tiles:insertAttribute name="content"></tiles:insertAttribute>

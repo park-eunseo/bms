@@ -19,13 +19,15 @@ CREATE TABLE POST (
     author_id 	VARCHAR(20) NOT NULL,
     title 		VARCHAR(50) NOT NULL,
     content 	TEXT NOT NULL,
-    private 	CHAR(1) CHECK ('Y' OR 'N'),
+    post_private 	CHAR(1) CHECK ('Y' OR 'N'),
     views 		INT DEFAULT 0,
     reg_date 	DATETIME DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (author_id)
         REFERENCES member (id)
         ON DELETE CASCADE
 );
+
+select * from post;
 
 CREATE TABLE COMMEND (
     id 			INT AUTO_INCREMENT PRIMARY KEY,
