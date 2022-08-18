@@ -58,7 +58,7 @@
 
 	<!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
-    <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
+    <!--  <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>-->
     <script src="${contextPath }/resources/bootstrap/libs/popper/popper.js"></script>
     <script src="${contextPath }/resources/bootstrap/js/bootstrap.js"></script>
     <script src="${contextPath }/resources/bootstrap/libs/perfect-scrollbar/perfect-scrollbar.js"></script>
