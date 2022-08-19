@@ -47,14 +47,17 @@
 			<!-- /Search -->
 			<div class="navbar-nav align-items-center" style="display: -webkit-inline-box; margin-left: auto;">
 				<button type="button" class="btn rounded-pill btn-dark"
-					style="padding: 0.4375rem 0.5rem; margin-left: auto;" onclick="location.href='${contextPath}/post/write'">
+					style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;" 
+					onclick="location.href='${contextPath}/blog/write'">
 					<span class="tf-icons bx bx-pencil"></span>
 				</button>
 				<button type="button" class="btn rounded-pill btn-dark"
-					style="padding: 0.4375rem 0.5rem; margin-left: 0.8rem" onclick="location.href='${contextPath}/favorites'">
+					style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;"
+					onclick="location.href='${contextPath}/favorites'">
 					<span class="tf-icons bx bxs-heart"></span>
 				</button>
-				<button type="button" class="btn rounded-pill btn-dark" style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;" onclick="location.href='#'">
+				<button type="button" class="btn rounded-pill btn-dark" style="padding: 0.4375rem 0.7rem;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;" 
+				onclick="location.href='#'">
 					<span class="tf-icons bx bxs-bell"></span>
 				</button>
 			</div>

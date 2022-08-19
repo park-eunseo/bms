@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="blog">
+	<insert id="insertPost" parameterType="PostDto">
+		INSERT INTO
+			POST(
+				AUTHORID,
+				TITLE,
+				THUMBNAIL,
+				CONTENT,
+				POSTPRIVATE,
+				REGDATE
+			)
+		VALUES(
+				#{authorId},
+				#{title},
+				#{thumbnail},
+				#{content},
+				#{postPrivate},
+				NOW()	
+		)
+
+	</insert>
+	
+	<select id="selectOneMember" parameterType="String" resultType="MemberDto">
+		SELECT
+				*
+		FROM
+				MEMBER
+		WHERE 
+				ID = #{id}
+	</select>
+	
+	<select id="selectPostList" parameterType="String" resultType="PostDto">
+		 SELECT
+		 		*
+		 FROM	
+		 		POST
+		 WHERE
+		 		AUTHORID = #{authorId}
+	</select>
+	
+	<select id="selectOnePost" parameterType="String" resultType="PostDto">
+		SELECT
+				*
+		FROM
+				POST
+		WHERE
+				POSTID = #{postId}
+	</select>
+	
+	<update id="updatePost" parameterType="PostDto">
+		UPDATE
+				POST
+		SET
+				TITLE = #{title},
+				THUMBNAIL = #{thumbnail},
+				CONTENT = #{content},
+				POSTPRIVATE = #{postPrivate}
+		WHERE
+				POSTID = #{postId}
+	</update>
+	
+	<delete id="deletePost" parameterType="String">
+		DELETE FROM
+					POST
+		WHERE	
+					POSTID = #{postId}		
+	</delete>
+</mapper>

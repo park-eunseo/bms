@@ -17,7 +17,7 @@
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "${contextPath}/post/fileUpload",
+			url : "${contextPath}/blog/fileUpload",
 			contentType : false,
 			enctype : "multipart/form-data",
 			processData : false,
@@ -73,7 +73,7 @@
 </head>
 <body>
 		<!-- HTML5 Inputs -->
-		<form id="formAuthentication" action="${contextPath }/post/write" onsubmit="return postCheck()" name="postForm" method="post" >
+		<form id="formAuthentication" action="${contextPath }/blog/write" enctype="multipart/form-data" onsubmit="return postCheck()" name="postForm" method="post" >
 		  <div class="mb-4">
 			<div class="card-body" style="width: max-content;">
 				<input type="hidden" name="authorId" value="${sessionScope.memberId }">
@@ -87,9 +87,15 @@
 					</div>
 				</div>
 				<div class="mb-3 row">
+					<label class="col-md-2 col-form-label" style="width: 100%">대표 사진 설정</label>
+					<div class="col-md-10" style="width: 900px;">
+						<input type="file" accept="image/png, image/jpeg" class="form-control" id="inputGroupFile02" name="thumbnail">
+					</div>
+				</div>
+				<div class="mb-3 row">
 					<label class="col-md-2 col-form-label" style="width: 100%">내용</label>
 					<div class="col-md-10" style="width: 900px;">
-						<textarea id="content" name="content" onkeyup="checkContent(this)"></textarea>
+						<textarea id="content" name="content"></textarea>
 						<br>
 	               		<small id="contentAlert" style="color:red"></small>
 						<script type="text/javascript">

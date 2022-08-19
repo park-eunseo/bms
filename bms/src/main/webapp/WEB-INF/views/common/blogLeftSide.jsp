@@ -23,14 +23,14 @@
 		<!-- 프로필(닉네임, 소개글) -->
 		<div style="flex-direction: column;">
 			<div class="avatar" style="display: block;margin: auto;height: 80px;width: 80px;">
-				<img src="${contextPath }/member/thumbnails?profileName=${sessionScope.memberProfile}" onclick="location.href='${contextPath}/blog'"
+				<img src="${contextPath }/member/thumbnails?profileName=${memberInfo.profileName}" onclick="location.href='${contextPath}/blog?id=${memberInfo.id }'"
 					class="w-px-40 h-auto rounded-circle"/>
 			</div>
 			<div class="text-center mb-3">
 				<div style="padding-top:10px; padding-bottom: 2rem">
                    <a class="nav-link dropdown-toggle" href="javascript:void(0)" style="font-size: 14px; font-weight: 500;"
                    		id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          	${sessionScope.memberNickname } 님
+                          	${memberInfo.nickname} 님
                    </a>
                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-top: -5px; transform: translate3d(30px, 55px, 0px);">
                        <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}">
@@ -39,7 +39,7 @@
 							<i class="bx bx-power-off me-2"></i>로그아웃</a>
 						</li>
                      </ul>
-					<p class="card-text">${sessionScope.memberIntro }</p>
+					<p class="card-text">${memberInfo.intro}</p>
 				</div>
 			</div>
 		</div>

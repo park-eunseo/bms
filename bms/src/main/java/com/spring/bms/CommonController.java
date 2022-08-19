@@ -2,18 +2,15 @@ package com.spring.bms;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+
 
 @Controller
-public class BlogController {
+public class CommonController {
 	
 	@GetMapping("/")
-	public String mainHome() {
+	public String mainHome() throws Exception {
 		return "/mainHome";
 	}
-	
-	@GetMapping("/blog")
-	public String blog() {
-		return "/blogHome";
-	}
-	
 }

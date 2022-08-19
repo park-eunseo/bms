@@ -4,6 +4,6 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.spring.bms.member.dto.MemberDto" alias="MemberDto"/>
-		<typeAlias type="com.spring.bms.post.dto.PostDto" alias="PostDto"/>
+		<typeAlias type="com.spring.bms.blog.dto.PostDto" alias="PostDto"/>
 	</typeAliases>
 </configuration>
