@@ -37,7 +37,19 @@
 				#{nickname},
 				#{intro}
 		)
-				
+	
+	</insert>
+	
+	<insert id="insertDefaultCategory" parameterType="String">			
+		INSERT INTO
+				CATEGORY(
+					MEMBER_ID,
+					CATEGORY_TITLE
+				)
+		VALUES(
+				#{id},
+				'전체'	
+		)	
 	</insert>
 	
 	<select id="selectOneMember" parameterType="String" resultType="MemberDto">
@@ -56,11 +68,18 @@
 				PASSWORD = #{password},
 				TEL = #{tel},
 				EMAIL = #{email},
-				PROFILENAME = #{profileName},
-				BLOGNAME = #{blogName},
+				PROFILE_NAME = #{profileName},
+				BLOG_NAME = #{blogName},
 				NICKNAME = #{nickname},
 				INTRO = #{intro}
 		WHERE 
 				ID = #{id}
 	</update>
+	
+	<delete id="deleteMember" parameterType="String">
+		DELETE FROM
+					MEMBER
+		WHERE 
+					ID = #{id}
+	</delete>
 </mapper>

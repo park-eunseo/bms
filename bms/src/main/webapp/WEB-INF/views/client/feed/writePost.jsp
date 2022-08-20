@@ -87,7 +87,8 @@
 					</div>
 				</div>
 				<div class="mb-3 row">
-					<label class="col-md-2 col-form-label" style="width: 100%">대표 사진 설정</label>
+					<label class="col-md-2 col-form-label" style="width: 100%">대표 사진 설정&ensp;
+						<small class="text-muted"> 내용에 첨부되지 않습니다.</small></label>
 					<div class="col-md-10" style="width: 900px;">
 						<input type="file" accept="image/png, image/jpeg" class="form-control" id="inputGroupFile02" name="thumbnail">
 					</div>

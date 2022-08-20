@@ -1,4 +1,4 @@
-package com.spring.bms.blog.controller;
+package com.spring.bms.feed.controller;
 
 import java.io.File;
 import java.io.IOException;
@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -29,26 +28,26 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
-import com.spring.bms.blog.dto.PostDto;
-import com.spring.bms.blog.service.BlogService;
+import com.spring.bms.feed.dto.PostDto;
+import com.spring.bms.feed.service.FeedService;
 
 import net.coobird.thumbnailator.Thumbnails;
 
 
 @Controller
-@RequestMapping("/blog")
-public class BlogController {
+@RequestMapping("/feed")
+public class FeedController {
 	@Autowired
-	private BlogService blogService;
+	private FeedService feedService;
 	
 	@GetMapping("")
-	public String blog(@RequestParam(value = "id") String id, HttpServletRequest request) throws Exception {		
-		// List<PostDto> postList = blogService.getPostList(id); 
+	public String feed(@RequestParam(value = "id") String id, HttpServletRequest request) throws Exception {		
+		// List<PostDto> postList = feedService.getPostList(id); 
 		// mv.addObject("postList", postList);	
 		
-		//	mv.addObject("memberInfo", blogService.getOneMember(id)); 
-		//	mv.setViewName("/blogHome");
-		List<PostDto> postList = blogService.getPostList(id);
+		//	mv.addObject("memberInfo", feedService.getOneMember(id)); 
+		//	mv.setViewName("/feedHome");
+		List<PostDto> postList = feedService.getPostList(id);
 		
 		for (PostDto postDto : postList) {
 			String content = postDto.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
@@ -62,23 +61,23 @@ public class BlogController {
 		
 		HttpSession session = request.getSession();
 		
-		session.setAttribute("memberInfo", blogService.getOneMember(id)); // 해당 블로그 회원의 정보 select
+		session.setAttribute("memberInfo", feedService.getOneMember(id)); // 해당 블로그 회원의 정보 select
 		session.setAttribute("memberPostList", postList); // 해당 블로그 회원의 게시 select
 		
-		return "/blogHome";
+		return "/feedHome";
 	}
 	
-	@GetMapping("/write")
+	@GetMapping("/writePost")
 	public String writePost() {
 		return "/writePost";
 	}
 	
-	@PostMapping("/write")
+	@PostMapping("/writePost")
 	public ResponseEntity<Object> writePost(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
 		
 		PostDto postDto = new PostDto();
-		postDto.setAuthorId(multipartRequest.getParameter("authorId"));
+		postDto.setMemberId(multipartRequest.getParameter("memberId"));
 		postDto.setTitle(multipartRequest.getParameter("title"));
 		postDto.setContent(multipartRequest.getParameter("content"));
 		postDto.setPostPrivate(multipartRequest.getParameter("postPrivate"));
@@ -99,14 +98,14 @@ public class BlogController {
 			} 
 		} 
 		
-		blogService.addPost(postDto);
+		feedService.addPost(postDto);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 	    
 	    String jsScript = "<script>"
 	    				+ "alert('게시글이 등록되었습니다.');"
-	    				+ "location.href = '" + request.getContextPath() + "/blog?id=" +  postDto.getAuthorId() + "';"
+	    				+ "location.href = '" + request.getContextPath() + "/post?id=" +  postDto.getMemberId() + "';"
 	    				+ "</script>";
 	    
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
@@ -143,7 +142,7 @@ public class BlogController {
 	public ModelAndView detailPost(@RequestParam("postId") String postId, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("detailPost", blogService.getOnePost(postId));
+		mv.addObject("detailPost", feedService.getOnePost(postId));
 		mv.setViewName("/detailPost");
 		
 		return mv;
@@ -153,7 +152,7 @@ public class BlogController {
 	public ModelAndView modifyPost(@RequestParam("postId") String postId) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
-		mv.addObject("detailPost", blogService.getOnePost(postId));
+		mv.addObject("detailPost", feedService.getOnePost(postId));
 		mv.setViewName("/modifyPost");
 		
 		return mv;
@@ -161,14 +160,14 @@ public class BlogController {
 	
 	@PostMapping("/modifyPost")
 	public ResponseEntity<Object> modifyPost(HttpServletRequest request, PostDto postDto) throws Exception{
-		blogService.modifyPost(postDto);
+		feedService.modifyPost(postDto);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 	    
 	    String jsScript = "<script>"
 	    				+ "alert('게시글이 수정되었습니다.');"
-	    				+ "location.href = '" + request.getContextPath() + "/blog/detailPost?postId=" +  postDto.getPostId() + "';"
+	    				+ "location.href = '" + request.getContextPath() + "/post/detailPost?postId=" +  postDto.getPostId() + "';"
 	    				+ "</script>";
 	    
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
@@ -176,18 +175,28 @@ public class BlogController {
 	
 	@GetMapping("/deletePost")
 	public ResponseEntity<Object> deletePost(HttpServletRequest request, @RequestParam("postId") String postId) throws Exception{
-		blogService.deletePost(postId);
+		feedService.deletePost(postId);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 	    
 	    String jsScript = "<script>"
 	    				+ "alert('게시글이 삭제되었습니다.');"
-	    				+ "location.href = '" + request.getContextPath() + "/blog?id=" + request.getSession().getAttribute("memberId") + "';"
+	    				+ "location.href = '" + request.getContextPath() + "/post?id=" + request.getSession().getAttribute("memberId") + "';"
 	    				+ "</script>";
 	    
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
+	
+	@GetMapping("/category")
+	public ModelAndView getCategory() {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.setViewName("/category");
+		
+		return mv;
+	}
+	
 	
 	@GetMapping("/thumbnails") // 게시글 썸네일
 	public void thumbnails(@RequestParam("thumbnail") String thumbnailName, HttpServletResponse response) throws IOException {

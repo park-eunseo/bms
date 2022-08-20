@@ -1,11 +1,11 @@
-package com.spring.bms.blog.service;
+package com.spring.bms.feed.service;
 
 import java.util.List;
 
-import com.spring.bms.blog.dto.PostDto;
+import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.member.dto.MemberDto;
 
-public interface BlogService {
+public interface FeedService {
 	public void addPost(PostDto postDto) throws Exception;
 	public MemberDto getOneMember(String id) throws Exception;
 	public List<PostDto> getPostList(String id) throws Exception;

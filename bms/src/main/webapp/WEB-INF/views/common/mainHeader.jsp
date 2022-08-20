@@ -29,21 +29,38 @@
             <span class="navbar-toggler-icon"></span>
         </button>
 		<!-- Search -->
-		<div class="navbar-collapse collapse" id="navbarCollapse" style="width: 0px;">
+		<div class="navbar-collapse collapse" id="navbarCollapse">
+			<div>
+			 <form class="d-flex"> <!-- 전체 회원 범위 -->
+					<select id="smallSelect" class="form-select form-select-sm" 
+							style="display: inline-block;border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right: none; width: fit-content;">
+	                          <option>전체</option>
+	                          <option value="authorId">작성자</option>
+	                          <option value="blogName">블로그명</option>
+	                          <option value="post">게시물</option>
+	                </select>
+					<div class="input-group">
+						<input type="text" class="form-control" style="border-start-start-radius: 0px; border-bottom-left-radius: 0px; "
+								placeholder="Search">
+						<button type="submit" class="input-group-text">
+							<i class="tf-icons bx bx-search"></i>
+						</button>
+					</div>
+				</form>
+			</div>
 			<c:choose>
 				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->
 		            <div class="navbar-nav ms-auto p-4 p-lg-0" style="">
-		                <a href="${contextPath }/member/register" class="nav-item nav-link">회원가입</a>
+		                <a href="${contextPath }/member/register" class="nav-item nav-link" >회원가입</a>
 		                <a href="${contextPath }/member/login" class="nav-item nav-link">로그인</a>        
 		            </div>
 		      </c:when>
 				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->
 					 <div class="navbar-nav ms-auto p-4 p-lg-0" style="">
-		                <a href="${contextPath }/blog?id=${sessionScope.memberId}" class="nav-item nav-link">내 블로그</a>
+		                <a href="${contextPath }/feed?id=${sessionScope.memberId}" class="nav-item nav-link">내 블로그</a>
 		                <div class="nav-item dropdown">
 		                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
 		                    <div class="dropdown-menu bg-light m-0" style="right: 0px;">
-		                        <a href="#" class="dropdown-item">내 친구 관리</a>
 		                        <a href="${contextPath }/member/modify?id=${sessionScope.memberId}"class="dropdown-item">내 정보 수정</a>
 		                        <a href="${contextPath }/member/logout" class="dropdown-item">로그아웃</a>
 		                    </div>
@@ -53,7 +70,7 @@
 				<c:otherwise> <!-- 세션이 있고 관리자 계정이라면 -->	
 				 <div class="navbar-nav ms-auto p-4 p-lg-0" style="right: 0px;">
 		             <div class="nav-item dropdown">
-		                <a href="${contextPath }/blog" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
+		                <a href="${contextPath }/feed" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
 		                  <div class="dropdown-menu bg-light m-0">
 		                      <a href="#" class="dropdown-item">회원 관리</a>
 		                      <a href="${contextPath }/member/modify?id=${sessionScope.memberId}">내 정보 수정</a>

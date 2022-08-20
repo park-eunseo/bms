@@ -1,13 +1,14 @@
-package com.spring.bms.blog.dto;
+package com.spring.bms.feed.dto;
 
 import org.springframework.stereotype.Component;
 
 @Component
 public class PostDto {
 	String postId;
-	String authorId;
-	String thumbnail;
+	String memberId;
+	String categoryTitle;
 	String title;
+	String thumbnail;
 	String content;
 	String postPrivate;
 	String regDate;
@@ -20,14 +21,22 @@ public class PostDto {
 		this.postId = postId;
 	}
 
-	public String getAuthorId() {
-		return authorId;
+	public String getMemberId() {
+		return memberId;
 	}
 
-	public void setAuthorId(String authorId) {
-		this.authorId = authorId;
+	public void setMemberId(String memberId) {
+		this.memberId = memberId;
 	}
-
+	
+	public String getCategoryTitle() {
+		return categoryTitle;
+	}
+	
+	public void setCategoryTitle(String categoryTitle) {
+		this.categoryTitle = categoryTitle;
+	}
+	
 	public String getThumbnail() {
 		return thumbnail;
 	}

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="blog">
+<mapper namespace="feed">
 	<insert id="insertPost" parameterType="PostDto">
 		INSERT INTO
 			POST(
-				AUTHORID,
+				MEMBER_ID,
+				CATEGORY_TITLE,
 				TITLE,
 				THUMBNAIL,
 				CONTENT,
-				POSTPRIVATE,
-				REGDATE
+				POST_PRIVATE,
+				REG_DATE
 			)
 		VALUES(
-				#{authorId},
+				#{memberId},
+				#{categoryTitle}
 				#{title},
 				#{thumbnail},
 				#{content},
@@ -34,38 +36,53 @@
 	
 	<select id="selectPostList" parameterType="String" resultType="PostDto">
 		 SELECT
-		 		*
+		 		POST_ID,
+		 		MEMBER_ID,
+		 		CATEGORY_TITLE,
+		 		TITLE,
+		 		THUMBNAIL,
+		 		CONTENT,
+		 		POST_PRIVATE,
+		 		date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
 		 FROM	
 		 		POST
 		 WHERE
-		 		AUTHORID = #{authorId}
+		 		MEMBER_ID = #{memberId}
 	</select>
 	
 	<select id="selectOnePost" parameterType="String" resultType="PostDto">
 		SELECT
-				*
+				POST_ID,
+		 		MEMBER_ID,
+		 		CATEGORY_TITLE,
+		 		TITLE,
+		 		THUMBNAIL,
+		 		CONTENT,
+		 		POST_PRIVATE,
+		 		date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
 		FROM
 				POST
 		WHERE
-				POSTID = #{postId}
+				POST_ID = #{postId}
 	</select>
 	
 	<update id="updatePost" parameterType="PostDto">
 		UPDATE
 				POST
 		SET
+				CATEGORY_TITLE,
 				TITLE = #{title},
 				THUMBNAIL = #{thumbnail},
 				CONTENT = #{content},
-				POSTPRIVATE = #{postPrivate}
+				POST_PRIVATE = #{postPrivate}
 		WHERE
-				POSTID = #{postId}
+				POST_ID = #{postId}
 	</update>
 	
 	<delete id="deletePost" parameterType="String">
 		DELETE FROM
 					POST
 		WHERE	
-					POSTID = #{postId}		
+					POST_ID = #{postId}		
 	</delete>
 </mapper>

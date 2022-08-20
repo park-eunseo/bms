@@ -2,8 +2,13 @@
 		<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
+	<settings>
+		<setting name="mapUnderscoreToCamelCase" value="true" />
+	</settings>
+
 	<typeAliases>
-		<typeAlias type="com.spring.bms.member.dto.MemberDto" alias="MemberDto"/>
-		<typeAlias type="com.spring.bms.blog.dto.PostDto" alias="PostDto"/>
+		<typeAlias type="com.spring.bms.member.dto.MemberDto" alias="MemberDto" />
+		<typeAlias type="com.spring.bms.feed.dto.PostDto" alias="PostDto" />
+		<typeAlias type="com.spring.bms.feed.dto.CategoryDto" alias="CategoryDto" />
 	</typeAliases>
 </configuration>

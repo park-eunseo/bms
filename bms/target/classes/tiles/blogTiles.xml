@@ -7,10 +7,9 @@
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>	<!-- 홈 하단 -->
 	</definition>
 	
-	<definition name="detailLayout" template="/WEB-INF/views/common/blogMainLayout.jsp"> <!-- 개인 블로그 메인 레이아웃 -->
-		<put-attribute name="header" value="/WEB-INF/views/common/blogHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
-		<put-attribute name="leftSide" value="/WEB-INF/views/common/blogLeftSide.jsp"></put-attribute>
-		<put-attribute name="rightSide" value="/WEB-INF/views/common/blogRightSide.jsp"></put-attribute>
+	<definition name="detailLayout" template="/WEB-INF/views/common/feedMainLayout.jsp"> <!-- 개인 블로그 메인 레이아웃 -->
+		<put-attribute name="header" value="/WEB-INF/views/common/feedHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
+		<put-attribute name="leftSide" value="/WEB-INF/views/common/feedLeftSide.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>
 	</definition>
 	
@@ -20,8 +19,8 @@
 		<put-attribute name="title" value="심플로그"></put-attribute>
 	</definition>
 	
-	<definition name="/blogHome" extends="detailLayout">	<!-- 블로그 메인 -->
-		<put-attribute name="content" value="/WEB-INF/views/common/blogHome.jsp"></put-attribute>
+	<definition name="/feedHome" extends="detailLayout">	<!-- 메인 피드 -->
+		<put-attribute name="content" value="/WEB-INF/views/common/feedHome.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="member/login" extends="mainLayout"> <!-- 회원 로그인 -->
@@ -49,22 +48,27 @@
 		<put-attribute name="title" value="심플로그 새 비밀번호 생성"></put-attribute>
 	</definition>
 	
-	<definition name="/writePost" extends="detailLayout">	<!-- 블로그 글 작성 -->
-		<put-attribute name="content" value="/WEB-INF/views/client/blog/writePost.jsp"></put-attribute>
+	<definition name="/writePost" extends="detailLayout">	<!-- 게시글 작성 -->
+		<put-attribute name="content" value="/WEB-INF/views/client/feed/writePost.jsp"></put-attribute>
 		<put-attribute name="title" value="포스트 작성"></put-attribute>
 	</definition>
 	
-	<definition name="/detailPost" extends="detailLayout">	<!-- 블로그 게시글 -->
-		<put-attribute name="content" value="/WEB-INF/views/client/blog/detailPost.jsp"></put-attribute>
+	<definition name="/detailPost" extends="detailLayout">	<!-- 하나의 게시글 -->
+		<put-attribute name="content" value="/WEB-INF/views/client/feed/detailPost.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="/modifyPost" extends="detailLayout">	<!-- 게시글 수정 -->
-		<put-attribute name="content" value="/WEB-INF/views/client/blog//modifyPost.jsp"></put-attribute>
+		<put-attribute name="content" value="/WEB-INF/views/client/feed//modifyPost.jsp"></put-attribute>
 	</definition>
 	
 	<definition name="/favorites" extends="detailLayout">	<!-- 즐겨찾기 회원 및 글-->
 		<put-attribute name="content" value="/WEB-INF/views/client/favorites/favorites.jsp"></put-attribute>
 		<put-attribute name="title" value="즐겨찾기"></put-attribute>
+	</definition>
+	
+	<definition name="/category" extends="detailLayout">	<!-- 게시판 카테고리-->
+		<put-attribute name="content" value="/WEB-INF/views/client/feed/setCategory.jsp"></put-attribute>
+		<put-attribute name="title" value="카테고리 설정"></put-attribute>
 	</definition>
 	
 </tiles-definitions>

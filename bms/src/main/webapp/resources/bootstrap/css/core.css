@@ -7406,7 +7406,7 @@ button:focus {
 
 .page-item.first .page-link, .page-item.last .page-link, .page-item.next .page-link, .page-item.prev .page-link, .page-item.previous .page-link {
   padding-top: 0.5rem;
-  padding-bottom: 0.5rem;
+  padding-bottom: 0.4rem;
 }
 .page-item.disabled .page-link {
   border-color: #d9dee3;
@@ -16472,12 +16472,12 @@ html:not(.layout-footer-fixed) .content-wrapper {
 .navbar.bg-white .search-input-wrapper .search-input,
 .navbar.bg-white .search-input-wrapper .search-toggler {
   background-color: #fff !important;
-  color: #a1acb8;
+  color: #6a6a6a;
 }
 .navbar.bg-white .navbar-nav > .nav-link,
 .navbar.bg-white .navbar-nav > .nav-item > .nav-link,
 .navbar.bg-white .navbar-nav > .nav > .nav-item > .nav-link {
-  color: #a1acb8;
+  color: #626262;
 }
 .navbar.bg-white .navbar-nav > .nav-link:hover, .navbar.bg-white .navbar-nav > .nav-link:focus,
 .navbar.bg-white .navbar-nav > .nav-item > .nav-link:hover,

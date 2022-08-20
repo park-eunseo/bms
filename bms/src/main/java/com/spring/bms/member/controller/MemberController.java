@@ -173,7 +173,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/modify")
-	public ResponseEntity<Object> modify(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
+	public ResponseEntity<Object> modifyInfo(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
 		
 		HttpSession session = request.getSession();
@@ -231,6 +231,27 @@ public class MemberController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 	    
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/delete")
+	public ResponseEntity<Object> delete(HttpServletRequest request, @RequestParam("id") String id) throws Exception {
+		HttpSession session = request.getSession();
+		
+		new File("C:\\profile\\" + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+		
+		memberService.deleteMember(id);
+		
+		session.invalidate();
+		
+		String jsScript = "<script>"
+				+ "alert('회원 탈퇴 완료되었습니다.');"
+				+ "location.href = '" + request.getContextPath() + "/';"
+				+ "</script>";
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 	

@@ -24,6 +24,8 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public void insertMember(MemberDto memberDto) throws Exception {
 		sqlSession.insert("member.insertMember", memberDto);
+		sqlSession.insert("member.insertDefaultCategory", memberDto.getId()); 
+		// 회원가입하면서 기본 카테고리인 '전체'를 입력
 	}
 
 	@Override
@@ -39,6 +41,11 @@ public class MemberDaoImpl implements MemberDao {
 	@Override
 	public void updateMember(MemberDto memberDto) throws Exception {
 		sqlSession.update("member.updateMember", memberDto);
+	}
+
+	@Override
+	public void deleteMember(String id) throws Exception {
+		sqlSession.delete("member.deleteMember", id);
 	}
 
 }

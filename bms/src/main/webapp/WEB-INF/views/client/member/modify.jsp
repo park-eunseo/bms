@@ -129,6 +129,16 @@
  			
  			reader.readAsDataURL(event.target.files[0]) // 바이너리 파일을 encode 문자열로 반환
  		}
+ 		
+ 		function deleteCheck(){ // 회원 탈퇴
+ 			var check = confirm("탈퇴하시겠습니까? 작성하신 글 모두 삭제됩니다.")
+ 			
+ 			if(check){
+ 				location.href="${contextPath }/member/delete?id=${memberDto.id }"
+ 			} else {
+ 				history.go(0)
+ 			}
+ 		}
  	</script>
   <body>
     <!-- Content -->
@@ -306,15 +316,16 @@
                   <br>
                   <small id="introAlert" style="color:red"></small>
                 </div>
-                <br>
-               <button class="btn btn-primary d-grid w-100">저장하기</button>
-              </form>
+                	<br>
+					<div style="display: flex;">
+						<button class="btn btn-primary d-grid" type="submit" style="width: 45%; margin-right: 10%;">저장하기</button>
+						<button class="btn btn-outline-danger" onclick="deleteCheck()" style="width: 45%;">탈퇴하기</button>
+					</div>
+				</form>
             </div>
           </div>
           <!-- Register Card -->
         </div>
-      </div>
-    </div>
     <!-- / Content -->
   </body>
 </html>

@@ -32,20 +32,20 @@
 								<c:forEach var="post" items="${memberPostList }">
 									<div class="col-md-6 col-lg-4 mb-3">
 										<div class="card h-100">
-											<a href="${contextPath }/blog/detailPost?postId=${post.postId}" >
+											<a href="${contextPath }/feed/detailPost?postId=${post.postId}" >
 												<c:if test="${not empty post.thumbnail}">
-												<img class="card-img-top"
-													src="${contextPath }/blog/thumbnails?thumbnail=${post.thumbnail}"
-													alt="Card image cap">
-											</c:if>
-											<div class="card-body">
-												<h5 class="card-title" 
-													style="height:19.792px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${post.title }</h5>
-												<p class="card-text" id="content"
-													style="white-space: break-spaces; overflow: hidden; text-overflow: ellipsis">${post.content }</p>
-												
-												<small class="text-muted">${post.regDate }</small>
-											</div>
+													<img class="card-img-top"
+														src="${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}"
+														alt="Card image cap">
+												</c:if>
+												<div class="card-body">
+													<h5 class="card-title" 
+														style="height:19.792px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${post.title }</h5>
+													<p class="card-text" id="content"
+														style="white-space: break-spaces; overflow: hidden; text-overflow: ellipsis">${post.content }</p>
+													
+													<small class="text-muted">${post.regDate }</small>
+												</div>
 											</a>
 										</div>
 									</div>
