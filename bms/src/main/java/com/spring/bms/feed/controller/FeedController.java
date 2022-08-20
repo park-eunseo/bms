@@ -28,11 +28,11 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.google.gson.JsonObject;
+import com.spring.bms.category.service.CategoryService;
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.feed.service.FeedService;
 
 import net.coobird.thumbnailator.Thumbnails;
-
 
 @Controller
 @RequestMapping("/feed")
@@ -40,93 +40,143 @@ public class FeedController {
 	@Autowired
 	private FeedService feedService;
 	
+	@Autowired
+	private CategoryService categoryService;
+
 	@GetMapping("")
-	public String feed(@RequestParam(value = "id") String id, HttpServletRequest request) throws Exception {		
-		// List<PostDto> postList = feedService.getPostList(id); 
-		// mv.addObject("postList", postList);	
-		
-		//	mv.addObject("memberInfo", feedService.getOneMember(id)); 
-		//	mv.setViewName("/feedHome");
+	public String feed(@RequestParam(value = "id") String id, HttpServletRequest request) throws Exception {
+		// List<PostDto> postList = feedService.getPostList(id);
+		// mv.addObject("postList", postList);
+
+		// mv.addObject("memberInfo", feedService.getOneMember(id));
+		// mv.setViewName("/feedHome");
 		List<PostDto> postList = feedService.getPostList(id);
-		
+
 		for (PostDto postDto : postList) {
 			String content = postDto.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-					content = content.replaceAll("&lt(;)?(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?&gt(;)?", "");
-			
-			// 게시글 내용 html 태그 다 제거 후
-			if(content.length() > 30) content = content.substring(0, 30) + "...";
+			content = content.replaceAll("&lt(;)?(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?&gt(;)?", "");
 
-			postDto.setContent(content);
+			// 게시글 내용 html 태그 다 제거 후
+			if (content.length() > 30)
+				content = content.substring(0, 30) + "...";
+				postDto.setContent(content);
 		}
-		
+
 		HttpSession session = request.getSession();
-		
-		session.setAttribute("memberInfo", feedService.getOneMember(id)); // 해당 블로그 회원의 정보 select
-		session.setAttribute("memberPostList", postList); // 해당 블로그 회원의 게시 select
+
+		session.setAttribute("memberInfo", feedService.getOneMember(id)); 		// 해당 블로그 회원의 정보 select
+		session.setAttribute("memberPostList", postList); 						// 해당 회원의 게시물 전체 select
+		session.setAttribute("categoryList", categoryService.getCategoryList(id));  // 해당 회원의 카테고리 전체 select
 		
 		return "/feedHome";
 	}
-	
+
 	@GetMapping("/writePost")
 	public String writePost() {
 		return "/writePost";
 	}
-	
+
 	@PostMapping("/writePost")
-	public ResponseEntity<Object> writePost(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
+	public ResponseEntity<Object> writePost(HttpServletRequest request, MultipartHttpServletRequest multipartRequest)
+			throws Exception {
 		multipartRequest.setCharacterEncoding("utf-8");
-		
+
 		PostDto postDto = new PostDto();
 		postDto.setMemberId(multipartRequest.getParameter("memberId"));
 		postDto.setTitle(multipartRequest.getParameter("title"));
 		postDto.setContent(multipartRequest.getParameter("content"));
 		postDto.setPostPrivate(multipartRequest.getParameter("postPrivate"));
-		
+
 		Iterator<String> file = multipartRequest.getFileNames();
 		String filePath = "C:\\thumbnailFile\\";
-		
-		if(file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
+
+		if (file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
 			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
-			
-			if(!multipartFile.getOriginalFilename().isEmpty()) {
-				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename(); // 이미지 이름이 중복되지 않도록 고유 식별 사용 
+
+			if (!multipartFile.getOriginalFilename().isEmpty()) {
+				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename(); // 이미지 이름이 중복되지 않도록 고유
+																								 // 식별 사용
 				File f = new File(filePath + fileName);
-				
 				multipartFile.transferTo(f);
-				
 				postDto.setThumbnail(fileName);
-			} 
-		} 
-		
+			}
+		}
+
 		feedService.addPost(postDto);
-		
+
 		HttpHeaders responseHeaders = new HttpHeaders();
-	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-	    
-	    String jsScript = "<script>"
-	    				+ "alert('게시글이 등록되었습니다.');"
-	    				+ "location.href = '" + request.getContextPath() + "/post?id=" +  postDto.getMemberId() + "';"
-	    				+ "</script>";
-	    
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "<script>" + "alert('게시글이 등록되었습니다.');" + "location.href = '" + request.getContextPath()
+				+ "/post?id=" + postDto.getMemberId() + "';" + "</script>";
+
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
-	
-	@RequestMapping(value="/fileUpload", produces = "application/json; charset=utf8") // 에디터에서 파일을 올렸을 때 저장하기
+
+	@GetMapping("/detailPost") // 하나의 게시글 보기
+	public ModelAndView detailPost(@RequestParam("postId") String postId, HttpServletRequest request) throws Exception {
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("detailPost", feedService.getOnePost(postId));
+		mv.setViewName("/detailPost");
+
+		return mv;
+	}
+
+	@GetMapping("/modifyPost") // 게시글 수정 정보 가져오기
+	public ModelAndView modifyPost(@RequestParam("postId") String postId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+
+		mv.addObject("detailPost", feedService.getOnePost(postId));
+		mv.setViewName("/modifyPost");
+
+		return mv;
+	}
+
+	@PostMapping("/modifyPost")
+	public ResponseEntity<Object> modifyPost(HttpServletRequest request, PostDto postDto) throws Exception {
+		feedService.modifyPost(postDto);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "<script>" + "alert('게시글이 수정되었습니다.');" + "location.href = '" + request.getContextPath()
+				+ "/post/detailPost?postId=" + postDto.getPostId() + "';" + "</script>";
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+
+	@GetMapping("/deletePost")
+	public ResponseEntity<Object> deletePost(HttpServletRequest request, @RequestParam("postId") String postId)
+			throws Exception {
+		feedService.deletePost(postId);
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "<script>" + "alert('게시글이 삭제되었습니다.');" + "location.href = '" + request.getContextPath()
+				+ "/post?id=" + request.getSession().getAttribute("memberId") + "';" + "</script>";
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+
+	@RequestMapping(value = "/fileUpload", produces = "application/json; charset=utf8") // 에디터에서 파일을 올렸을 때 저장하기
 										// json 형태로 response
 	@ResponseBody
-	public String fileUpload(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile) throws IOException {
-		
+	public String fileUpload(HttpServletRequest request, @RequestParam("file") MultipartFile multipartFile)
+			throws IOException {
+
 		JsonObject json = new JsonObject();
-		
+
 		String filePath = "C:\\postFile\\";
-		String fileName = UUID.randomUUID() + "_" +multipartFile.getOriginalFilename();
-		
+		String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
+
 		File file = new File(filePath + fileName);
-		
+
 		try {
 			InputStream inputStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(inputStream, file);
-			
+
 			json.addProperty("url", "/imgUpload/" + fileName); // 이미지 url 전송
 			json.addProperty("responseCode", "success");
 		} catch (Exception e) {
@@ -134,82 +184,23 @@ public class FeedController {
 			json.addProperty("responseCode", "error");
 			e.printStackTrace();
 		}
-		
+
 		return json.toString();
 	}
-	
-	@GetMapping("/detailPost") // 하나의 게시글 보기
-	public ModelAndView detailPost(@RequestParam("postId") String postId, HttpServletRequest request) throws Exception {
-		ModelAndView mv = new ModelAndView();
 
-		mv.addObject("detailPost", feedService.getOnePost(postId));
-		mv.setViewName("/detailPost");
-		
-		return mv;
-	}
-	
-	@GetMapping("/modifyPost") // 게시글 수정 정보 가져오기
-	public ModelAndView modifyPost(@RequestParam("postId") String postId) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("detailPost", feedService.getOnePost(postId));
-		mv.setViewName("/modifyPost");
-		
-		return mv;
-	}
-	
-	@PostMapping("/modifyPost")
-	public ResponseEntity<Object> modifyPost(HttpServletRequest request, PostDto postDto) throws Exception{
-		feedService.modifyPost(postDto);
-		
-		HttpHeaders responseHeaders = new HttpHeaders();
-	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-	    
-	    String jsScript = "<script>"
-	    				+ "alert('게시글이 수정되었습니다.');"
-	    				+ "location.href = '" + request.getContextPath() + "/post/detailPost?postId=" +  postDto.getPostId() + "';"
-	    				+ "</script>";
-	    
-		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
-	}
-	
-	@GetMapping("/deletePost")
-	public ResponseEntity<Object> deletePost(HttpServletRequest request, @RequestParam("postId") String postId) throws Exception{
-		feedService.deletePost(postId);
-		
-		HttpHeaders responseHeaders = new HttpHeaders();
-	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-	    
-	    String jsScript = "<script>"
-	    				+ "alert('게시글이 삭제되었습니다.');"
-	    				+ "location.href = '" + request.getContextPath() + "/post?id=" + request.getSession().getAttribute("memberId") + "';"
-	    				+ "</script>";
-	    
-		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
-	}
-	
-	@GetMapping("/category")
-	public ModelAndView getCategory() {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.setViewName("/category");
-		
-		return mv;
-	}
-	
-	
 	@GetMapping("/thumbnails") // 게시글 썸네일
-	public void thumbnails(@RequestParam("thumbnail") String thumbnailName, HttpServletResponse response) throws IOException {
-		OutputStream out = response.getOutputStream();	 // 데이터를 출력할 메서드
+	public void thumbnails(@RequestParam("thumbnail") String thumbnailName, HttpServletResponse response)
+			throws IOException {
+		OutputStream out = response.getOutputStream(); // 데이터를 출력할 메서드
 		String filePath = "C:\\thumbnailFile\\" + thumbnailName;
-		
+
 		File file = new File(filePath);
-		if(file.exists()) { // 받아온 파일이 존재한다면
+		if (file.exists()) { // 받아온 파일이 존재한다면
 			Thumbnails.of(file).size(800, 800).outputFormat("png").toOutputStream(out);
 		} else {
 			System.out.println("파일없음");
 		}
-		
+
 		byte[] buffer = new byte[1024 * 8];
 		out.write(buffer); // 파일을 바이트 단위로 출력
 		out.close();

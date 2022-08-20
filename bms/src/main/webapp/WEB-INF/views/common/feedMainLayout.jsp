@@ -6,7 +6,7 @@
 <!DOCTYPE html>
 <html lang="en" class="light-style layout-menu-fixed" dir="ltr" data-theme="theme-default" data-assets-path="../assets/" data-template="vertical-menu-template-free">
 <meta charset="UTF-8">
-<title> ${memberInfo.blogName } 블로그</title>
+<title> ${memberInfo.blogName }_심플로그</title>
 
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />

@@ -38,6 +38,7 @@ CREATE TABLE CATEGORY (
 );
 
 select * from category;
+delete from category where category_id = 3;
 
 CREATE TABLE COMMEND (
     commend_id 	INT AUTO_INCREMENT PRIMARY KEY,

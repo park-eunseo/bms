@@ -1,4 +1,4 @@
-package com.spring.bms.feed.dto;
+package com.spring.bms.category.dto;
 
 import org.springframework.stereotype.Component;
 

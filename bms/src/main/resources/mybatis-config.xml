@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-		<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
 	<settings>
@@ -9,6 +9,6 @@
 	<typeAliases>
 		<typeAlias type="com.spring.bms.member.dto.MemberDto" alias="MemberDto" />
 		<typeAlias type="com.spring.bms.feed.dto.PostDto" alias="PostDto" />
-		<typeAlias type="com.spring.bms.feed.dto.CategoryDto" alias="CategoryDto" />
+		<typeAlias type="com.spring.bms.category.dto.CategoryDto" alias="CategoryDto" />
 	</typeAliases>
 </configuration>

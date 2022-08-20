@@ -7,6 +7,11 @@
 <head>
 <meta charset="UTF-8">
 </head>
+<script>
+	function changeClass(title){
+		console.log(title)
+	}
+</script>
 <body>
 	<aside id="layout-menu"
 		class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
@@ -44,28 +49,27 @@
 			</div>
 		</div>
 		<div style="align-self: self-end;"> <!-- 카테고리 설정 -->
-			<button class="btn" onclick="location.href='${contextPath}/category/set'"><i class='bx bxs-cog' style="font-size: 1.3rem; color:#4e4e4e"></i></button>
+			<button class="btn" onclick="location.href='${contextPath}/setCategory'"><i class='bx bxs-cog' style="font-size: 1.3rem; color:#4e4e4e"></i></button>
 		</div>
 		<div>
 		<!-- 사이드 메뉴 -->
 		<ul class="menu-inner py-1">
 			<!-- Dashboard -->
-			<li class="menu-item active">
+			<li class="menu-item active" id="all">
 				<!-- 본 카테고리 --> 
 			 	<a href="index.html" class="menu-link"> 
 					<i class="menu-icon tf-icons bx bx-home-alt"></i>
 					전체
 			 	</a>
 			</li>
-
-			<!-- Layouts -->
-			<li class="menu-item">
-				<!-- 카테고리 열면 class 변경함 --> 
-				<a href="javascript:void(0);" class="menu-link"> 
-					<i class="menu-icon tf-icons bx bx-chevron-right bx-flip-vertical"></i>
-						여행
-				</a>
-			</li>
+			<c:forEach var="category" items="${categoryList }">
+				<li class="menu-item" id="${category.categoryTitle }">
+					<a href="${contextPath }/setCategory" onclick="changeClass()" class="menu-link"> 
+						<i class="menu-icon tf-icons bx bx-chevron-right bx-flip-vertical"></i>
+							${category.categoryTitle }
+					</a>
+				</li>
+			</c:forEach>
 		</ul>
 		</div>
 	</aside>

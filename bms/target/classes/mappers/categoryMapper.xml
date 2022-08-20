@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="category">
+	<select id="isCategoryCheck" parameterType="CategoryDto" resultType="CategoryDto">
+		SELECT 
+				*
+		FROM
+				CATEGORY
+		WHERE 
+				MEMBER_ID = #{memberId} AND CATEGORY_TITLE = #{categoryTitle}
+	</select>
+	
+	<insert id="insertCategory" parameterType="CategoryDto">
+		INSERT INTO 
+			CATEGORY(
+				MEMBER_ID,
+				CATEGORY_TITLE
+			)
+		VALUES(
+			#{memberId},
+			#{categoryTitle}
+		)
+	</insert>
+	
+	<select id="selectCategoryList" parameterType="String" resultType="CategoryDto">
+		SELECT
+				*
+		FROM
+			CATEGORY	
+		WHERE
+			MEMBER_ID = #{id} AND CATEGORY_TITLE NOT IN ('전체')
+	</select>
+</mapper>
