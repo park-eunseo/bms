@@ -6,26 +6,51 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
 <script>
+	var memberId = '<%=(String)session.getAttribute("memberId")%>'
+	var likeClick = false // 기본값 false
+	
+	$().ready(function(){
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/getLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId},
+			success : function(data){
+				if(data){ // 버튼을 이미 눌렀었다면
+					document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')
+					likeClick = true
+				} 
+			}
+		});
+	});
+
 	function deletePost(){
 		var check = confirm("삭제하시겠습니까?")
 		
 		if(check){
-			location.href="${contextPath }/blog/deletePost?postId=${detailPost.postId}"
+			location.href="${contextPath }/feed/deletePost?postId=${detailPost.postId}"
 		} else {
 			history.go(0)
 		}
 	}
 	
-	var likeClick = false // 기본값 false
-	
-	function likePost(){
-		if(likeClick == true){ // 좋아요 눌렀다가 떼는 과정
+	function likePost(){ 
+		if(likeClick == true){ // 좋아요 O -> 좋아요 X
+			$.ajax({
+				type : "get",
+				url : "${contextPath}/notLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId} 
+			});
+		
 			document.getElementById("likePost").classList.replace('bxs-heart', 'bx-heart')
 			likeClick = false
-		} else {
+		} else { // 좋아요 X -> 좋아요 O
+			$.ajax({
+				type : "get",
+				url : "${contextPath}/likePost?memberId=" + memberId + "&postId=" + ${detailPost.postId} 
+			});
+		
 			document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')	
-			likeClick = true
+			likeClick = true;
 		}
 	}
 </script>
@@ -43,7 +68,7 @@
 					<ul class="dropdown-menu dropdown-menu-end"
 						style="text-align-last: start; min-inline-size: auto;">
 						<li><a class="dropdown-item"
-							href="${contextPath }/blog/modifyPost?postId=${detailPost.postId}">수정하기</a></li>
+								href="${contextPath }/feed/modifyPost?postId=${detailPost.postId}">수정하기</a></li>
 						<li><button class="dropdown-item" onclick="deletePost()">삭제하기</button></li>
 					</ul>
 				</div>
@@ -51,10 +76,12 @@
 			<div>
 				
 			</div>
-			<div class="row pt-md-4" style="margin-top: -15px;">
-				<h1 class="mb-3"
-					style="text-align-last: center; word-break: break-all; padding-bottom: 20px; color:#000000">${detailPost.title }</h1>
-				<small class="text-muted">${detailPost.regDate }</small>
+			<div class="row pt-md-4" style="margin-top: -20px;">
+			<h4 style="text-align-last: center;color: #7676767d;font-weight: 200; padding-bottom: 10px;">
+						[${detailPost.categoryTitle }]</h4>
+				<h2 class="mb-3"
+					style="text-align-last: center; word-break: break-all; padding-bottom: 20px; color:#000000">${detailPost.title }</h2>
+				<span class="text-muted">${detailPost.regDate }</span>
 				<hr style="height: 0.03rem; margin-top: 1rem;">
 				<p style="text-align-last: center; color:#000000">${detailPost.content }</p>
 				
@@ -62,12 +89,15 @@
 				<div class="pt-5 mt-5">
 					<!-- 댓글 시작 -->
 					<div>
-						<button type="button" onclick="likePost()" class="btn" style="display: inline-flex;">
-						<i id="likePost" class='bx bx-heart' style="font-size: 1.2rem; color: red; margin-bottom: -10px;
-						margin-left: -20px;"></i>
+						<!-- 게시글 좋아요 -->
+						<button type="button" onclick="likePost()" id="likePost"
+								class="btn bx bx-heart" style="font-size: 1.2rem; color: red; margin-bottom: -15px; margin-left: -20px;">
 						</button>
-						<h6 style="margin-left: -22px; vertical-align: bottom; display: inline; font-size: 15px; color: #626262;">
-								2</h6>
+						<h6 id="likePostCount" style="margin-left: -22px; vertical-align: bottom; display: inline; font-size: 15px; color: #626262;">2</h6>
+						&ensp;
+						<!-- 댓글 -->
+						<i class="bx bx-message-rounded-dots" style="font-size: 1.2rem; margin-bottom: -15px;"></i>
+						<h6 style=" vertical-align: bottom; display: inline; font-size: 15px; color: #626262;">3</h6>
 					</div>
 					<hr>
 					<ul class="comment-list">
@@ -106,7 +136,7 @@
 					<div class="comment-form-wrap pt-5">
 						<form action="#" class="p-3 p-md-5 bg-light" style="margin-top: -40px;">
 							<div class="form-group">
-								<i class='bx bxs-message-rounded-dots'></i> &ensp;<label for="message">Message</label>
+								<i class="bx bx-message-rounded-dots"></i> &ensp;<label for="message">댓글</label>
 								<textarea name="" id="message"
 									style="resize: none; height: 60px; margin-bottom: 15px; margin-top: 8px;" placeholder="댓글을 남겨보세요."
 									cols="30" rows="5" class="form-control"></textarea>

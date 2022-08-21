@@ -8,5 +8,7 @@ public interface CategoryService {
 
 	public boolean addCategory(CategoryDto categoryDto) throws Exception;
 	public List<CategoryDto> getCategoryList(String id) throws Exception;
+	public boolean modifyCategory(CategoryDto categoryDto) throws Exception;
+	public void deleteCategory(CategoryDto categoryDto) throws Exception;
 
 }

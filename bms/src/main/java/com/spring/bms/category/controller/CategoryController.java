@@ -34,7 +34,7 @@ public class CategoryController {
 	}
 	
 	@GetMapping("/addCategory")
-	public  ResponseEntity<Object> addCategory(HttpServletRequest request, CategoryDto categoryDto) throws Exception{
+	public ResponseEntity<Object> addCategory(HttpServletRequest request, CategoryDto categoryDto) throws Exception{
 		boolean isCheck = categoryService.addCategory(categoryDto);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -49,6 +49,35 @@ public class CategoryController {
 		} else {
 			jsScript = "<script>" + "alert('중복된 카테고리명입니다.');" 
 					+ "history.go(-1);"
+					+ "</script>";
+		}
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
+	@GetMapping("resetCategory")
+	public ResponseEntity<Object> resetCategory(HttpServletRequest request, CategoryDto categoryDto, 
+															@RequestParam("action") String action) throws Exception{
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "";
+		
+		if(action.equals("modify")) {
+			if(categoryService.modifyCategory(categoryDto)) { // 기존 카테고리명과 중복된 게 없다면 true
+				jsScript = "<script>" + "alert('카테고리명이 수정되었습니다.');" 
+							+ "location.href='" + request.getContextPath() + "/setCategory';"
+							+ "</script>";
+			} else {
+					jsScript = "<script>" + "alert('중복된 카테고리명입니다.');" 
+						+ "history.go(-1);"
+						+ "</script>";
+			}
+		} else {
+			categoryService.deleteCategory(categoryDto);
+			
+			jsScript = "<script>" + "alert('카테고리가 삭제되었습니다.');" 
+					+ "location.href='" + request.getContextPath() + "/setCategory';"
 					+ "</script>";
 		}
 

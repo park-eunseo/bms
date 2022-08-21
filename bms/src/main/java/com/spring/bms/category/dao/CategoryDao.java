@@ -8,5 +8,7 @@ public interface CategoryDao {
 
 	public boolean insertCategory(CategoryDto categoryDto) throws Exception;
 	public List<CategoryDto> selectCategoryList(String id) throws Exception;
+	public boolean udpateCategory(CategoryDto categoryDto) throws Exception;
+	public void deleteCategory(CategoryDto categoryDto) throws Exception;
 
 }

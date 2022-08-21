@@ -15,7 +15,7 @@
 			)
 		VALUES(
 				#{memberId},
-				#{categoryTitle}
+				#{categoryTitle},
 				#{title},
 				#{thumbnail},
 				#{content},
@@ -48,6 +48,8 @@
 		 		POST
 		 WHERE
 		 		MEMBER_ID = #{memberId}
+		 ORDER BY
+		 		REG_DATE DESC
 	</select>
 	
 	<select id="selectOnePost" parameterType="String" resultType="PostDto">
@@ -70,7 +72,7 @@
 		UPDATE
 				POST
 		SET
-				CATEGORY_TITLE,
+				CATEGORY_TITLE = #{categoryTitle},
 				TITLE = #{title},
 				THUMBNAIL = #{thumbnail},
 				CONTENT = #{content},

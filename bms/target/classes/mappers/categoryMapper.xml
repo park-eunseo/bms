@@ -31,4 +31,20 @@
 		WHERE
 			MEMBER_ID = #{id} AND CATEGORY_TITLE NOT IN ('전체')
 	</select>
+	
+	<update id="updateCategory" parameterType="CategoryDto">
+		UPDATE
+				CATEGORY
+		SET
+				CATEGORY_TITLE = #{categoryTitle}
+		WHERE
+				CATEGORY_ID = #{categoryId}
+	</update>
+	
+	<delete id="deleteCategory" parameterType="CategoryDto">
+		DELETE FROM
+				CATEGORY
+		WHERE
+				CATEGORY_ID = #{categoryId}
+	</delete>
 </mapper>

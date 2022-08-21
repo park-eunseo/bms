@@ -24,5 +24,15 @@ public class CategoryServiceImpl implements CategoryService {
 		return categoryDao.selectCategoryList(id);
 	}
 
+	@Override
+	public boolean modifyCategory(CategoryDto categoryDto) throws Exception {
+		return categoryDao.udpateCategory(categoryDto);
+	}
+
+	@Override
+	public void deleteCategory(CategoryDto categoryDto) throws Exception {
+		categoryDao.deleteCategory(categoryDto);
+	}
+
 
 }

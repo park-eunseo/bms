@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="like">
+	<insert id="insertLikePost" parameterType="LikePostDto">
+		INSERT INTO
+				LIKEPOST(
+					MEMBER_ID,
+					POST_ID
+				)
+		VALUES(
+			#{memberId},
+			#{postId}
+		)	
+	</insert>
+	
+	<select id="selectLikePost" parameterType="LikePostDto" resultType="LikePostDto">
+		SELECT
+				*
+		FROM	
+				LIKEPOST
+		WHERE 
+				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
+	</select>
+	
+	<delete id="deleteLikePost" parameterType="LikePostDto">
+		DELETE FROM 
+				LIKEPOST
+		WHERE
+				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
+	</delete>
+</mapper>

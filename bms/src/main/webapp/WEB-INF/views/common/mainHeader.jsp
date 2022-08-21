@@ -12,7 +12,7 @@
 	<div id="spinner"
 		class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
 		<div class="spinner-border text-secondary" role="status">
-			<span class="visually-hidden">Loading...</span>
+			<span class="visually-hidden">Loading</span>
 		</div>
 	</div>
 	<!-- Spinner End -->
@@ -31,17 +31,18 @@
 		<!-- Search -->
 		<div class="navbar-collapse collapse" id="navbarCollapse">
 			<div>
-			 <form class="d-flex"> <!-- 전체 회원 범위 -->
-					<select id="smallSelect" class="form-select form-select-sm" 
-							style="display: inline-block;border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right: none; width: fit-content;">
-	                          <option>전체</option>
-	                          <option value="authorId">작성자</option>
-	                          <option value="blogName">블로그명</option>
-	                          <option value="post">게시물</option>
-	                </select>
+				<form class="d-flex">
+					<!-- 전체 회원 범위 -->
 					<div class="input-group">
-						<input type="text" class="form-control" style="border-start-start-radius: 0px; border-bottom-left-radius: 0px; "
-								placeholder="Search">
+						<select id="smallSelect" class="form-select form-select-sm"
+							style="display: inline-block; box-shadow: none; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right: none;  max-width: max-content;">
+							<option>전체</option>
+							<option value="authorId">작성자</option>
+							<option value="blogName">블로그명</option>
+							<option value="post">게시물</option>
+						</select> <input type="text" class="form-control"
+							style="border-start-start-radius: 0px; border-bottom-left-radius: 0px;"
+							placeholder="Search">
 						<button type="submit" class="input-group-text">
 							<i class="tf-icons bx bx-search"></i>
 						</button>

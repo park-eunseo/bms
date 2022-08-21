@@ -1,14 +1,17 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
-<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
+<c:set var="contextPath" value="${pageContext.request.contextPath }" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+<link
+	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <script>
 	function uploadSummernoteImageFile(file, el){
 		data = new FormData();
@@ -16,7 +19,7 @@
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "${contextPath}/blog/fileUpload",
+			url : "${contextPath}/feed/fileUpload",
 			contentType : false,
 			enctype : "multipart/form-data",
 			processData : false,
@@ -71,27 +74,49 @@
 </script>
 </head>
 <body>
-		<!-- HTML5 Inputs -->
-		<form id="formAuthentication" action="${contextPath }/blog/modifyPost" onsubmit="return postCheck()" name="postForm" method="post" >
-		  <div class="mb-4">
-			<div class="card-body" style="width: max-content;">
-				<input type="hidden" name="postId" value="${detailPost.postId }">
-				<div class="mb-3 row">
-					<label class="col-md-2 col-form-label" style="width: 100%">제목</label>
-					<div class="col-md-10" style="width: 900px;">
-						<input class="form-control" onkeyup="checkTitle(this)" type="text" value="${detailPost.title}" placeholder="제목을 입력하세요." name="title" id="title">
-						<small id="titleLen">(0/50byte)</small>
-	                	<br>
-	               		<small id="titleAlert" style="color:red"></small>
-					</div>
+	<!-- HTML5 Inputs -->
+	<form id="formAuthentication" action="${contextPath }/feed/modifyPost" enctype="multipart/form-data" onsubmit="return postCheck()" name="postForm" method="post">
+		<div class="card-body" style="width: max-content;">
+			<input type="hidden" name="postId" value="${detailPost.postId }">
+			<div class="mb-3">
+				<label class="col-md-2 col-form-label" style="width: 100%">카테고리</label>
+				<div class="col-md-10" style="width: 900px;">
+					<select class="form-select form-select-sm" name="categoryTitle"
+						style="display: inline-block; box-shadow: none; max-width: max-content;">
+						<option value="all"
+							<c:if test="${detailPost.categoryTitle eq '전체' }">selected</c:if>>전체</option>
+						<c:forEach var="category" items="${categoryList }">
+							<option value="${category.categoryTitle }"
+								<c:if test="${detailPost.categoryTitle eq category.categoryTitle }">selected</c:if>>
+								${category.categoryTitle }</option>
+						</c:forEach>
+					</select>
 				</div>
-				<div class="mb-3 row">
-					<label class="col-md-2 col-form-label" style="width: 100%">내용</label>
-					<div class="col-md-10" style="width: 900px;">
-						<textarea id="content" name="content">${detailPost.content }</textarea>
-						<br>
-	               		<small id="contentAlert" style="color:red"></small>
-						<script type="text/javascript">
+			</div>
+			<div class="mb-3">
+				<label class="col-md-2 col-form-label" style="width: 100%">제목</label>
+				<div class="col-md-10" style="width: 900px;">
+					<input class="form-control" onkeyup="checkTitle(this)" type="text"
+						value="${detailPost.title}" placeholder="제목을 입력하세요." name="title"
+						id="title"> <small id="titleLen">(0/50byte)</small> <br>
+					<small id="titleAlert" style="color: red"></small>
+				</div>
+			</div>
+			<div class="mb-3">
+				<label class="col-md-2 col-form-label" style="width: 100%">대표 사진 설정&ensp; 
+					<small class="text-muted"> 내용에 첨부되지 않습니다.</small>
+				</label>
+				<div class="col-md-10" style="width: 900px;">
+					<input type="file" accept="image/png, image/jpeg"
+						class="form-control" id="inputGroupFile02" name="thumbnail">
+				</div>
+			</div>
+			<div class="mb-3">
+				<label class="col-md-2 col-form-label" style="width: 100%">내용</label>
+				<div class="col-md-10" style="width: 900px;">
+					<textarea id="content" name="content">${detailPost.content }</textarea>
+					<br> <small id="contentAlert" style="color: red"></small>
+					<script type="text/javascript">
 							$("#content").summernote({
 								height : 500, // 에디터 높이
 								minHeight : null, // 최소 높이
@@ -127,20 +152,23 @@
 								}	
 							});
 						</script>
-					</div>
 				</div>
-				<div class="form-check form-check-inline mt-3" >
-					<input class="form-check-input" type="radio" name="postPrivate" value="N" checked="checked"> 
-						<label class="form-check-label" for="inlineRadio1">공개</label>
-				</div>
-				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="postPrivate"" value="Y"> 
-						<label class="form-check-label" for="inlineRadio2">비공개</label>
-				</div>
-				<br><br>
-				<button class="btn rounded-pill btn-outline-dark" >저장</button>
 			</div>
+			<div class="form-check form-check-inline mt-3">
+				<input class="form-check-input" type="radio" name="postPrivate"
+					value="N" checked="checked"> <label
+					class="form-check-label" for="inlineRadio1">공개</label>
+			</div>
+			<div class="form-check form-check-inline">
+				<input class="form-check-input" type="radio" name="postPrivate"
+					" value="Y"> <label class="form-check-label"
+					for="inlineRadio2">비공개</label>
+			</div>
+			<br>
+			<br>
+			<button class="btn rounded-pill btn-outline-dark">저장</button>
 		</div>
+		<input type="hidden" name="postId" value="${detailPost.postId }">
 	</form>
 </body>
 </html>

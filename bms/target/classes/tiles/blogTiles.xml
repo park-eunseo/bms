@@ -61,8 +61,8 @@
 		<put-attribute name="content" value="/WEB-INF/views/client/feed//modifyPost.jsp"></put-attribute>
 	</definition>
 	
-	<definition name="/favorites" extends="detailLayout">	<!-- 즐겨찾기 회원 및 글-->
-		<put-attribute name="content" value="/WEB-INF/views/client/favorites/favorites.jsp"></put-attribute>
+	<definition name="/likeList" extends="detailLayout">	<!-- 즐겨찾기 회원 및 글-->
+		<put-attribute name="content" value="/WEB-INF/views/client/like/likeList.jsp"></put-attribute>
 		<put-attribute name="title" value="즐겨찾기"></put-attribute>
 	</definition>
 	

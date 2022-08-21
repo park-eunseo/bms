@@ -38,7 +38,18 @@ CREATE TABLE CATEGORY (
 );
 
 select * from category;
-delete from category where category_id = 3;
+delete from category where category_id in (9, 11, 12, 13);
+
+CREATE TABLE likePost (
+    like_post_id INT AUTO_INCREMENT PRIMARY KEY,
+	member_id 	 VARCHAR(20), -- 자기자신 ID
+    post_id 	 VARCHAR(20), -- 좋아요 누른 게시글 ID
+    FOREIGN KEY (member_id)
+        REFERENCES member (id)
+        ON DELETE CASCADE
+);
+select * from likePost;
+delete from likePost where like_post_id in (6);
 
 CREATE TABLE COMMEND (
     commend_id 	INT AUTO_INCREMENT PRIMARY KEY,
@@ -61,15 +72,6 @@ CREATE TABLE favoriteMember (
         REFERENCES member (id)
         ON DELETE CASCADE,
 	FOREIGN KEY (favorite_member_id)
-        REFERENCES member (id)
-        ON DELETE CASCADE
-);
-
-CREATE TABLE favoritePost (
-    id 				 INT AUTO_INCREMENT PRIMARY KEY,
-	member_id 		 VARCHAR(20), -- 자기자신 ID
-    favorite_post_id INT,		  -- 좋아요 누른 게시글 ID
-    FOREIGN KEY (member_id)
         REFERENCES member (id)
         ON DELETE CASCADE
 );

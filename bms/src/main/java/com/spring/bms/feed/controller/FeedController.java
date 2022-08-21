@@ -57,8 +57,8 @@ public class FeedController {
 			content = content.replaceAll("&lt(;)?(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?&gt(;)?", "");
 
 			// 게시글 내용 html 태그 다 제거 후
-			if (content.length() > 30)
-				content = content.substring(0, 30) + "...";
+			if (content.length() > 50)
+				content = content.substring(0, 50) + "...";
 				postDto.setContent(content);
 		}
 
@@ -83,6 +83,7 @@ public class FeedController {
 
 		PostDto postDto = new PostDto();
 		postDto.setMemberId(multipartRequest.getParameter("memberId"));
+		postDto.setCategoryTitle(multipartRequest.getParameter("categoryTitle"));
 		postDto.setTitle(multipartRequest.getParameter("title"));
 		postDto.setContent(multipartRequest.getParameter("content"));
 		postDto.setPostPrivate(multipartRequest.getParameter("postPrivate"));
@@ -108,7 +109,7 @@ public class FeedController {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
 		String jsScript = "<script>" + "alert('게시글이 등록되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/post?id=" + postDto.getMemberId() + "';" + "</script>";
+				+ "/feed?id=" + postDto.getMemberId() + "';" + "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -134,14 +135,36 @@ public class FeedController {
 	}
 
 	@PostMapping("/modifyPost")
-	public ResponseEntity<Object> modifyPost(HttpServletRequest request, PostDto postDto) throws Exception {
+	public ResponseEntity<Object> modifyPost(HttpServletRequest request, MultipartHttpServletRequest multipartRequest) throws Exception {
+		PostDto postDto = new PostDto();
+		postDto.setPostId(multipartRequest.getParameter("postId"));
+		postDto.setCategoryTitle(multipartRequest.getParameter("categoryTitle"));
+		postDto.setTitle(multipartRequest.getParameter("title"));
+		postDto.setContent(multipartRequest.getParameter("content"));
+		postDto.setPostPrivate(multipartRequest.getParameter("postPrivate"));
+
+		Iterator<String> file = multipartRequest.getFileNames();
+		String filePath = "C:\\thumbnailFile\\";
+
+		if (file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
+			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
+
+			if (!multipartFile.getOriginalFilename().isEmpty()) {
+				String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename(); // 이미지 이름이 중복되지 않도록 고유
+																								 // 식별 사용
+				File f = new File(filePath + fileName);
+				multipartFile.transferTo(f);
+				postDto.setThumbnail(fileName);
+			}
+		}
+		
 		feedService.modifyPost(postDto);
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
 		String jsScript = "<script>" + "alert('게시글이 수정되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/post/detailPost?postId=" + postDto.getPostId() + "';" + "</script>";
+				+ "/feed/detailPost?postId=" + postDto.getPostId() + "';" + "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -155,7 +178,7 @@ public class FeedController {
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
 		String jsScript = "<script>" + "alert('게시글이 삭제되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/post?id=" + request.getSession().getAttribute("memberId") + "';" + "</script>";
+				+ "/feed?id=" + request.getSession().getAttribute("memberId") + "';" + "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}

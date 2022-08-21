@@ -42,7 +42,7 @@
 				<hr style="width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px; ">
 				<button type="button" class="btn rounded-pill btn-dark"
 					style="padding: 0.4375rem 0.5rem; display: list-item;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;"
-					onclick="location.href='${contextPath}/favorites'">
+					onclick="location.href='${contextPath}/likeList'">
 					<span class="tf-icons bx bxs-star"></span>
 				</button>
 				<hr style="width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px; "">

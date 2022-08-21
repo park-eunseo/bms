@@ -72,12 +72,22 @@
 </script>
 </head>
 <body>
-		<!-- HTML5 Inputs -->
-		<form id="formAuthentication" action="${contextPath }/blog/write" enctype="multipart/form-data" onsubmit="return postCheck()" name="postForm" method="post" >
-		  <div class="mb-4">
-			<div class="card-body" style="width: max-content;">
-				<input type="hidden" name="authorId" value="${sessionScope.memberId }">
-				<div class="mb-3 row">
+<!-- HTML5 Inputs -->
+	<form id="formAuthentication" action="${contextPath }/feed/writePost" enctype="multipart/form-data" onsubmit="return postCheck()" name="postForm" method="post" >
+		<div class="card-body" style="width: max-content;">
+			<div class="mb-3">
+				<label class="col-md-2 col-form-label" style="width: 100%">카테고리</label>
+					<div class="col-md-10" style="width: 900px;">
+						<select class="form-select form-select-sm" name="categoryTitle"
+							style="display: inline-block; box-shadow: none; max-width: max-content;">
+							<option value="전체" selected="selected">전체</option>
+							<c:forEach var="category" items="${categoryList }">
+								<option value="${category.categoryTitle }">${category.categoryTitle }</option>
+							</c:forEach>
+						</select>
+					</div>
+				</div>
+				<div class="mb-3">
 					<label class="col-md-2 col-form-label" style="width: 100%">제목</label>
 					<div class="col-md-10" style="width: 900px;">
 						<input class="form-control" onkeyup="checkTitle(this)" type="text" placeholder="제목을 입력하세요." name="title" id="title">
@@ -86,14 +96,14 @@
 	               		<small id="titleAlert" style="color:red"></small>
 					</div>
 				</div>
-				<div class="mb-3 row">
+				<div class="mb-3">
 					<label class="col-md-2 col-form-label" style="width: 100%">대표 사진 설정&ensp;
 						<small class="text-muted"> 내용에 첨부되지 않습니다.</small></label>
 					<div class="col-md-10" style="width: 900px;">
 						<input type="file" accept="image/png, image/jpeg" class="form-control" id="inputGroupFile02" name="thumbnail">
 					</div>
 				</div>
-				<div class="mb-3 row">
+				<div class="mb-3">
 					<label class="col-md-2 col-form-label" style="width: 100%">내용</label>
 					<div class="col-md-10" style="width: 900px;">
 						<textarea id="content" name="content"></textarea>
@@ -142,13 +152,13 @@
 						<label class="form-check-label" for="inlineRadio1">공개</label>
 				</div>
 				<div class="form-check form-check-inline">
-					<input class="form-check-input" type="radio" name="postPrivate"" value="Y"> 
+					<input class="form-check-input" type="radio" name="postPrivate" value="Y"> 
 						<label class="form-check-label" for="inlineRadio2">비공개</label>
 				</div>
 				<br><br>
 				<button class="btn rounded-pill btn-outline-dark" >저장</button>
 			</div>
-		</div>
+		<input type="hidden" name="memberId" value="${sessionScope.memberId }">
 	</form>
 </body>
 </html>
