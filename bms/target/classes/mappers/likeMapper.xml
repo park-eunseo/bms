@@ -29,4 +29,28 @@
 		WHERE
 				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
 	</delete>
+	
+	<select id="selectLikeCount" parameterType="LikePostDto" resultType="int">
+		SELECT
+				COUNT(*)
+		FROM 
+				LIKEPOST
+		WHERE
+				POST_ID = #{postId}
+	</select>
+	
+	<select id="selectLikePostList" parameterType="String" resultType="PostDto">
+		SELECT
+				P.MEMBER_ID AS MEMBER_ID,
+				P.TITLE	AS TITLE,
+				P.CONTENT AS CONTENT,
+				P.POST_ID AS POST_ID
+		FROM
+				POST P 
+					 LEFT JOIN LIKEPOST L
+					 ON P.POST_ID = L.POST_ID
+		WHERE
+				L.MEMBER_ID = #{id} 
+				
+	</select>
 </mapper>

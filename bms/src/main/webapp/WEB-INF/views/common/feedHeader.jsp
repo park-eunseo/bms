@@ -6,6 +6,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<script>
+	function search(){
+		var searchWord = document.getElementById("searchWord")
+		location.href = "${contextPath}/feed?id=${memberInfo.id}&searchWord=" + searchWord.value
+	}
+</script>
 </head>
 <body>
 	<nav
@@ -22,14 +28,13 @@
 
 			<!-- Search -->
 			<div class="navbar-nav align-items-center" style="display: -webkit-inline-box;">
-				<form class="d-flex"> <!-- 해당 블로그 회원 범위 -->
+			 <!-- 현재 페이지인 블로그 범위 -->
 					<div class="input-group">
-						<input type="text" class="form-control" placeholder="Search">
-						<button type="submit" class="input-group-text">
+						<input type="text" id="searchWord" class="form-control" placeholder="Search">
+						<button type="button" class="input-group-text" onclick="search()">
 							<i class="tf-icons bx bx-search"></i>
 						</button>
 					</div>
-				</form>
 			</div>
 			<hr>
 			<!-- /Search -->

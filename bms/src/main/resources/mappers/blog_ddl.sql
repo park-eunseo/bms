@@ -49,7 +49,7 @@ CREATE TABLE likePost (
         ON DELETE CASCADE
 );
 select * from likePost;
-delete from likePost where like_post_id in (6);
+delete from likePost where like_post_id between 20 and 30;
 
 CREATE TABLE COMMEND (
     commend_id 	INT AUTO_INCREMENT PRIMARY KEY,

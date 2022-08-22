@@ -6,13 +6,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-</head>
 <script>
-	function changeClass(title){
-		console.log(title)
+	var selected = document.getElementsByClassName("menu-item active")[0] // 선택 전 선택되어 있었던 카테고리 
+	var select = '<%=(String)session.getAttribute("category")%>'
+	console.log(selected.id)
+	
+	if(selected.id != select){
+		selected.className = "menu-item"
+		document.getElementById(title).className += ' active'
 	}
 </script>
-<body>
+</head>
 	<aside id="layout-menu"
 		class="layout-menu menu-vertical menu bg-menu-theme" data-bg-class="bg-menu-theme">
 		<div class="app-brand demo">
@@ -58,20 +62,26 @@
 		<!-- 사이드 메뉴 -->
 		<ul class="menu-inner py-1">
 			<!-- Dashboard -->
-			<li class="menu-item active" id="all">
-				<!-- 본 카테고리 --> 
-			 	<a href="${contextPath }/feed?id=${memberInfo.id}" class="menu-link"> 
-					<i class="menu-icon tf-icons bx bx-home-alt"></i>
-					전체
-			 	</a>
-			</li>
+
 			<c:forEach var="category" items="${categoryList }">
-				<li class="menu-item" id="${category.categoryTitle }">
-					<a href="${contextPath }/setCategory" onclick="changeClass()" class="menu-link"> 
-						<i class="menu-icon tf-icons bx bx-chevron-right bx-flip-vertical"></i>
-							${category.categoryTitle }
-					</a>
-				</li>
+				<c:choose>
+					<c:when test="${category.categoryTitle eq '전체'}">
+						<li class="menu-item active" id="${category.categoryTitle}">
+							<a href="${contextPath }/feed?id=${memberInfo.id}" class="menu-link"
+								onclick="active('${category.categoryTitle }')">
+								<i class="menu-icon tf-icons bx bx-home-alt"></i> 전체
+							</a>
+						</li>
+					</c:when>
+					<c:otherwise>
+						<li class="menu-item" id="${category.categoryTitle }">
+							<a href="${contextPath}/feed?id=${memberInfo.id}&category=${category.categoryTitle }"
+									onclick="active('${category.categoryTitle }')" class="menu-link">
+								<i class="menu-icon tf-icons bx bx-chevron-right bx-flip-vertical"></i>
+									${category.categoryTitle }
+						</a></li>
+					</c:otherwise>
+				</c:choose>
 			</c:forEach>
 		</ul>
 		</div>

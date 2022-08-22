@@ -1,9 +1,12 @@
 package com.spring.bms.like.dao;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.like.dto.LikePostDto;
 
 @Repository
@@ -30,6 +33,16 @@ public class LikePostDaoImpl implements LikePostDao {
 	@Override
 	public void deleteLikePost(LikePostDto likePostDto) throws Exception {
 		sqlSession.delete("like.deleteLikePost", likePostDto);
+	}
+
+	@Override
+	public int selectLikeCount(LikePostDto likePostDto) throws Exception {
+		return sqlSession.selectOne("like.selectLikeCount", likePostDto);
+	}
+
+	@Override
+	public List<PostDto> selectLikePostList(String id) throws Exception {
+		return sqlSession.selectList("like.selectLikePostList", id);
 	}
 
 }

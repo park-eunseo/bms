@@ -13,7 +13,8 @@
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
-	</script>
+	var memberId = '<%=(String)session.getAttribute("memberId")%>'
+</script>
 </head>
 
 <body>
@@ -32,14 +33,35 @@
 										src="${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}"
 										alt="Card image cap">
 								</c:if>
-								<div class="card-body" style="padding:1.2rem">
+								<div class="card-body" style="padding: 1.2rem">
 									<h5 class="card-title"
 										style="height: 19.792px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${post.title }</h5>
 									<p class="card-text" id="content">${post.content }</p>
-									<small class="text-muted">${post.categoryTitle} | ${post.regDate }</small>	
+									<small class="text-muted">${post.categoryTitle} | ${post.regDate }</small>
 									<div style="text-align: end;">
-										<small id="likePost" class='bx bx-heart' style="color: red; font-size: 1.1rem;"></small>
-										<small style="font-size: 0.8rem;">2</small>&ensp;
+									<!-- 좋아요 -->
+										<small id="likeBtn${post.postId}" class='bx bx-heart' style="color: red; font-size: 1.1rem;"></small> 
+										<small id="likeCount${post.postId}" style="font-size: 0.8rem;">0</small>&ensp;
+										<script>
+											$().ready(function(){
+												$.ajax({
+													type : "get",
+													url : "${contextPath}/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
+													success : function(data){
+														if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
+													}
+												})
+												
+												$.ajax({
+													type : "get",
+													url : "${contextPath}/getLikeCount?memberId=" + memberId + "&postId=" + ${post.postId},
+													success : function(data){
+														document.getElementById("likeCount${post.postId}").innerText = data
+													}
+												})
+											})
+										</script>
+										<!-- 댓글 -->
 										<small><i class="bx bx-message-rounded-dots" style="font-size: 1.1rem;"></i></small>
 										<small style="font-size: 0.8rem;">0</small>
 									</div>
@@ -50,10 +72,7 @@
 				</c:forEach>
 			</c:if>
 		</div>
-		<c:if test="${empty memberPostList }">
+		<c:if test="${empty memberPostList}">
 			<h5 style="text-align-last: center;">게시글이 없습니다.</h5>
 		</c:if>
 	</div>
-
-</body>
-</html>

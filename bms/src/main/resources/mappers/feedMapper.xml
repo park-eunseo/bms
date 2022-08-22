@@ -34,7 +34,7 @@
 				ID = #{id}
 	</select>
 	
-	<select id="selectPostList" parameterType="String" resultType="PostDto">
+	<select id="selectPostList" parameterType="hashmap" resultType="PostDto">
 		 SELECT
 		 		POST_ID,
 		 		MEMBER_ID,
@@ -47,7 +47,16 @@
 		 FROM	
 		 		POST
 		 WHERE
-		 		MEMBER_ID = #{memberId}
+		 		MEMBER_ID = #{id} AND 
+		 		<choose>
+		 			<when test='category == null'>
+		 				(TITLE LIKE CONCAT('%', #{searchWord}, '%') OR CONTENT LIKE CONCAT('%', #{searchWord}, '%'))		 			
+		 			</when>
+		 			<otherwise>
+		 				CATEGORY_TITLE = #{category}
+		 			</otherwise>
+		 		</choose>
+		 		
 		 ORDER BY
 		 		REG_DATE DESC
 	</select>

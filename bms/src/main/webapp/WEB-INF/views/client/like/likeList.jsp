@@ -1,10 +1,26 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<c:set var="contextPath" value="${pageContext.request.contextPath }"/>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 </head>
+<script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
+<script>
+	var memberId = '<%=(String)session.getAttribute("memberId")%>'
+	
+	function deleteLikePost(postId){
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/notLikePost?memberId=" + memberId + "&postId=" + postId,
+			success : function(){
+				history.go(0)
+			}			
+		})	
+	}
+</script>
 <body>
 	<div class="content-wrapper">
 		<div class="container-xxl flex-grow-1 container-p-y" style="margin-top: 20px;">
@@ -26,7 +42,7 @@
 									게시글</button>
 							</li>
 						</ul>
-						<div class="tab-content" style="box-shadow: none;">
+						<div class="tab-content" style="box-shadow: none; padding: inherit;">
 							<div class="tab-pane fade active show" id="navs-top-home"
 								role="tabpanel">
 								<div class="table-responsive text-nowrap">
@@ -57,26 +73,40 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
-												<th>nickname</th>
+												<th style="padding-left: 35px;">ID</th>
 												<th>Title</th>
 												<th>Content</th>
 												<th>Actions</th>
 											</tr>
 										</thead>
-										<tbody class="table-border-bottom-0">
-											<tr>
-												<td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-													<strong>루루루</strong></td>
-												<td>오늘의 강릉 여행 일기</td>
-												<td>가족끼리 여행을 하러 어쩌고저쩌고 ...</td>
-												<td style="padding-left: 30px;">
-													<button type="button"
-														class="btn btn-icon btn-outline-danger">
-														<i class='bx bx-x'></i>
-													</button>
-												</td>
-											</tr>
-										</tbody>
+										<c:if test="${not empty likePostList }">
+											<c:forEach var="list" items="${likePostList }">
+												<tbody class="table-border-bottom-0">
+													<tr>
+														<td><i class="fab fa-angular fa-lg text-danger me-3"></i>
+															<strong>${list.memberId }</strong></td>
+														<td><a href="${contextPath }/feed/detailPost?postId=${list.postId}">${list.title }</a></td>
+														<td>${list.content }</td>
+														<td>
+															<button type="button" onclick="deleteLikePost('${list.postId}')"
+																style="width: 1.5rem; height: 1.5rem;"
+																class="btn btn-icon btn-outline-danger">
+																<i class='bx bx-x'></i>
+															</button>
+														</td>
+													</tr>
+												</tbody>
+											</c:forEach>
+										</c:if>
+										<c:if test="${empty likePostList }">
+											<tbody class="table-border-bottom-0">
+												<tr>
+													<td colspan="4" style="text-align-last: center;">
+														좋아하는 게시글이 없습니다.
+													</td>
+												</tr>
+											</tbody>
+										</c:if>
 									</table>
 								</div>
 							</div>

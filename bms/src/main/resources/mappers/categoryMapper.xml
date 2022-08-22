@@ -29,7 +29,7 @@
 		FROM
 			CATEGORY	
 		WHERE
-			MEMBER_ID = #{id} AND CATEGORY_TITLE NOT IN ('전체')
+			MEMBER_ID = #{id}
 	</select>
 	
 	<update id="updateCategory" parameterType="CategoryDto">

@@ -1,6 +1,7 @@
 package com.spring.bms.feed.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +26,8 @@ public class FeedDaoImpl implements FeedDao {
 	}
 	
 	@Override
-	public List<PostDto> selectPostList(String id) throws Exception {
-		return sqlSession.selectList("feed.selectPostList", id);
+	public List<PostDto> selectPostList(Map<String, String> postMap) throws Exception {
+		return sqlSession.selectList("feed.selectPostList", postMap);
 	}
 
 	@Override

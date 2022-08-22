@@ -4,8 +4,10 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 import javax.servlet.http.HttpServletRequest;
@@ -42,27 +44,35 @@ public class FeedController {
 	
 	@Autowired
 	private CategoryService categoryService;
-
+	
 	@GetMapping("")
-	public String feed(@RequestParam(value = "id") String id, HttpServletRequest request) throws Exception {
-		// List<PostDto> postList = feedService.getPostList(id);
-		// mv.addObject("postList", postList);
-
-		// mv.addObject("memberInfo", feedService.getOneMember(id));
-		// mv.setViewName("/feedHome");
-		List<PostDto> postList = feedService.getPostList(id);
+	public String feed(@RequestParam("id") String id, 
+						@RequestParam(name = "searchWord", defaultValue = "") String searchWord, 
+						@RequestParam(name = "category", required = false) String category,
+						HttpServletRequest request) throws Exception {
+		
+		HttpSession session = request.getSession();
+		Map<String, String> postMap = new HashMap<>();
+		postMap.put("id", id);
+		
+		if(category == null) {
+			postMap.put("searchWord", searchWord);
+		} else {
+			postMap.put("category", category);
+		}
+		
+		List<PostDto> postList = feedService.getPostList(postMap);
 
 		for (PostDto postDto : postList) {
 			String content = postDto.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 			content = content.replaceAll("&lt(;)?(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?&gt(;)?", "");
 
 			// 게시글 내용 html 태그 다 제거 후
-			if (content.length() > 50)
+			if (content.length() > 50) 
 				content = content.substring(0, 50) + "...";
 				postDto.setContent(content);
+			
 		}
-
-		HttpSession session = request.getSession();
 
 		session.setAttribute("memberInfo", feedService.getOneMember(id)); 		// 해당 블로그 회원의 정보 select
 		session.setAttribute("memberPostList", postList); 						// 해당 회원의 게시물 전체 select

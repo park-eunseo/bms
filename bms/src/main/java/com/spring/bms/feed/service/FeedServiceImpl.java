@@ -1,6 +1,7 @@
 package com.spring.bms.feed.service;
 
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -25,8 +26,8 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<PostDto> getPostList(String id) throws Exception {
-		return feedDao.selectPostList(id);
+	public List<PostDto> getPostList(Map<String, String> postMap) throws Exception {
+		return feedDao.selectPostList(postMap);
 	}
 
 	@Override

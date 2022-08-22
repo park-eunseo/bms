@@ -11,19 +11,60 @@
 	var memberId = '<%=(String)session.getAttribute("memberId")%>'
 	var likeClick = false // 기본값 false
 	
-	$().ready(function(){
-		$.ajax({
-			type : "get",
-			url : "${contextPath}/getLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId},
-			success : function(data){
-				if(data){ // 버튼을 이미 눌렀었다면
-					document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')
-					likeClick = true
-				} 
-			}
-		});
+	// 좋아요 버튼값 
+	$.ajax({
+		type : "get",
+		url : "${contextPath}/getLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId},
+		success : function(data){
+			if(data) { 
+				document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart') 
+				likeClick = true
+				
+				likeCount()
+			};
+		}
 	});
 
+	function likeCount() { // 좋아요 개수
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/getLikeCount?memberId=" + memberId + "&postId=" + ${detailPost.postId},
+			success : function(data){
+				document.getElementById("likeCount").innerText = data
+			}
+		});
+	}
+	
+	function likePost(){ // 좋아요 버튼 눌렀을 때 이벤트
+		if(likeClick == true){ // 좋아요 O -> 좋아요 X(좋아요 개수 - 1)
+			$.ajax({
+				type : "get",
+				async : false, // async : true가 기본 설정(비동기식 처리: 병렬적), false(동기식 처리: 직렬적)
+				url : "${contextPath}/notLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId}, // 회원의 해당 게시글 좋아요한 행 제거한 후
+				success : function(){
+					likeCount()
+				}
+			});
+
+		// 비동기식 방식 사용 시 1차 결과값을 기다리지 않고 다음 함수와 같이 실행되기 때문에 2차로 받고자 하는 값을 정확하게 받지 못한다.
+		
+			document.getElementById("likePost").classList.replace('bxs-heart', 'bx-heart')
+			likeClick = false
+		} else { // 좋아요 X -> 좋아요 O(좋아요 개수 + 1)
+			$.ajax({
+				type : "get",
+				async : false, 
+				url : "${contextPath}/likePost?memberId=" + memberId + "&postId=" + ${detailPost.postId},
+				success : function(){
+					likeCount()
+				}
+			});
+			
+			document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')	
+			likeClick = true;
+		}
+	}
+	
 	function deletePost(){
 		var check = confirm("삭제하시겠습니까?")
 		
@@ -31,26 +72,6 @@
 			location.href="${contextPath }/feed/deletePost?postId=${detailPost.postId}"
 		} else {
 			history.go(0)
-		}
-	}
-	
-	function likePost(){ 
-		if(likeClick == true){ // 좋아요 O -> 좋아요 X
-			$.ajax({
-				type : "get",
-				url : "${contextPath}/notLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId} 
-			});
-		
-			document.getElementById("likePost").classList.replace('bxs-heart', 'bx-heart')
-			likeClick = false
-		} else { // 좋아요 X -> 좋아요 O
-			$.ajax({
-				type : "get",
-				url : "${contextPath}/likePost?memberId=" + memberId + "&postId=" + ${detailPost.postId} 
-			});
-		
-			document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')	
-			likeClick = true;
 		}
 	}
 </script>
@@ -87,19 +108,19 @@
 				
 				
 				<div class="pt-5 mt-5">
-					<!-- 댓글 시작 -->
 					<div>
 						<!-- 게시글 좋아요 -->
 						<button type="button" onclick="likePost()" id="likePost"
 								class="btn bx bx-heart" style="font-size: 1.2rem; color: red; margin-bottom: -15px; margin-left: -20px;">
 						</button>
-						<h6 id="likePostCount" style="margin-left: -22px; vertical-align: bottom; display: inline; font-size: 15px; color: #626262;">2</h6>
+						<h6 id="likeCount" style="margin-left: -22px; vertical-align: bottom; display: inline; font-size: 15px; color: #626262;">0</h6>
 						&ensp;
 						<!-- 댓글 -->
 						<i class="bx bx-message-rounded-dots" style="font-size: 1.2rem; margin-bottom: -15px;"></i>
 						<h6 style=" vertical-align: bottom; display: inline; font-size: 15px; color: #626262;">3</h6>
 					</div>
 					<hr>
+					<!-- 댓글 시작 -->
 					<ul class="comment-list">
 						<li class="comment">
 							<div class="comment-body">
@@ -107,11 +128,10 @@
 								<h6 style="display: inline-block;">John Doe</h6>
 								<div class="meta">입력 날짜</div>
 								<p>댓글 내용</p>
-								<p>
-									<a href="#" class="reply">답글달기</a>
-								</p>
+								<div class="form-group" style="margin-bottom: 1.5rem; margin-top: -4px;">
+									<input type="submit" value="답글" style="font-size: smaller; padding-block: 4px; padding-inline: 10px;"class="btn btn-primary">
+								</div>
 							</div>
-
 							<ul class="children">
 								<!-- 대댓글 -->
 								<li class="comment">
@@ -140,11 +160,11 @@
 								<textarea name="" id="message"
 									style="resize: none; height: 60px; margin-bottom: 15px; margin-top: 8px;" placeholder="댓글을 남겨보세요."
 									cols="30" rows="5" class="form-control"></textarea>
+								<small id="replyAlert"  style="color: red;" hidden="">* 댓글을 입력해 주세요.</small>
 							</div>
 							<div class="form-group" style="text-align-last: end;">
 								<input type="submit" value="작성" class="btn btn-primary">
 							</div>
-
 						</form>
 					</div>
 				</div>

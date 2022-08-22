@@ -58,7 +58,7 @@
 		      </c:when>
 				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->
 					 <div class="navbar-nav ms-auto p-4 p-lg-0" style="">
-		                <a href="${contextPath }/feed?id=${sessionScope.memberId}" class="nav-item nav-link">내 블로그</a>
+		                <a href="${contextPath }/feed?id=${sessionScope.memberId}&searchWord=" class="nav-item nav-link">내 블로그</a>
 		                <div class="nav-item dropdown">
 		                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
 		                    <div class="dropdown-menu bg-light m-0" style="right: 0px;">

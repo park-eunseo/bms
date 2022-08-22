@@ -80,9 +80,10 @@
 					<div class="col-md-10" style="width: 900px;">
 						<select class="form-select form-select-sm" name="categoryTitle"
 							style="display: inline-block; box-shadow: none; max-width: max-content;">
-							<option value="전체" selected="selected">전체</option>
 							<c:forEach var="category" items="${categoryList }">
-								<option value="${category.categoryTitle }">${category.categoryTitle }</option>
+								<option value="${category.categoryTitle }" 
+									<c:if test="${category.categoryTitle eq '전체' }">selected</c:if>>
+									${category.categoryTitle }</option>
 							</c:forEach>
 						</select>
 					</div>
