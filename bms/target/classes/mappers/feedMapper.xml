@@ -102,12 +102,16 @@
 				REPLY(
 					MEMBER_ID,
 					POST_ID,
+					TOP_REPLY_ID,
+					MENTION,
 					CONTENT,
 					REG_DATE
 				)
 		VALUES(
 			#{memberId},
 			#{postId},
+			#{topReplyId},
+			#{mention},
 			#{content},
 			NOW()
 		)
@@ -115,13 +119,14 @@
 	
 	<select id="selectReplyList" parameterType="String" resultType="ReplyDto">
 		SELECT
-				R.REPLY_ID AS REPLY_ID,
-				R.MEMBER_ID AS MEMBER_ID,
-				M.NICKNAME AS NICKNAME,
-				M.PROFILE_NAME AS PROFILE_NAME,
-				R.POST_ID AS POST_ID,
-				R.CONTENT AS CONTENT,
-				R.TOP_ID AS TOP_ID,
+				R.REPLY_ID 		AS REPLY_ID,
+				R.MEMBER_ID 	AS MEMBER_ID,
+				M.NICKNAME 		AS NICKNAME,
+				M.PROFILE_NAME 	AS PROFILE_NAME,
+				R.POST_ID 		AS POST_ID,
+				R.TOP_REPLY_ID 	AS TOP_REPLY_ID,
+				R.MENTION 		AS MENTION,
+				R.CONTENT 		AS CONTENT,
 				date_format(R.REG_DATE, '%Y-%m-%d %H:%i') AS REGDATE
 		FROM
 				REPLY R
@@ -129,6 +134,7 @@
 				ON R.MEMBER_ID = M.ID
 		WHERE
 				POST_ID = #{postId}
+				
 	</select>
 	
 	<update id="deleteReply" parameterType="String"> <!-- 삭제하려는 댓글이지만 답글에 영향 끼치지 않기 위해 내용만 삭제해 준다. -->

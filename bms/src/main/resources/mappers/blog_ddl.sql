@@ -50,17 +50,18 @@ select * from category;
 delete from category where category_id in (9, 11, 12, 13);
 
 CREATE TABLE reply (
-    reply_id 	INT AUTO_INCREMENT PRIMARY KEY,
-    member_id	VARCHAR(20) NOT NULL,
-    post_id	 	INT NOT NULL,
-    top_id		INT NULL,
-    content 	TEXT NOT NULL,
-    reg_date 	DATETIME DEFAULT CURRENT_TIMESTAMP
+    reply_id 	 INT AUTO_INCREMENT PRIMARY KEY,
+    member_id	 VARCHAR(20) NOT NULL,
+    post_id	 	 INT NOT NULL,
+    top_reply_id INT NULL,
+    mention		 VARCHAR(45), -- 언급된 회원
+    content 	 TEXT NOT NULL,
+    reg_date 	 DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 select * from reply;
 update reply set content = "감사하빈다~~" where reply_id in (1, 4);
-
+DELETE FROM REPLY WHERE REPLY_ID in (13, 16);
 
 CREATE TABLE likePost (
     like_post_id INT AUTO_INCREMENT PRIMARY KEY,

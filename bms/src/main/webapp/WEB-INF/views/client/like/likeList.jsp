@@ -58,9 +58,9 @@
 												<td><i class="fab fa-angular fa-lg text-danger me-3"></i>
 													<strong>어솨(qkqkl)</strong></td>
 												<td style="padding-left: 30px;">
-													<button type="button" style="width: 1.5rem; height: 1.5rem;"
-														class="btn btn-icon btn-outline-danger">
-														<i class='bx bx-x'></i>
+													<button type="button" style="width: 1.5rem; height: 1.5rem; padding: 0;"
+														class="btn">
+														<i class='bx bxs-user-minus' style="color:#ef3333; font-size: xx-large;"></i>
 													</button>
 												</td>
 											</tr>
@@ -81,11 +81,11 @@
 											</tr>
 										</thead>
 										<c:if test="${not empty likePostList }">
-										<c:set var="count" value="0"></c:set>
 											<c:forEach var="list" items="${likePostList }">
+											<c:set var="count" value="${count + 1 }"></c:set>
 												<tbody class="table-border-bottom-0">
 													<tr>
-														<td>${count + 1 }</td>
+														<td>${count}</td>
 														<td><i class="fab fa-angular fa-lg text-danger me-3"></i>
 															<strong>${list.memberId }</strong></td>
 														<td><a href="${contextPath }/feed/detailPost?postId=${list.postId}">${list.title }</a></td>
