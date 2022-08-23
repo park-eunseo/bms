@@ -96,4 +96,56 @@
 		WHERE	
 					POST_ID = #{postId}		
 	</delete>
+	
+	<insert id="insertReply" parameterType="ReplyDto">
+		INSERT INTO
+				REPLY(
+					MEMBER_ID,
+					POST_ID,
+					CONTENT,
+					REG_DATE
+				)
+		VALUES(
+			#{memberId},
+			#{postId},
+			#{content},
+			NOW()
+		)
+	</insert>
+	
+	<select id="selectReplyList" parameterType="String" resultType="ReplyDto">
+		SELECT
+				R.REPLY_ID AS REPLY_ID,
+				R.MEMBER_ID AS MEMBER_ID,
+				M.NICKNAME AS NICKNAME,
+				M.PROFILE_NAME AS PROFILE_NAME,
+				R.POST_ID AS POST_ID,
+				R.CONTENT AS CONTENT,
+				R.TOP_ID AS TOP_ID,
+				date_format(R.REG_DATE, '%Y-%m-%d %H:%i') AS REGDATE
+		FROM
+				REPLY R
+					JOIN MEMBER M
+				ON R.MEMBER_ID = M.ID
+		WHERE
+				POST_ID = #{postId}
+	</select>
+	
+	<update id="deleteReply" parameterType="String"> <!-- 삭제하려는 댓글이지만 답글에 영향 끼치지 않기 위해 내용만 삭제해 준다. -->
+		UPDATE
+				REPLY
+		SET
+				CONTENT = ''
+		WHERE
+				REPLY_ID = #{replyId}
+	</update>
+	
+	<update id="updateReply" parameterType="ReplyDto">
+		UPDATE
+				REPLY
+		SET
+				CONTENT = #{content}
+		WHERE
+				REPLY_ID = #{replyId}
+	</update>
 </mapper>

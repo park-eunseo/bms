@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.spring.bms.feed.dao.FeedDao;
 import com.spring.bms.feed.dto.PostDto;
+import com.spring.bms.feed.dto.ReplyDto;
 import com.spring.bms.member.dto.MemberDto;
 
 @Service
@@ -43,6 +44,26 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public void deletePost(String postId) throws Exception {
 		feedDao.deletePost(postId);
+	}
+
+	@Override
+	public void writeReply(ReplyDto replyDto) throws Exception {
+		feedDao.insertReply(replyDto);
+	}
+
+	@Override
+	public List<ReplyDto> getReplyList(String postId) throws Exception {
+		return feedDao.selectReplyList(postId);
+	}
+
+	@Override
+	public void deleteReply(String replyId) throws Exception {
+		feedDao.deleteReply(replyId);
+	}
+
+	@Override
+	public void modifyReply(ReplyDto replyDto) throws Exception {
+		feedDao.updateReply(replyDto);
 	}
 
 

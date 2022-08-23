@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.bms.feed.dto.PostDto;
+import com.spring.bms.feed.dto.ReplyDto;
 import com.spring.bms.member.dto.MemberDto;
 
 @Repository
@@ -43,6 +44,26 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public void deletePost(String postId) throws Exception {
 		sqlSession.delete("feed.deletePost", postId);
+	}
+
+	@Override
+	public void insertReply(ReplyDto replyDto) throws Exception {
+		sqlSession.insert("feed.insertReply", replyDto);
+	}
+
+	@Override
+	public List<ReplyDto> selectReplyList(String postId) throws Exception {
+		return sqlSession.selectList("feed.selectReplyList", postId);
+	}
+
+	@Override
+	public void deleteReply(String replyId) throws Exception {
+		sqlSession.update("feed.deleteReply", replyId);
+	}
+
+	@Override
+	public void updateReply(ReplyDto replyDto) throws Exception {
+		sqlSession.update("feed.updateReply", replyDto);
 	}
 
 }

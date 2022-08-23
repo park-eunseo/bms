@@ -16,20 +16,21 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bms.feed.dto.PostDto;
+import com.spring.bms.like.dto.LikeMemberDto;
 import com.spring.bms.like.dto.LikePostDto;
-import com.spring.bms.like.service.LikePostService;
+import com.spring.bms.like.service.LikeService;
 
 @Controller
 public class LikeController {
 	@Autowired
-	private LikePostService likePostService;
+	private LikeService likeService;
 	
 	@GetMapping("/likeList")
 	public ModelAndView likeList(HttpServletRequest request) throws Exception {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
 		
-		List<PostDto> likePostList = likePostService.getLikePostList((String)session.getAttribute("memberId"));
+		List<PostDto> likePostList = likeService.getLikePostList((String)session.getAttribute("memberId"));
 		
 		for (PostDto postDto : likePostList) {
 			String title = postDto.getTitle();
@@ -53,28 +54,36 @@ public class LikeController {
 	}
 	
 	@GetMapping("/likePost")
-	public ResponseEntity<Object> likePost(HttpServletRequest request, LikePostDto likePostDto) throws Exception {
-		likePostService.addLikePost(likePostDto);
+	public ResponseEntity<Object> likePost(LikePostDto likePostDto) throws Exception {
+		likeService.addLikePost(likePostDto);
 
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/notLikePost")
 	public ResponseEntity<Object> notLikePost(HttpServletRequest request, LikePostDto likePostDto) throws Exception {
-		likePostService.notLikePost(likePostDto);
+		likeService.notLikePost(likePostDto);
 		
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
 	@GetMapping("/getLikePost") // 해당 게시글에 회원이 좋아요를 눌렀는지 확인
 	public ResponseEntity<Object> getLikePost(HttpServletRequest request, LikePostDto likePostDto) throws Exception {
-		return new ResponseEntity<Object>(likePostService.getLikePost(likePostDto), HttpStatus.OK);
+		return new ResponseEntity<Object>(likeService.getLikePost(likePostDto), HttpStatus.OK);
 	}
 	
-	@GetMapping("/getLikeCount")
+	@GetMapping("/getLikeCount") // 해당 게시글에 좋아요가 몇 개인지
 	public ResponseEntity<Object> getLikeCount(HttpServletRequest request, LikePostDto likePostDto) throws Exception {
-		int likeCount = likePostService.getLikeCount(likePostDto);
+		int likeCount = likeService.getLikeCount(likePostDto);
 
 		return new ResponseEntity<Object>(likeCount, HttpStatus.OK);
 	}
+	
+	@GetMapping("/likeMember")
+	public ResponseEntity<Object> likeMember(LikeMemberDto likeMemberDto) throws Exception {
+		likeService.addLikeMember(likeMemberDto);
+
+		return new ResponseEntity<Object>(HttpStatus.OK);
+	}
+	
 }

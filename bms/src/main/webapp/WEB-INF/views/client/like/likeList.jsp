@@ -73,16 +73,19 @@
 									<table class="table table-striped">
 										<thead>
 											<tr>
+												<th>번호</th>
 												<th style="padding-left: 35px;">ID</th>
-												<th>Title</th>
-												<th>Content</th>
-												<th>Actions</th>
+												<th>제목</th>
+												<th>내용</th>
+												<th>삭제</th>
 											</tr>
 										</thead>
 										<c:if test="${not empty likePostList }">
+										<c:set var="count" value="0"></c:set>
 											<c:forEach var="list" items="${likePostList }">
 												<tbody class="table-border-bottom-0">
 													<tr>
+														<td>${count + 1 }</td>
 														<td><i class="fab fa-angular fa-lg text-danger me-3"></i>
 															<strong>${list.memberId }</strong></td>
 														<td><a href="${contextPath }/feed/detailPost?postId=${list.postId}">${list.title }</a></td>

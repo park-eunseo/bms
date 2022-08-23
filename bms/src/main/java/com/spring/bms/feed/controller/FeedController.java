@@ -22,6 +22,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -32,6 +33,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.google.gson.JsonObject;
 import com.spring.bms.category.service.CategoryService;
 import com.spring.bms.feed.dto.PostDto;
+import com.spring.bms.feed.dto.ReplyDto;
 import com.spring.bms.feed.service.FeedService;
 
 import net.coobird.thumbnailator.Thumbnails;
@@ -71,7 +73,6 @@ public class FeedController {
 			if (content.length() > 50) 
 				content = content.substring(0, 50) + "...";
 				postDto.setContent(content);
-			
 		}
 
 		session.setAttribute("memberInfo", feedService.getOneMember(id)); 		// 해당 블로그 회원의 정보 select
@@ -129,6 +130,7 @@ public class FeedController {
 		ModelAndView mv = new ModelAndView();
 
 		mv.addObject("detailPost", feedService.getOnePost(postId));
+		mv.addObject("replyList", feedService.getReplyList(postId));
 		mv.setViewName("/detailPost");
 
 		return mv;
@@ -192,7 +194,48 @@ public class FeedController {
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
+	
+	@PostMapping("/writeReply") // 댓글 작성
+	public ResponseEntity<Object> writeReply(HttpServletRequest request, ReplyDto replyDto) throws Exception {
+		feedService.writeReply(replyDto);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
+		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
+								"/feed/detailPost?postId=" + replyDto.getPostId() + "';</script>";
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/deleteReply") // 댓글 삭제
+	public ResponseEntity<Object> deleteReply(HttpServletRequest request, 
+										@RequestParam("replyId") String replyId,
+										@RequestParam("postId") String postId) throws Exception {
+		feedService.deleteReply(replyId);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
+								"/feed/detailPost?postId=" + postId + "';</script>";
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+
+	@PostMapping("/modifyReply")
+	public ResponseEntity<Object> modifyReply(HttpServletRequest request, ReplyDto replyDto) throws Exception{
+		feedService.modifyReply(replyDto);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
+								"/feed/detailPost?postId=" + replyDto.getPostId() + "';</script>";
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
 	@RequestMapping(value = "/fileUpload", produces = "application/json; charset=utf8") // 에디터에서 파일을 올렸을 때 저장하기
 										// json 형태로 response
 	@ResponseBody

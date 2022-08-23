@@ -53,4 +53,16 @@
 				L.MEMBER_ID = #{id} 
 				
 	</select>
+	
+	<insert id="insertLikeMember" parameterType="LikeMemberDto">
+		INSERT INTO
+					LIKEMEMBER(
+						MEMBER_ID,
+						FAVORITE_ID
+					)
+		VALUES(
+			#{memberId},
+			#{favoriteId}
+		)
+	</insert>
 </mapper>

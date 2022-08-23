@@ -50,7 +50,7 @@
                      </ul>
 					<p class="card-text" style="padding-left: 1rem;padding-right: 1rem; color:#555555">${memberInfo.intro}</p>
 					<c:if test="${memberInfo.id ne sessionScope.memberId }"> <!-- 현재 로그인 중인 회원과 다른 회원의 피드일 경우 보여짐 -->
-						<button type="button" class="btn rounded-pill btn-outline-warning" style="padding: 0.4rem 0.6rem; font-size: 10px;">즐겨찾기</button>
+						<button type="button" onclick="likeMember()" class="btn rounded-pill btn-outline-warning" style="padding: 0.4rem 0.6rem; font-size: 10px;">즐겨찾기</button>
 					</c:if>
 				</div>
 			</div>

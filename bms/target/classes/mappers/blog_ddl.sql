@@ -30,6 +30,15 @@ CREATE TABLE POST (
 
 select * from post;
 
+		SELECT
+				P.MEMBER_ID AS MEMBER_ID,
+				P.TITLE	AS TITLE,
+				P.CONTENT AS CONTENT
+		FROM
+				POST P LEFT JOIN LIKEPOST L
+				ON P.POST_ID = L.POST_ID
+		WHERE L.MEMBER_ID = 'dlcnd';
+                
 CREATE TABLE CATEGORY (
     category_id 		INT AUTO_INCREMENT PRIMARY KEY,
     member_id 			varchar(20),
@@ -39,6 +48,19 @@ CREATE TABLE CATEGORY (
 
 select * from category;
 delete from category where category_id in (9, 11, 12, 13);
+
+CREATE TABLE reply (
+    reply_id 	INT AUTO_INCREMENT PRIMARY KEY,
+    member_id	VARCHAR(20) NOT NULL,
+    post_id	 	INT NOT NULL,
+    top_id		INT NULL,
+    content 	TEXT NOT NULL,
+    reg_date 	DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+select * from reply;
+update reply set content = "감사하빈다~~" where reply_id in (1, 4);
+
 
 CREATE TABLE likePost (
     like_post_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -51,30 +73,21 @@ CREATE TABLE likePost (
 select * from likePost;
 delete from likePost where like_post_id between 20 and 30;
 
-CREATE TABLE COMMEND (
-    commend_id 	INT AUTO_INCREMENT PRIMARY KEY,
-    member_id	VARCHAR(20) NOT NULL,
-    post_id	 	INT NOT NULL,
-    top_id		INT NOT NULL,
-    content 	TEXT NOT NULL,
-    reg_date 	DATETIME DEFAULT CURRENT_TIMESTAMP,
-    FOREIGN KEY (commend_id)
-        REFERENCES member (id),
-    FOREIGN KEY (top_id)
-        REFERENCES member (id)
-);
 
-CREATE TABLE favoriteMember (
-    id 					INT AUTO_INCREMENT PRIMARY KEY,
-    member_id 			VARCHAR(20), -- 자기자신 ID
-	favorite_member_id 	VARCHAR(20), -- 친구 추가한 상대방 ID
+CREATE TABLE likeMember (
+    like_member_id 		INT AUTO_INCREMENT PRIMARY KEY,
+    member_id 		VARCHAR(20), 	-- 자기자신 ID
+	favorite_id 	VARCHAR(20), -- 친구 추가한 상대방 ID
     FOREIGN KEY (member_id)
         REFERENCES member (id)
         ON DELETE CASCADE,
-	FOREIGN KEY (favorite_member_id)
+	FOREIGN KEY (favorite_id)
         REFERENCES member (id)
         ON DELETE CASCADE
 );
+
+select * from likeMember;
+
 
 CREATE TABLE MANAGER(
 	id varchar(20) primary key,

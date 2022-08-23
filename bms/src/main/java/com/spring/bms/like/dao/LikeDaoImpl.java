@@ -7,10 +7,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.spring.bms.feed.dto.PostDto;
+import com.spring.bms.like.dto.LikeMemberDto;
 import com.spring.bms.like.dto.LikePostDto;
 
 @Repository
-public class LikePostDaoImpl implements LikePostDao {
+public class LikeDaoImpl implements LikeDao {
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -43,6 +44,11 @@ public class LikePostDaoImpl implements LikePostDao {
 	@Override
 	public List<PostDto> selectLikePostList(String id) throws Exception {
 		return sqlSession.selectList("like.selectLikePostList", id);
+	}
+
+	@Override
+	public void insertLikeMember(LikeMemberDto likeMemberDto) throws Exception {
+		sqlSession.insert("like.insertLikeMember", likeMemberDto);
 	}
 
 }

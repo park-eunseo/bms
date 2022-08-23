@@ -6,39 +6,42 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bms.feed.dto.PostDto;
-import com.spring.bms.like.dao.LikePostDao;
+import com.spring.bms.like.dao.LikeDao;
+import com.spring.bms.like.dto.LikeMemberDto;
 import com.spring.bms.like.dto.LikePostDto;
 
 @Service
-public class LikePostServiceImpl implements LikePostService {
+public class LikeServiceImpl implements LikeService {
 	@Autowired
-	private LikePostDao likePostDao;
+	private LikeDao likeDao;
 	
 	@Override
 	public void addLikePost(LikePostDto likePostDto) throws Exception {
-		likePostDao.insertLikePost(likePostDto);
+		likeDao.insertLikePost(likePostDto);
 	}
 
 	@Override
 	public boolean getLikePost(LikePostDto likePostDto) throws Exception {
-		return likePostDao.selectLikePost(likePostDto);
+		return likeDao.selectLikePost(likePostDto);
 	}
 
 	@Override
 	public void notLikePost(LikePostDto likePostDto) throws Exception {
-		likePostDao.deleteLikePost(likePostDto);
+		likeDao.deleteLikePost(likePostDto);
 	}
 
 	@Override
 	public int getLikeCount(LikePostDto likePostDto) throws Exception {
-		return likePostDao.selectLikeCount(likePostDto);
+		return likeDao.selectLikeCount(likePostDto);
 	}
 
 	@Override
 	public List<PostDto> getLikePostList(String id) throws Exception {
-		return likePostDao.selectLikePostList(id);
+		return likeDao.selectLikePostList(id);
 	}
 
-
-
+	@Override
+	public void addLikeMember(LikeMemberDto likeMemberDto) throws Exception {
+		likeDao.insertLikeMember(likeMemberDto);
+	}
 }

@@ -6,6 +6,8 @@ import org.springframework.stereotype.Component;
 public class ReplyDto {
 	String replyId;
 	String memberId;
+	String nickname;
+	String profileName;
 	String postId;
 	String topId;
 	String content;
@@ -23,6 +25,21 @@ public class ReplyDto {
 	public void setMemberId(String memberId) {
 		this.memberId = memberId;
 	}
+	
+	public String getNickname() {
+		return nickname;
+	}
+	
+	public String getProfileName() {
+		return profileName;
+	}
+	public void setProfileName(String profileName) {
+		this.profileName = profileName;
+	}
+	public void setNickname(String nickname) {
+		this.nickname = nickname;
+	}
+	
 	public String getPostId() {
 		return postId;
 	}
