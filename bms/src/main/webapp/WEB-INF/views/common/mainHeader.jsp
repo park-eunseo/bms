@@ -6,6 +6,34 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+.selectBox {
+	display: inline-block;
+	box-shadow: none;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
+	border-right: none;
+	max-width: max-content;
+}
+
+.searchText {
+	border-start-start-radius: 0px;
+	border-bottom-left-radius: 0px;
+}
+</style>
+<script>
+	function search(){
+		var searchKeyword = $("#searchKeyword").val()
+		var searchWord = $("#searchWord").val()
+		
+		if(searchWord == "") {
+			alert("검색어를 입력해 주세요.")
+			return false
+		}
+
+		location.href = "${contextPath}/search?searchKeyword=" + searchKeyword + "&searchWord=" + searchWord
+	}
+</script>
 </head>
 <body>
 	<!-- Spinner Start -->
@@ -31,23 +59,18 @@
 		<!-- Search -->
 		<div class="navbar-collapse collapse" id="navbarCollapse">
 			<div>
-				<form class="d-flex">
 					<!-- 전체 회원 범위 -->
 					<div class="input-group">
-						<select id="smallSelect" class="form-select form-select-sm"
-							style="display: inline-block; box-shadow: none; border-top-right-radius: 0px; border-bottom-right-radius: 0px; border-right: none;  max-width: max-content;">
-							<option>전체</option>
-							<option value="authorId">작성자</option>
+						<select id="searchKeyword" name="searchKeyword" class="form-select selectBox form-select-sm">
+							<option value="member">작성자</option>
 							<option value="blogName">블로그명</option>
-							<option value="post">게시물</option>
-						</select> <input type="text" class="form-control"
-							style="border-start-start-radius: 0px; border-bottom-left-radius: 0px;"
-							placeholder="Search">
-						<button type="submit" class="input-group-text">
+							<option value="post">게시글</option>
+						</select> 
+						<input type="text" id="searchWord" name="searchWord" class="form-control searchText" placeholder="Search">
+						<button type="button" onclick="search()" class="input-group-text">
 							<i class="tf-icons bx bx-search"></i>
 						</button>
 					</div>
-				</form>
 			</div>
 			<c:choose>
 				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->

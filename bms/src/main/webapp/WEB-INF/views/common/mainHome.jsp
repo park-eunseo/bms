@@ -24,10 +24,19 @@
         </div>
     </div>
 	<!-- Service Start -->
+	
+	<c:if test="${empty sessionScope.memberId }">
+		<div class="text-center mx-auto mb-5 fadeInUp" data-wow-delay="0.1s"
+			style="height: 300px;">
+			<p style="font-size: large; padding-top: 30px;">즐겨찾는 회원을 추가해 소식을 확인해 보세요 🙌 </h5>
+		</div>
+	</c:if>
+	<c:if test="${not empty sessionScope.memberId }">
+	
 	<div class="container" style="width: 700px; background-color: white;">
 		<div class="text-center mx-auto mb-5 fadeInUp" data-wow-delay="0.1s"
 			style="max-width: 600px;">
-			<h1 class="mb-4" style="font-size: 25px;">친구들의 새로운 소식을 둘러보세요 🙌 </h1>
+			<h5 class="mb-4">즐겨찾는 회원의 새 글을 확인해 보세요 🙌 </h5>
 		</div>
 
 
@@ -36,69 +45,27 @@
 			<div>
 				<div class="card mb-3">
 					<div class="row g-0">
+						<div class="col-md-8">
+							<div class="card-body">
+								<h5 class="card-title">Card title</h5>
+								<p class="card-text">This is a wider card with supporting
+									text below as a natural lead-in to additional content. This
+									content is a little bit longer.</p>
+								<p class="card-text">
+									<small class="text-muted">Last updated 3 mins ago</small>
+								</p>
+							</div>
+						</div>
 						<div class="col-md-4">
-							<img class="card-img card-img-left" style="height: 100%;"
+							<img class="card-img card-img-right" style="height: 100%;"
 								src="${contextPath }/resources/bootstrap/img/bridge-g0e9719a63_1920.jpg" alt="Card image">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a wider card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div class="card mb-3">
-					<div class="row g-0">
-						<div class="col-md-4">
-							<img class="card-img card-img-left" style=" height: 100%;"
-								src="${contextPath }/resources/bootstrap/img/lake-5538757_1280.jpg" alt="Card image">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a wider card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-			<div>
-				<div class="card mb-3">
-					<div class="row g-0">
-						<div class="col-md-4">
-							<img class="card-img card-img-left" style=" height: 100%;"
-								src="${contextPath }/resources/bootstrap/img/wallpaperbetter.jpg" alt="Card image">
-						</div>
-						<div class="col-md-8">
-							<div class="card-body">
-								<h5 class="card-title">Card title</h5>
-								<p class="card-text">This is a wider card with supporting
-									text below as a natural lead-in to additional content. This
-									content is a little bit longer.</p>
-								<p class="card-text">
-									<small class="text-muted">Last updated 3 mins ago</small>
-								</p>
-							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</div>
-
+</c:if>
 	<!-- Service End -->
 
 </body>

@@ -7,7 +7,7 @@
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>	<!-- 홈 하단 -->
 	</definition>
 	
-	<definition name="detailLayout" template="/WEB-INF/views/common/feedMainLayout.jsp"> <!-- 개인 블로그 메인 레이아웃 -->
+	<definition name="detailLayout" template="/WEB-INF/views/common/feedLayout.jsp"> <!-- 개인 블로그 메인 레이아웃 -->
 		<put-attribute name="header" value="/WEB-INF/views/common/feedHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
 		<put-attribute name="leftSide" value="/WEB-INF/views/common/feedLeftSide.jsp"></put-attribute>
 		<put-attribute name="footer" value="/WEB-INF/views/common/footer.jsp"></put-attribute>
@@ -21,6 +21,11 @@
 	
 	<definition name="/feedHome" extends="detailLayout">	<!-- 메인 피드 -->
 		<put-attribute name="content" value="/WEB-INF/views/common/feedHome.jsp"></put-attribute>
+	</definition>
+	
+	<definition name="/search" extends="mainLayout">	<!-- 메인 검색 -->
+		<put-attribute name="content" value="/WEB-INF/views/client/search/search.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그"></put-attribute>
 	</definition>
 	
 	<definition name="member/login" extends="mainLayout"> <!-- 회원 로그인 -->

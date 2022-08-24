@@ -233,7 +233,7 @@ public class FeedController {
 	@GetMapping("/deleteReply") // 댓글 삭제
 	public ResponseEntity<Object> deleteReply(HttpServletRequest request, 
 										@RequestParam("replyId") String replyId,
-										@RequestParam("postId") String postId) throws Exception {
+										@RequestParam(name = "postId", required = false) String postId ) throws Exception {
 		feedService.deleteReply(replyId);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();

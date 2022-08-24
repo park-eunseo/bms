@@ -14,7 +14,7 @@
 	function deleteLikePost(postId){
 		$.ajax({
 			type : "get",
-			url : "${contextPath}/notLikePost?memberId=" + memberId + "&postId=" + postId,
+			url : "${contextPath}/feed/notLikePost?memberId=" + memberId + "&postId=" + postId,
 			success : function(){
 				history.go(0)
 			}			
@@ -24,7 +24,7 @@
 	function deleteListMember(favoriteId){
 		$.ajax({
 			type : "get",
-			url : "${contextPath}/notLikeMember?memberId=" + memberId + "&favoriteId=" + favoriteId,
+			url : "${contextPath}/feed/notLikeMember?memberId=" + memberId + "&favoriteId=" + favoriteId,
 			success : function(){
 				history.go(0)
 			}			
@@ -35,7 +35,7 @@
 	function deleteReply(replyId){
 		$.ajax({
 			type : "get",
-			url : "",
+			url : "${contextPath}/feed/deleteReply?replyId=" + replyId,
 			success : function(){
 				history.go(0)
 			}			

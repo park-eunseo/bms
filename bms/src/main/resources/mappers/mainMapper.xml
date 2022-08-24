@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="main">
+	<select id="selectSearchList" parameterType="hashmap" resultType="hashmap">
+			<if test='searchKeyword == "member"'>
+				SELECT
+						ID 			 AS id,
+						NICKNAME 	 AS nickname,
+						INTRO		 AS intro,
+						PROFILE_NAME AS profile
+				FROM
+						MEMBER
+				WHERE
+						ID LIKE CONCAT ('%', #{searchWord}, '%') OR
+						NICKNAME LIKE CONCAT ('%', #{searchWord}, '%')
+			</if>
+			<if test='searchKeyword == "blogName"'>
+				SELECT
+						ID				AS id,
+						NICKNAME 		AS nickname,
+						PROFILE_NAME 	AS profile,
+						BLOG_NAME 		AS blogName,
+						INTRO 			AS intro
+				FROM
+						MEMBER
+				WHERE
+						BLOG_NAME LIKE CONCAT ('%', #{searchWord}, '%')
+			</if>
+			<if test='searchKeyword == "post"'>
+				SELECT
+						M.ID 			AS memberId,
+						M.NICKNAME		AS nickname,
+						M.PROFILE_NAME 	AS profile,
+						M.BLOG_NAME		AS blogName,
+						P.POST_ID 		AS postId,
+						P.TITLE 		AS title,
+						P.CONTENT 		AS content,
+						P.THUMBNAIL		AS thumbnail,
+						date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate
+				FROM
+						POST P
+							 JOIN MEMBER M
+						ON P.MEMBER_ID = M.ID
+				WHERE
+						TITLE LIKE CONCAT ('%', #{searchWord}, '%') OR
+						CONTENT LIKE CONCAT ('%', #{searchWord}, '%')
+			</if>
+	</select>
+</mapper>
