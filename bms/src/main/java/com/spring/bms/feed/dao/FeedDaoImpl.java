@@ -9,6 +9,8 @@ import org.springframework.stereotype.Repository;
 
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.feed.dto.ReplyDto;
+import com.spring.bms.manage.dto.LikeMemberDto;
+import com.spring.bms.manage.dto.LikePostDto;
 import com.spring.bms.member.dto.MemberDto;
 
 @Repository
@@ -64,6 +66,38 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public void updateReply(ReplyDto replyDto) throws Exception {
 		sqlSession.update("feed.updateReply", replyDto);
+	}
+
+	@Override
+	public boolean selectLikePost(LikePostDto likePostDto) throws Exception {	// 게시글 좋아요 유무 select
+		boolean isLike = false;
+		
+		if(sqlSession.selectOne("feed.selectLikePost", likePostDto) != null) { // 결과값이 있으면 좋아요 버튼을 누른 것
+			isLike = true;
+		}
+
+		return isLike;
+	}
+
+	@Override
+	public int selectLikeCount(String postId) throws Exception {				// 하나의 게시글의 좋아요 개수
+		return sqlSession.selectOne("feed.selectLikeCount", postId);
+	}
+	
+	@Override
+	public boolean selectLikeMember(LikeMemberDto likeMemberDto) throws Exception {	
+		boolean isLike = false;
+		
+		if(sqlSession.selectOne("feed.selectLikeMember", likeMemberDto) != null){
+			isLike = true;
+		}
+		
+		return isLike;
+	}
+
+	@Override
+	public int selectReplyCount(String postId) throws Exception {		//  해당 게시글 댓글 개수
+		return sqlSession.selectOne("feed.selectReplyCount", postId);
 	}
 
 }

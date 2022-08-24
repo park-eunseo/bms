@@ -6,15 +6,73 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+.bookmark {
+	padding: 0.2rem 0.5rem;
+	border-radius: 2px;
+	font-size: 10px;
+}
+</style>
+<script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
 <script>
-	var selected = document.getElementsByClassName("menu-item active")[0] // 선택 전 선택되어 있었던 카테고리 
+<%-- 	var selected = document.getElementsByClassName("menu-item active")[0] // 선택 전 선택되어 있었던 카테고리 
 	var select = '<%=(String)session.getAttribute("category")%>'
-	console.log(selected.id)
 	
-	if(selected.id != select){
+	
+	if(selected.id != select){ // 카테고리 설정 미완성
 		selected.className = "menu-item"
 		document.getElementById(title).className += ' active'
-	}
+	} --%>
+	
+	$().ready(function(){
+		var memberId = '<%=(String) session.getAttribute("memberId")%>'
+		var likeMember = false
+		
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/getLikeMember?memberId=" + memberId + "&favoriteId=" + '${memberInfo.id}',
+			success : function(data){
+				if(data){
+					$("#likeMember").prop("checked", true)
+					likeMember = true
+				} 
+			}
+		})
+		
+		//
+		
+		$("#likeMember").change(function(){
+			if(memberId == null){
+				alert("로그인 후 이용 가능합니다.")
+				location.href = "${contextPath}/member/login"
+				
+				return false
+			} 
+
+			if(!likeMember){ // 즐겨찾는 회원이 아니었다가 추가했을 경우
+				$.ajax({
+					type : "get",
+					url : "${contextPath}/likeMember?memberId=" + memberId + "&favoriteId=" + '${memberInfo.id}',
+					success : function(){
+						likeMember = true
+					}
+				})	
+			} else {
+				$.ajax({
+					type : "get",
+					url : "${contextPath}/notLikeMember?memberId=" + memberId + "&favoriteId=" + '${memberInfo.id}',
+					success : function(){
+						likeMember = false
+						history.go(0)
+					}
+				})
+			}
+		})
+		
+		if(memberId == '${memberInfo.id}'){
+			$("#modifyInfo").addClass("dropdown-toggle")
+		}
+	})
 </script>
 </head>
 	<aside id="layout-menu"
@@ -35,26 +93,35 @@
 				<img src="${contextPath }/member/thumbnails?profileName=${memberInfo.profileName}" onclick="location.href='${contextPath}/feed?id=${memberInfo.id }'"
 					class="w-px-40 rounded-circle"/>
 			</div>
-			<div class="text-center mb-3">
-				<div style="padding-top:10px;">
-                   <a class="nav-link dropdown-toggle" href="javascript:void(0)" style="font-size: 14px; font-weight: 500; color:#000000"
-                   		id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          	${memberInfo.nickname}
-                   </a>
-                   <ul class="dropdown-menu" aria-labelledby="navbarDropdown" style="margin-top: -5px; transform: translate3d(30px, 55px, 0px);">
-                       <li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}">
-                       		<i class="bx bx-user me-2"></i>내 정보 수정</a></li>
-                       <li><a class="dropdown-item" href="${contextPath }/member/logout">
-							<i class="bx bx-power-off me-2"></i>로그아웃</a>
-						</li>
-                     </ul>
-					<p class="card-text" style="padding-left: 1rem;padding-right: 1rem; color:#555555">${memberInfo.intro}</p>
-					<c:if test="${memberInfo.id ne sessionScope.memberId }"> <!-- 현재 로그인 중인 회원과 다른 회원의 피드일 경우 보여짐 -->
-						<button type="button" onclick="likeMember()" class="btn rounded-pill btn-outline-warning" style="padding: 0.4rem 0.6rem; font-size: 10px;">즐겨찾기</button>
-					</c:if>
-				</div>
+		<div class="text-center mb-3">
+			<div style="padding-top: 10px;">
+				<a class="nav-link" href="javascript:void(0)"
+					style="font-size: 14px; font-weight: 500; color: #000000"
+					id="modifyInfo" role="button" data-bs-toggle="dropdown"
+					aria-expanded="false"> ${memberInfo.nickname} </a>
+				<c:if test="${memberInfo.id eq  sessionScope.memberId}">
+					<ul class="dropdown-menu" aria-labelledby="navbarDropdown"
+						style="margin-top: -5px; transform: translate3d(30px, 55px, 0px);">
+						<li><a class="dropdown-item" href="${contextPath }/member/modify?id=${sessionScope.memberId}">
+								<i class="bx bx-user me-2"></i>내 정보 수정
+						</a></li>
+						<li><a class="dropdown-item" href="${contextPath }/member/logout"> 
+								<i class="bx bx-power-off me-2"></i>로그아웃
+						</a></li>
+					</ul>
+				</c:if>
+				<p class="card-text"
+					style="padding-left: 1rem; padding-right: 1rem; color: #555555">${memberInfo.intro}</p>
+				<c:if test="${memberInfo.id ne sessionScope.memberId }">
+					<!-- 현재 로그인 중인 회원과 다른 회원의 피드일 경우 보여짐 -->
+					<div class="d-block">
+						<input type="checkbox" class="btn-check" id="likeMember">
+						<label class="btn btn-outline-warning bookmark" for="likeMember">즐겨찾기</label>
+					</div>
+				</c:if>
 			</div>
 		</div>
+	</div>
 		<div style="align-self: self-end;"> <!-- 카테고리 설정 -->
 			<button class="btn" onclick="location.href='${contextPath}/setCategory'"><i class='bx bxs-cog' style="font-size: 1.3rem; color:#4e4e4e"></i></button>
 		</div>

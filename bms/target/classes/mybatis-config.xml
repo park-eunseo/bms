@@ -11,7 +11,7 @@
 		<typeAlias type="com.spring.bms.feed.dto.PostDto" alias="PostDto" />
 		<typeAlias type="com.spring.bms.category.dto.CategoryDto" alias="CategoryDto" />
 		<typeAlias type="com.spring.bms.feed.dto.ReplyDto" alias="ReplyDto" />
-		<typeAlias type="com.spring.bms.like.dto.LikePostDto" alias="LikePostDto" />
-		<typeAlias type="com.spring.bms.like.dto.LikeMemberDto" alias="LikeMemberDto" />
+		<typeAlias type="com.spring.bms.manage.dto.LikePostDto" alias="LikePostDto" />
+		<typeAlias type="com.spring.bms.manage.dto.LikeMemberDto" alias="LikeMemberDto" />
 	</typeAliases>
 </configuration>

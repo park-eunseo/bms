@@ -35,30 +35,62 @@
 	</select>
 	
 	<select id="selectPostList" parameterType="hashmap" resultType="PostDto">
-		 SELECT
-		 		POST_ID,
-		 		MEMBER_ID,
-		 		CATEGORY_TITLE,
-		 		TITLE,
-		 		THUMBNAIL,
-		 		CONTENT,
-		 		POST_PRIVATE,
-		 		date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
-		 FROM	
-		 		POST
-		 WHERE
-		 		MEMBER_ID = #{id} AND 
-		 		<choose>
-		 			<when test='category == null'>
-		 				(TITLE LIKE CONCAT('%', #{searchWord}, '%') OR CONTENT LIKE CONCAT('%', #{searchWord}, '%'))		 			
-		 			</when>
-		 			<otherwise>
-		 				CATEGORY_TITLE = #{category}
-		 			</otherwise>
-		 		</choose>
-		 		
-		 ORDER BY
-		 		REG_DATE DESC
+		<choose>
+			<when test='sessionId != id'> <!-- 내 피드가 아닌 다른 회원 피드라면 비공개된 글 제외하고 반환 -->
+				SELECT
+						POST_ID,
+						MEMBER_ID,
+						CATEGORY_TITLE,
+						TITLE,
+						THUMBNAIL,
+						CONTENT,
+						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
+				FROM
+						POST
+				WHERE
+						MEMBER_ID = #{id} AND POST_PRIVATE = 'N' AND
+				<choose>
+					<when test='category == null'>
+						(TITLE LIKE CONCAT('%', #{searchWord}, '%') OR CONTENT LIKE CONCAT('%',
+						#{searchWord}, '%'))
+					</when>
+					<otherwise>
+						CATEGORY_TITLE = #{category}
+					</otherwise>
+				</choose>
+			
+				ORDER BY
+						REG_DATE DESC
+			</when>
+			<otherwise> <!-- 내 피드라면 비공개까지 전부 반환 -->
+				SELECT
+						POST_ID,
+						MEMBER_ID,
+						CATEGORY_TITLE,
+						TITLE,
+						THUMBNAIL,
+						CONTENT,
+						POST_PRIVATE,
+						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
+				FROM
+						POST
+				WHERE
+						MEMBER_ID = #{id} AND
+				<choose>
+					<when test='category == null'>
+						(TITLE LIKE CONCAT('%', #{searchWord}, '%') OR CONTENT LIKE CONCAT('%',
+						#{searchWord}, '%'))
+					</when>
+					<otherwise>
+						CATEGORY_TITLE = #{category}
+					</otherwise>
+				</choose>
+			
+				ORDER BY
+						REG_DATE DESC
+			</otherwise>
+		</choose>
+
 	</select>
 	
 	<select id="selectOnePost" parameterType="String" resultType="PostDto">
@@ -73,6 +105,26 @@
 		 		date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
 		FROM
 				POST
+		WHERE
+				POST_ID = #{postId}
+	</select>
+	
+		
+	<select id="selectLikePost" parameterType="LikePostDto" resultType="LikePostDto">
+		SELECT
+				*
+		FROM	
+				LIKEPOST
+		WHERE 
+				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
+	</select>
+	
+		
+	<select id="selectLikeCount" parameterType="String" resultType="int">
+		SELECT
+				COUNT(*)
+		FROM 
+				LIKEPOST
 		WHERE
 				POST_ID = #{postId}
 	</select>
@@ -154,4 +206,24 @@
 		WHERE
 				REPLY_ID = #{replyId}
 	</update>
+	
+	<select id="selectReplyCount" parameterType="String" resultType="int">
+		SELECT
+				COUNT(*)
+		FROM 
+				REPLY
+		WHERE
+				POST_ID = #{postId}
+	</select>
+	
+	<select id="selectLikeMember" resultType="LikeMemberDto">
+		SELECT
+				*
+		FROM
+				LIKEMEMBER
+		WHERE
+				MEMBER_ID = #{memberId} AND FAVORITE_ID = #{favoriteId}
+	</select>
+	
+	
 </mapper>

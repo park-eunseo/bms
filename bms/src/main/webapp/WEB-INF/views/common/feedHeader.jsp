@@ -6,6 +6,24 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+.headerHr {
+	width: 0.7px;
+	height: 30px;
+	margin-left: 2px;
+	margin-right: 2px;
+}
+
+.headerBtn {
+	padding: 0.4375rem 0.5rem;
+	display: list-item;
+	margin-left: auto;
+	color: #3d3d3d;
+	background: none;
+	border-color: #fff;
+	box-shadow: none;
+}
+</style>
 <script>
 	function search(){
 		var searchWord = document.getElementById("searchWord")
@@ -38,20 +56,29 @@
 			</div>
 			<hr>
 			<!-- /Search -->
+			
 			<div class="navbar-nav align-items-center" style="display: -webkit-inline-box; margin-left: auto; margin-right: -15px;">
-				<button type="button" class="btn rounded-pill btn-dark"
-					style="padding: 0.4375rem 0.5rem; display: list-item; margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;" 
-					onclick="location.href='${contextPath}/feed/writePost'">
-					<span class="tf-icons bx bx-pencil"></span>
-				</button>
-				<hr style="width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px; ">
-				<button type="button" class="btn rounded-pill btn-dark"
-					style="padding: 0.4375rem 0.5rem; display: list-item;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;"
-					onclick="location.href='${contextPath}/likeList'">
-					<span class="tf-icons bx bxs-star"></span>
-				</button>
-				<hr style="width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px; "">
-				<button type="button" class="btn rounded-pill btn-dark" style="padding: 0.4375rem 0.5rem; display: list-item;margin-left: auto;color: #3d3d3d;background: none;border-color: #fff;box-shadow: none;" 
+				<c:choose>
+					<c:when test="${memberInfo.id eq  sessionScope.memberId}">
+						<button type="button" class="btn rounded-pill headerBtn"
+							onclick="location.href='${contextPath}/feed/writePost'">
+							<span class="tf-icons bx bx-pencil"></span>
+						</button>
+						<hr style="	width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px;">
+						<button type="button" class="btn rounded-pill headerBtn"
+							onclick="location.href='${contextPath}/manage/manageList'">
+							<span class="tf-icons bx bxs-star"></span>
+						</button>
+					</c:when>
+					<c:otherwise>
+						<button type="button" class="btn rounded-pill headerBtn"
+							onclick="location.href='${contextPath}/feed?id=${sessionScope.memberId }'">
+							<span class="tf-icons bx bxs-home"></span>
+						</button>
+					</c:otherwise>
+				</c:choose>
+				<hr style="	width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px;">
+				<button type="button" class="btn rounded-pill headerBtn"
 					onclick="location.href='#'">
 					<span class="tf-icons bx bxs-bell"></span>
 					<span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20" style="top: -8px; margin-left: -5px;">4</span>

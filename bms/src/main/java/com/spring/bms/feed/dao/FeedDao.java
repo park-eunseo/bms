@@ -5,6 +5,8 @@ import java.util.Map;
 
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.feed.dto.ReplyDto;
+import com.spring.bms.manage.dto.LikeMemberDto;
+import com.spring.bms.manage.dto.LikePostDto;
 import com.spring.bms.member.dto.MemberDto;
 
 public interface FeedDao {
@@ -19,4 +21,8 @@ public interface FeedDao {
 	public List<ReplyDto> selectReplyList(String postId) throws Exception;
 	public void deleteReply(String replyId) throws Exception;
 	public void updateReply(ReplyDto replyDto) throws Exception;
+	public boolean selectLikePost(LikePostDto likePostDto) throws Exception;
+	public boolean selectLikeMember(LikeMemberDto likeMemberDto) throws Exception;
+	public int selectLikeCount(String postId) throws Exception;
+	public int selectReplyCount(String postId) throws Exception;
 }

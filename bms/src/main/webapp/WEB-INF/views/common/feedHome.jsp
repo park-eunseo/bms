@@ -8,6 +8,19 @@
 	data-theme="theme-default" data-assets-path="../assets/"
 	data-template="vertical-menu-template-free">
 <head>
+<style>
+.postTitle {
+	height: 19.792px;
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis
+}
+
+.lock {
+	font-size: 1rem;
+	color: gray;
+}
+</style>
 <meta charset="utf-8" />
 <meta name="viewport"
 	content="width=device-width, initial-scale=1.0, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
@@ -34,8 +47,10 @@
 										alt="Card image cap">
 								</c:if>
 								<div class="card-body" style="padding: 1.2rem">
-									<h5 class="card-title"
-										style="height: 19.792px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis">${post.title }</h5>
+									<div style="display: flex; justify-content: space-between;">
+										<h5 class="card-title postTitle" style="">${post.title }</h5>
+										<c:if test="${post.postPrivate eq 'Y' }"> <i class='bx bxs-lock-alt lock'></i></c:if>
+									</div>
 									<p class="card-text" id="content">${post.content }</p>
 									<small class="text-muted">${post.categoryTitle} | ${post.regDate }</small>
 									<div style="text-align: end;">
@@ -46,7 +61,7 @@
 											$().ready(function(){
 												$.ajax({
 													type : "get",
-													url : "${contextPath}/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
+													url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
 													success : function(data){
 														if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
 													}
@@ -54,7 +69,7 @@
 												
 												$.ajax({
 													type : "get",
-													url : "${contextPath}/getLikeCount?memberId=" + memberId + "&postId=" + ${post.postId},
+													url : "${contextPath}/feed/getLikeCount?memberId=" + memberId + "&postId=" + ${post.postId},
 													success : function(data){
 														document.getElementById("likeCount${post.postId}").innerText = data
 													}
@@ -63,7 +78,18 @@
 										</script>
 										<!-- 댓글 -->
 										<small><i class="bx bx-message-rounded-dots" style="font-size: 1.1rem;"></i></small>
-										<small style="font-size: 0.8rem;">0</small>
+										<small id="replyCount${post.postId }" style="font-size: 0.8rem;">0</small>
+										<script>
+											$().ready(function(){
+												$.ajax({
+													type : "get",
+													url : "${contextPath}/feed/getReplyCount?postId=" + ${post.postId},
+													success : function(data){
+														$("#replyCount" + ${post.postId}).text(data)
+													}
+												});
+											})
+										</script>
 									</div>
 								</div>
 							</a>
@@ -73,6 +99,6 @@
 			</c:if>
 		</div>
 		<c:if test="${empty memberPostList}">
-			<h5 style="text-align-last: center;">게시글이 없습니다.</h5>
+			<h6 style="text-align-last: center;">게시글이 없습니다.</h6>
 		</c:if>
 	</div>

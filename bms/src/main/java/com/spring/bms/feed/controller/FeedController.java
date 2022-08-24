@@ -22,7 +22,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -35,6 +34,8 @@ import com.spring.bms.category.service.CategoryService;
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.feed.dto.ReplyDto;
 import com.spring.bms.feed.service.FeedService;
+import com.spring.bms.manage.dto.LikeMemberDto;
+import com.spring.bms.manage.dto.LikePostDto;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -56,6 +57,7 @@ public class FeedController {
 		HttpSession session = request.getSession();
 		Map<String, String> postMap = new HashMap<>();
 		postMap.put("id", id);
+		postMap.put("sessionId", (String)session.getAttribute("memberId"));
 		
 		if(category == null) {
 			postMap.put("searchWord", searchWord);
@@ -193,6 +195,26 @@ public class FeedController {
 				+ "/feed?id=" + request.getSession().getAttribute("memberId") + "';" + "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/getLikePost") // 해당 게시글에 회원이 좋아요를 눌렀는지 확인
+	public ResponseEntity<Object> getLikePost(LikePostDto likePostDto) throws Exception {
+		return new ResponseEntity<Object>(feedService.getLikePost(likePostDto), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getLikeCount") // 해당 게시글에 좋아요가 몇 개인지
+	public ResponseEntity<Object> getLikeCount(String postId) throws Exception {
+		return new ResponseEntity<Object>(feedService.getLikeCount(postId), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getLikeMember") // 해당 회원을 즐겨찾기 했는지
+	public ResponseEntity<Object> getLikeMember(LikeMemberDto likeMemberDto) throws Exception {
+		return new ResponseEntity<Object>(feedService.getLikeMember(likeMemberDto), HttpStatus.OK);
+	}
+	
+	@GetMapping("/getReplyCount") // 해당 게시글에 좋아요가 몇 개인지
+	public ResponseEntity<Object> getReplyCount(String postId) throws Exception {
+		return new ResponseEntity<Object>(feedService.getReplyCount(postId), HttpStatus.OK);
 	}
 	
 	@PostMapping("/writeReply") // 댓글 작성

@@ -57,6 +57,6 @@
 
 	<aop:aspectj-autoproxy />
 	<context:component-scan
-		base-package="com.spring.bms" />
+		base-package="com.spring.bms.common.controller" />
 
 </beans:beans>

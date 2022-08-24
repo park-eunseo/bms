@@ -49,6 +49,21 @@ CREATE TABLE CATEGORY (
 select * from category;
 delete from category where category_id in (9, 11, 12, 13);
 
+		SELECT
+				R.POST_ID 	AS POST_ID,
+				P.TITLE 	AS TITLE,
+				R.CONTENT 	AS REPLY,
+				R.REPLY_ID	AS REPLY_ID,
+                R.REG_DATE
+		FROM 
+				REPLY R
+					  JOIN POST P
+					  ON R.POST_ID = P.POST_ID
+		WHERE
+				R.MEMBER_ID = 'dlcnd'
+		ORDER BY
+				R.REG_DATE DESC;
+                
 CREATE TABLE reply (
     reply_id 	 INT AUTO_INCREMENT PRIMARY KEY,
     member_id	 VARCHAR(20) NOT NULL,
@@ -61,7 +76,7 @@ CREATE TABLE reply (
 
 select * from reply;
 update reply set content = "감사하빈다~~" where reply_id in (1, 4);
-DELETE FROM REPLY WHERE REPLY_ID in (13, 16);
+DELETE FROM REPLY WHERE REPLY_ID in (26);
 
 CREATE TABLE likePost (
     like_post_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -88,6 +103,7 @@ CREATE TABLE likeMember (
 );
 
 select * from likeMember;
+delete from likemember where member_id = 'dlcnd' and favorite_id = 'dlcnd11';
 
 
 CREATE TABLE MANAGER(

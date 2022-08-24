@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import com.spring.bms.feed.dao.FeedDao;
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.feed.dto.ReplyDto;
+import com.spring.bms.manage.dto.LikeMemberDto;
+import com.spring.bms.manage.dto.LikePostDto;
 import com.spring.bms.member.dto.MemberDto;
 
 @Service
@@ -66,5 +68,24 @@ public class FeedServiceImpl implements FeedService {
 		feedDao.updateReply(replyDto);
 	}
 
+	@Override
+	public boolean getLikePost(LikePostDto likePostDto) throws Exception {
+		return feedDao.selectLikePost(likePostDto);
+	}
+
+	@Override
+	public int getLikeCount(String postId) throws Exception {
+		return feedDao.selectLikeCount(postId);
+	}
+
+	@Override
+	public boolean getLikeMember(LikeMemberDto likeMemberDto) throws Exception {
+		return feedDao.selectLikeMember(likeMemberDto);
+	}
+
+	@Override
+	public int getReplyCount(String postId) throws Exception {
+		return feedDao.selectReplyCount(postId);
+	}
 
 }

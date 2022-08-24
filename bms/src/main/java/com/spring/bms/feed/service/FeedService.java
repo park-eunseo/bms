@@ -3,8 +3,12 @@ package com.spring.bms.feed.service;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.util.MultiValueMap;
+
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.feed.dto.ReplyDto;
+import com.spring.bms.manage.dto.LikeMemberDto;
+import com.spring.bms.manage.dto.LikePostDto;
 import com.spring.bms.member.dto.MemberDto;
 
 public interface FeedService {
@@ -18,5 +22,9 @@ public interface FeedService {
 	public List<ReplyDto> getReplyList(String postId) throws Exception;
 	public void deleteReply(String replyId) throws Exception;
 	public void modifyReply(ReplyDto replyDto) throws Exception;
+	public boolean getLikePost(LikePostDto likePostDto) throws Exception;
+	public int getLikeCount(String postId) throws Exception;
+	public boolean getLikeMember(LikeMemberDto likeMemberDto) throws Exception;
+	public int getReplyCount(String postId) throws Exception;
 
 }

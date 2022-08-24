@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="manage">
+	<insert id="insertLikePost" parameterType="LikePostDto">
+		INSERT INTO
+				LIKEPOST(
+					MEMBER_ID,
+					POST_ID
+				)
+		VALUES(
+			#{memberId},
+			#{postId}
+		)	
+	</insert>
+
+	<delete id="deleteLikePost" parameterType="LikePostDto">
+		DELETE FROM 
+				LIKEPOST
+		WHERE
+				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
+	</delete>
+
+	<select id="selectLikePostList" parameterType="String" resultType="PostDto">
+		SELECT
+				P.MEMBER_ID AS MEMBER_ID,
+				P.TITLE	AS TITLE,
+				P.CONTENT AS CONTENT,
+				P.POST_ID AS POST_ID
+		FROM
+				POST P 
+					 LEFT JOIN LIKEPOST L
+					 ON P.POST_ID = L.POST_ID
+		WHERE
+				L.MEMBER_ID = #{id} 
+				
+	</select>
+	
+	<select id="selectMemberList" parameterType="String" resultType="MemberDto">
+		SELECT
+				L.FAVORITE_ID AS ID,
+				M.NICKNAME 	AS NICKNAME
+		FROM
+				MEMBER M 
+					   JOIN LIKEMEMBER L
+					   ON M.ID = L.FAVORITE_ID
+		WHERE
+				L.MEMBER_ID = #{id}
+	</select>
+	
+	<insert id="insertLikeMember" parameterType="LikeMemberDto">
+		INSERT INTO
+					LIKEMEMBER(
+						MEMBER_ID,
+						FAVORITE_ID
+					)
+		VALUES(
+			#{memberId},
+			#{favoriteId}
+		)
+	</insert>
+	
+	<delete id="deleteLikeMember" parameterType="LikeMemberDto">
+		DELETE FROM
+				LIKEMEMBER
+		WHERE
+				MEMBER_ID = #{memberId} AND FAVORITE_ID = #{favoriteId}
+	</delete>
+	
+
+	<select id="selectMyReplyList" parameterType="String" resultType="java.util.HashMap">
+		SELECT
+				R.POST_ID 	AS postId,
+				P.TITLE 	AS title,
+				R.CONTENT 	AS reply,
+				R.REPLY_ID	AS replyId
+		FROM 
+				REPLY R
+					  JOIN POST P
+					  ON R.POST_ID = P.POST_ID
+		WHERE
+				R.MEMBER_ID = #{id}
+		ORDER BY
+				R.REG_DATE DESC
+				
+	</select>
+</mapper>
