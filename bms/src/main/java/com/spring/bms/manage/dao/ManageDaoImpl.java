@@ -20,11 +20,13 @@ public class ManageDaoImpl implements ManageDao {
 	@Override
 	public void insertLikePost(LikePostDto likePostDto) throws Exception { 		// 좋아하는 게시글 insert
 		sqlSession.insert("manage.insertLikePost", likePostDto);
+		sqlSession.update("manage.updateLikeAdd", likePostDto);
 	}
 
 	@Override
 	public void deleteLikePost(LikePostDto likePostDto) throws Exception {		// 좋아요 한 게시글 취소 
 		sqlSession.delete("manage.deleteLikePost", likePostDto);
+		sqlSession.update("manage.updateLikeCancel", likePostDto);
 	}
 
 	@Override

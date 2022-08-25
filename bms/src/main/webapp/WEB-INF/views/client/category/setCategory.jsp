@@ -6,6 +6,14 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style>
+.categoryInput {
+	font-size: xx-small;
+	display: inline;
+	box-shadow: none;
+	width: fit-content;
+}
+</style>
 <script>
 	function addCategoryCheck(){
 		var category = document.getElementById("newCategory")
@@ -58,7 +66,8 @@
 		style="margin-top: 20px;">
 		<div class="col-xl-6" style="width: 50%;">
 			<h4 class="text-muted" style="color: #8e8e8e;">카테고리</h4>
-			<div class="tab-content" style="box-shadow: none; width: fit-content;">
+			<div class="tab-content"
+				style="box-shadow: none; width: fit-content;">
 				<div class="table-responsive text-nowrap">
 					<table class="table table-striped">
 						<thead>
@@ -69,47 +78,56 @@
 						<c:forEach var="category" items="${categoryList }">
 							<tbody class="table-border-bottom-0">
 								<tr>
-									<td><a href="#" onclick="return setCategory(this)" data-value="${category.categoryId }" >
-										<i class="fab fa-angular fa-lg text-danger me-3"></i>
-										<strong>${category.categoryTitle }</strong></a>
+									<td><a href="#" onclick="return setCategory(this)"
+										data-value="${category.categoryId }"> <i
+											class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${category.categoryTitle }</strong></a>
 									</td>
 								</tr>
 							</tbody>
 						</c:forEach>
 						<tbody class="table-border-bottom-0">
-							<form action="${contextPath}/addCategory" onsubmit="return addCategoryCheck()"> <!-- 추가 -->
+							<form action="${contextPath}/addCategory" onsubmit="return addCategoryCheck()">
+								<!-- 추가 -->
 								<tr>
-									<td><input type="text" class="form-control" 
-										style="font-size: xx-small; display: inline; width: fit-content;"
-										id="newCategory" name="categoryTitle" placeholder="10자 이내로 입력해 주세요.">
-										<button type="submit" class="btn rounded-pill btn-outline-dark"
+									<td><input type="text" class="form-control categoryInput"
+										id="newCategory" name="categoryTitle"
+										placeholder="10자 이내로 입력해 주세요.">
+										<button type="submit"
+											class="btn rounded-pill btn-outline-dark"
 											style="padding: 3px 4px; margin-left: 10px;">
 											<i class='bx bx-plus'></i>
-										</button>
-									</td>
+										</button></td>
 								</tr>
-								<input type="hidden" name="memberId" value="${sessionScope.memberId }">
+								<input type="hidden" name="memberId"
+									value="${sessionScope.memberId }">
 							</form>
 						</tbody>
 					</table>
 				</div>
 			</div>
-			<div class="card-body"  style="width: fit-content">
-				<form action="${contextPath }/resetCategory" name="resetForm" onsubmit="return resetCategoryCheck()"> <!-- 수정 및 삭제 -->
+			<div class="card-body" style="width: 17.8rem;">
+				<form action="${contextPath }/resetCategory" name="resetForm"
+					onsubmit="return resetCategoryCheck()">
+					<!-- 수정 및 삭제 -->
 					<div>
-						<label for="defaultFormControlInput" class="form-label">수정할 카테고리를 눌러주세요.</label>
-						<input type="text" class="form-control" id="resetCategory"
-							name="categoryTitle" placeholder="10자 이내로 입력해 주세요.">
+						<label for="defaultFormControlInput" class="form-label">수정할
+							카테고리를 눌러주세요.</label> 
+						<input type="text" class="form-control"
+							id="resetCategory" style="box-shadow: none;" name="categoryTitle"
+							placeholder="10자 이내로 입력해 주세요.">
 						<div id="defaultFormControlHelp" class="form-text">
 							*중복된 카테고리명은 저장되지 않습니다.</div>
 					</div>
 					<div style="text-align-last: end; margin-top: 10px">
-						<button type="button" class="btn btn-primary" onclick="resetCategoryCheck('modify')" style="padding: 5px 10px;">수정</button>
-						<button type="button" class="btn btn-outline-danger" onclick="resetCategoryCheck('delete')" style="padding: 5px 10px;">삭제</button>
+						<button type="button" class="btn btn-primary"
+							onclick="resetCategoryCheck('modify')" style="padding: 5px 10px;">수정</button>
+						<button type="button" class="btn btn-outline-danger"
+							onclick="resetCategoryCheck('delete')" style="padding: 5px 10px;">삭제</button>
 					</div>
 					<input type="hidden" id="categoryId" name="categoryId" value="">
-					<input type="hidden" name="memberId" value="${sessionScope.memberId }">
-					<input type="hidden" id="action" name="action" value="">				
+					<input type="hidden" name="memberId"
+						value="${sessionScope.memberId }"> <input type="hidden"
+						id="action" name="action" value="">
 				</form>
 			</div>
 		</div>

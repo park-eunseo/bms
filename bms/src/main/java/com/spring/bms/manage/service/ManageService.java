@@ -17,5 +17,4 @@ public interface ManageService {
 	public void notLikeMember(LikeMemberDto likeMemberDto) throws Exception;
 	public List<MemberDto> getLikeMemberList(String id) throws Exception;
 	public List<Map<String, String>> getMyReplyList(String id) throws Exception;
-
 }

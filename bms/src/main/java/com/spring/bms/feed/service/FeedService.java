@@ -20,11 +20,12 @@ public interface FeedService {
 	public void deletePost(String postId) throws Exception;
 	public void writeReply(ReplyDto replyDto) throws Exception;
 	public List<ReplyDto> getReplyList(String postId) throws Exception;
-	public void deleteReply(String replyId) throws Exception;
+	public void deleteReply(ReplyDto replyDto) throws Exception;
 	public void modifyReply(ReplyDto replyDto) throws Exception;
+	
 	public boolean getLikePost(LikePostDto likePostDto) throws Exception;
-	public int getLikeCount(String postId) throws Exception;
 	public boolean getLikeMember(LikeMemberDto likeMemberDto) throws Exception;
+	public int getLikeCount(String postId) throws Exception;
 	public int getReplyCount(String postId) throws Exception;
 
 }

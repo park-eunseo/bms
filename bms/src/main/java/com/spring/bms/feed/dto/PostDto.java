@@ -11,6 +11,8 @@ public class PostDto {
 	String thumbnail;
 	String content;
 	String postPrivate;
+	int likeCount;
+	int ReplyCount;
 	String regDate;
 
 	public String getPostId() {
@@ -67,6 +69,22 @@ public class PostDto {
 
 	public void setPostPrivate(String postPrivate) {
 		this.postPrivate = postPrivate;
+	}
+
+	public int getLikeCount() {
+		return likeCount;
+	}
+
+	public void setLikeCount(int likeCount) {
+		this.likeCount = likeCount;
+	}
+
+	public int getReplyCount() {
+		return ReplyCount;
+	}
+
+	public void setReplyCount(int replyCount) {
+		ReplyCount = replyCount;
 	}
 
 	public String getRegDate() {

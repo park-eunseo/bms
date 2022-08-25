@@ -69,7 +69,6 @@ public class FeedController {
 
 		for (PostDto postDto : postList) {
 			String content = postDto.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-			content = content.replaceAll("&lt(;)?(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?&gt(;)?", "");
 
 			// 게시글 내용 html 태그 다 제거 후
 			if (content.length() > 50) 
@@ -128,9 +127,15 @@ public class FeedController {
 	}
 
 	@GetMapping("/detailPost") // 하나의 게시글 보기
-	public ModelAndView detailPost(@RequestParam("postId") String postId, HttpServletRequest request) throws Exception {
+	public ModelAndView detailPost(@RequestParam("postId") String postId, 
+								   @RequestParam(name = "id", required = false) String id, HttpServletRequest request) throws Exception {
 		ModelAndView mv = new ModelAndView();
-
+		
+		if(id != null) {
+			mv.addObject("categoryList", categoryService.getCategoryList(id));
+			mv.addObject("memberInfo", feedService.getOneMember(id));
+		}
+		
 		mv.addObject("detailPost", feedService.getOnePost(postId));
 		mv.addObject("replyList", feedService.getReplyList(postId));
 		mv.setViewName("/detailPost");
@@ -212,7 +217,7 @@ public class FeedController {
 		return new ResponseEntity<Object>(feedService.getLikeMember(likeMemberDto), HttpStatus.OK);
 	}
 	
-	@GetMapping("/getReplyCount") // 해당 게시글에 좋아요가 몇 개인지
+	@GetMapping("/getReplyCount") // 해당 게시글에 댓글 몇 개인지
 	public ResponseEntity<Object> getReplyCount(String postId) throws Exception {
 		return new ResponseEntity<Object>(feedService.getReplyCount(postId), HttpStatus.OK);
 	}
@@ -231,16 +236,14 @@ public class FeedController {
 	}
 	
 	@GetMapping("/deleteReply") // 댓글 삭제
-	public ResponseEntity<Object> deleteReply(HttpServletRequest request, 
-										@RequestParam("replyId") String replyId,
-										@RequestParam(name = "postId", required = false) String postId ) throws Exception {
-		feedService.deleteReply(replyId);
+	public ResponseEntity<Object> deleteReply(HttpServletRequest request, ReplyDto replyDto) throws Exception {
+		feedService.deleteReply(replyDto);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
 		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
-								"/feed/detailPost?postId=" + postId + "';</script>";
+								"/feed/detailPost?postId=" + replyDto.getPostId() + "';</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}

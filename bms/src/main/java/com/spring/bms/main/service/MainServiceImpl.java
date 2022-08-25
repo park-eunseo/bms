@@ -19,4 +19,9 @@ public class MainServiceImpl implements MainService {
 		return mainDao.selectSearchList(searchMap);
 	}
 
+	@Override
+	public List<Map<String, Object>> getFavoriteList(String id) throws Exception {
+		return mainDao.selectFavoriteList(id);
+	}
+
 }

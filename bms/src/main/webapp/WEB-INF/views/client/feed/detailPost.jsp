@@ -84,7 +84,7 @@
 			};
 		}
 	});
-
+	
 	function likeCount() { // 좋아요 개수
 		$.ajax({
 			type : "get",
@@ -105,11 +105,8 @@
 		});
 	}
 	
-	likeCount()
-	replyCount()
-	
 	function likePost(){ // 좋아요 버튼 눌렀을 때 이벤트
-		if(memberId == null){
+		if(memberId == null || memberId == 'null'){
 			alert("로그인 후 이용 가능합니다.")
 			location.href = "${contextPath}/member/login"
 			return false
@@ -119,26 +116,21 @@
 			$.ajax({
 				type : "get",
 				async : false, // async : true가 기본 설정(비동기식 처리: 병렬적), false(동기식 처리: 직렬적)
-				url : "${contextPath}/manage/notLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId}, // 회원의 해당 게시글 좋아요한 행 제거한 후
-				success : function(){
-					likeCount()
-				}
+				url : "${contextPath}/manage/notLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId} // 회원의 해당 게시글 좋아요한 행 제거한 후
 			});
-
-		// 비동기식 방식 사용 시 1차 결과값을 기다리지 않고 다음 함수와 같이 실행되기 때문에 2차로 받고자 하는 값을 정확하게 받지 못한다.
-		
+			// 비동기식 방식 사용 시 1차 결과값을 기다리지 않고 다음 함수와 같이 실행되기 때문에 2차로 받고자 하는 값을 정확하게 받지 못한다.
+			
+			likeCount()
 			document.getElementById("likePost").classList.replace('bxs-heart', 'bx-heart')
 			likeClick = false
 		} else { // 좋아요 X -> 좋아요 O(좋아요 개수 + 1)
 			$.ajax({
 				type : "get",
 				async : false, 
-				url : "${contextPath}/manage/likePost?memberId=" + memberId + "&postId=" + ${detailPost.postId},
-				success : function(){
-					likeCount()
-				}
-			});
+				url : "${contextPath}/manage/likePost?memberId=" + memberId + "&postId=" + ${detailPost.postId}
+			})
 			
+			likeCount()
 			document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')	
 			likeClick = true;
 		}
@@ -157,7 +149,7 @@
 	function replyCheck(){
 		var content = document.getElementById("content")	
 		
-		if(memberId == null){
+		if(memberId == null || memberId == 'null'){
 			alert("로그인 후 이용 가능합니다.")
 			location.href = "${contextPath}/member/login"
 			return false
@@ -172,7 +164,7 @@
 	}
 	
 	function re_replyCheck(replyId){ // 댓글 입력값 체크 후 폼 이동
-		if(memberId == null){
+		if(memberId == null || memberId == 'null'){
 			alert("로그인 후 이용 가능합니다.")
 			location.href = "${contextPath}/member/login"
 			return false
@@ -272,12 +264,12 @@
 							style="font-size: 1.2rem; color: red; margin-bottom: -15px; margin-left: -20px;">
 						</button>
 						<h6 id="likeCount" class="count"
-							style="margin-left: -22px;">0</h6>
+							style="margin-left: -22px;">${detailPost.likeCount }</h6>
 						&ensp;
 						<!-- 댓글 -->
 						<i class="bx bx-message-rounded-dots"
 							style="font-size: 1.2rem; margin-bottom: -15px;"></i>
-						<h6 id="replyCount" class="count">0</h6>
+						<h6 id="replyCount" class="count">${detailPost.replyCount }</h6>
 					</div>
 					<hr>
 					<!-- 댓글 시작 -->

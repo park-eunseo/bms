@@ -12,11 +12,16 @@ import com.spring.bms.feed.dto.PostDto;
 @Repository
 public class MainDaoImpl implements MainDao {
 	@Autowired
-	private SqlSession SqlSession;
+	private SqlSession sqlSession;
 	
 	@Override
 	public List<Map<String, Object>> selectSearchList(Map<String, Object> searchMap) throws Exception {
-		return SqlSession.selectList("main.selectSearchList", searchMap);
+		return sqlSession.selectList("main.selectSearchList", searchMap);
+	}
+
+	@Override
+	public List<Map<String, Object>> selectFavoriteList(String id) throws Exception {
+		return sqlSession.selectList("main.selectFavoritePostList", id);
 	}
 
 }

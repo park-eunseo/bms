@@ -59,13 +59,18 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public void deleteReply(String replyId) throws Exception {
-		feedDao.deleteReply(replyId);
+	public void deleteReply(ReplyDto replyDto) throws Exception {
+		feedDao.deleteReply(replyDto);
 	}
 
 	@Override
 	public void modifyReply(ReplyDto replyDto) throws Exception {
 		feedDao.updateReply(replyDto);
+	}
+
+	@Override
+	public boolean getLikeMember(LikeMemberDto likeMemberDto) throws Exception {
+		return feedDao.selectLikeMember(likeMemberDto);
 	}
 
 	@Override
@@ -76,11 +81,6 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public int getLikeCount(String postId) throws Exception {
 		return feedDao.selectLikeCount(postId);
-	}
-
-	@Override
-	public boolean getLikeMember(LikeMemberDto likeMemberDto) throws Exception {
-		return feedDao.selectLikeMember(likeMemberDto);
 	}
 
 	@Override

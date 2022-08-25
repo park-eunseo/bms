@@ -26,8 +26,10 @@
 </style>
 <script>
 	function search(){
-		var searchWord = document.getElementById("searchWord")
-		location.href = "${contextPath}/feed?id=${memberInfo.id}&searchWord=" + searchWord.value
+		if (window.event.keyCode == 13) {
+			var searchWord = document.getElementById("searchWord")
+			location.href = "${contextPath}/feed?id=${memberInfo.id}&searchWord=" + searchWord.value
+		}
 	}
 </script>
 </head>
@@ -45,14 +47,13 @@
 		<div class="navbar-nav-right d-flex align-items-center" id="navbar-collapse">
 
 			<!-- Search -->
-			<div class="navbar-nav align-items-center" style="display: -webkit-inline-box;">
+			<div class="navbar-nav align-items-center" >
 			 <!-- 현재 페이지인 블로그 범위 -->
-					<div class="input-group">
-						<input type="text" id="searchWord" class="form-control" placeholder="Search">
-						<button type="button" class="input-group-text" onclick="search()">
-							<i class="tf-icons bx bx-search"></i>
-						</button>
-					</div>
+				<div class="nav-item d-flex align-items-center">
+                  	<i class="bx bx-search fs-4 lh-0"></i>
+                 	 <input type="text" class="form-control border-0 shadow-none" 
+                 	 		 id="searchWord" placeholder="Search" onkeyup="search()">
+                </div>
 			</div>
 			<hr>
 			<!-- /Search -->

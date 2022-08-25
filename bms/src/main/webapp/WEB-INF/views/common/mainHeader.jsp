@@ -22,7 +22,7 @@
 }
 </style>
 <script>
-	function search(){
+	function searchEnter(){
 		var searchKeyword = $("#searchKeyword").val()
 		var searchWord = $("#searchWord").val()
 		
@@ -31,7 +31,22 @@
 			return false
 		}
 
-		location.href = "${contextPath}/search?searchKeyword=" + searchKeyword + "&searchWord=" + searchWord
+		if (window.event.keyCode == 13) {	// 엔터 
+			location.href = "${contextPath}/search?searchKeyword=" + searchKeyword + "&searchWord=" + searchWord
+		} 
+	}
+	
+	function search(){
+		var searchKeyword = $("#searchKeyword").val()
+		var searchWord = $("#searchWord").val()
+		
+		if(searchWord == "") {
+			alert("검색어를 입력해 주세요.")
+			return false
+		}
+	
+			location.href = "${contextPath}/search?searchKeyword=" + searchKeyword + "&searchWord=" + searchWord
+
 	}
 </script>
 </head>
@@ -47,9 +62,9 @@
 
 	<!-- Navbar Start -->
 	<nav
-		class="navbar navbar-expand-lg bg-white navbar-light sticky-top p-0" style="margin-bottom: -35px;">
+		class="navbar navbar-expand-lg navbar-light sticky-top p-0" style="background-color: #f4f4f4;">
 		<a href="${contextPath }/"
-			class="navbar-brand d-flex align-items-center border-end px-4 px-lg-5">
+			class="navbar-brand d-flex align-items-center px-4">
 			<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a>
 		
@@ -60,13 +75,13 @@
 		<div class="navbar-collapse collapse" id="navbarCollapse">
 			<div>
 					<!-- 전체 회원 범위 -->
-					<div class="input-group">
-						<select id="searchKeyword" name="searchKeyword" class="form-select selectBox form-select-sm">
+					<div class="input-group" style="box-shadow: none">
+						<select id="searchKeyword" name="searchKeyword" class="form-select selectBox form-select-sm" style="box-shadow: none">
 							<option value="member">작성자</option>
 							<option value="blogName">블로그명</option>
 							<option value="post">게시글</option>
 						</select> 
-						<input type="text" id="searchWord" name="searchWord" class="form-control searchText" placeholder="Search">
+						<input type="text" id="searchWord" name="searchWord" onkeypress="searchEnter()" class="form-control searchText" placeholder="Search">
 						<button type="button" onclick="search()" class="input-group-text">
 							<i class="tf-icons bx bx-search"></i>
 						</button>
@@ -75,8 +90,8 @@
 			<c:choose>
 				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->
 		            <div class="navbar-nav ms-auto p-4 p-lg-0" style="">
-		                <a href="${contextPath }/member/register" class="nav-item nav-link" >회원가입</a>
-		                <a href="${contextPath }/member/login" class="nav-item nav-link">로그인</a>        
+		                <a href="${contextPath }/member/register" class="nav-item nav-link" style="font-size: initial;">회원가입</a>
+		                <a href="${contextPath }/member/login" class="nav-item nav-link" style="font-size: initial;">로그인</a>        
 		            </div>
 		      </c:when>
 				<c:when test="${sessionScope.role eq 'client' }"> <!-- 세션이 있고 클라이언트 계정이라면 -->

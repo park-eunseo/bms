@@ -48,7 +48,7 @@
 		<div class="container-xxl flex-grow-1 container-p-y" style="margin-top: 20px;">
 			<div class="row">
 				<div class="col-xl-6" style="width: 100%;">
-					<h4 class="text-muted" style="color: #8e8e8e;">관리</h4>
+					<h4 class="text-muted" style="color: #8e8e8e;">내 활동 관리</h4>
 					<div class="nav-align-top mb-4" style="padding-top: 15px;">
 						<ul class="nav nav-pills mb-3" role="tablist">
 							<li class="nav-item">

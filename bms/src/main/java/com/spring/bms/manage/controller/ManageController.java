@@ -1,5 +1,7 @@
 package com.spring.bms.manage.controller;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -12,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bms.feed.dto.PostDto;
@@ -60,28 +63,29 @@ public class ManageController {
 		return mv;
 	}
 	
-	@GetMapping("/likePost")
+	@GetMapping("/likePost") // 좋아요 버튼 눌렀을 때 값 insert
 	public ResponseEntity<Object> likePost(LikePostDto likePostDto) throws Exception {
 		manageService.addLikePost(likePostDto);
 
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/notLikePost")
+	
+	@GetMapping("/notLikePost")  // 좋아요 버튼 취소했을 때 값 delete
 	public ResponseEntity<Object> notLikePost(HttpServletRequest request, LikePostDto likePostDto) throws Exception {
 		manageService.notLikePost(likePostDto);
 		
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/likeMember")
+	@GetMapping("/likeMember")	 // 회원 즐겨찾기 버튼 눌렀을 때 값 insert
 	public ResponseEntity<Object> likeMember(LikeMemberDto likeMemberDto) throws Exception {
 		manageService.addLikeMember(likeMemberDto);
 
 		return new ResponseEntity<Object>(HttpStatus.OK);
 	}
 	
-	@GetMapping("/notLikeMember")
+	@GetMapping("/notLikeMember")	// 회원 즐겨찾기 버튼 눌렀을 때 값 delete
 	public ResponseEntity<Object> notLikeMember(LikeMemberDto likeMemberDto) throws Exception {
 		manageService.notLikeMember(likeMemberDto);
 		

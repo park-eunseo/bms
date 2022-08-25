@@ -51,21 +51,23 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public void insertReply(ReplyDto replyDto) throws Exception {
 		sqlSession.insert("feed.insertReply", replyDto);
+		sqlSession.update("feed.updateReplyAdd", replyDto);
 	}
 
 	@Override
-	public List<ReplyDto> selectReplyList(String postId) throws Exception {
-		return sqlSession.selectList("feed.selectReplyList", postId);
+	public void deleteReply(ReplyDto replyDto) throws Exception {
+		sqlSession.update("feed.deleteReply", replyDto);
+		sqlSession.update("feed.updateReplyCancel", replyDto);
 	}
-
-	@Override
-	public void deleteReply(String replyId) throws Exception {
-		sqlSession.update("feed.deleteReply", replyId);
-	}
-
+	
 	@Override
 	public void updateReply(ReplyDto replyDto) throws Exception {
 		sqlSession.update("feed.updateReply", replyDto);
+	}
+	
+	@Override
+	public List<ReplyDto> selectReplyList(String postId) throws Exception {
+		return sqlSession.selectList("feed.selectReplyList", postId);
 	}
 
 	@Override
@@ -80,11 +82,6 @@ public class FeedDaoImpl implements FeedDao {
 	}
 
 	@Override
-	public int selectLikeCount(String postId) throws Exception {				// 하나의 게시글의 좋아요 개수
-		return sqlSession.selectOne("feed.selectLikeCount", postId);
-	}
-	
-	@Override
 	public boolean selectLikeMember(LikeMemberDto likeMemberDto) throws Exception {	
 		boolean isLike = false;
 		
@@ -94,9 +91,14 @@ public class FeedDaoImpl implements FeedDao {
 		
 		return isLike;
 	}
+	
+	@Override
+	public int selectLikeCount(String postId) throws Exception {
+		return sqlSession.selectOne("feed.selectLikeCount", postId);
+	}
 
 	@Override
-	public int selectReplyCount(String postId) throws Exception {		//  해당 게시글 댓글 개수
+	public int selectReplyCount(String postId) throws Exception {
 		return sqlSession.selectOne("feed.selectReplyCount", postId);
 	}
 

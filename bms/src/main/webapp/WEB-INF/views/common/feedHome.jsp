@@ -39,7 +39,7 @@
 				<c:forEach var="post" items="${memberPostList }">
 					<div class="col-md-6 col-lg-4 mb-3">
 						<div class="card">
-							<a href="${contextPath }/feed/detailPost?postId=${post.postId}">
+							<a href="${contextPath }/feed/detailPost?id=${post.memberId }&postId=${post.postId}">
 								<c:if test="${not empty post.thumbnail}">
 									<img class="card-img-top"
 										style="height: 160px; object-fit: cover;"
@@ -56,7 +56,7 @@
 									<div style="text-align: end;">
 									<!-- 좋아요 -->
 										<small id="likeBtn${post.postId}" class='bx bx-heart' style="color: red; font-size: 1.1rem;"></small> 
-										<small id="likeCount${post.postId}" style="font-size: 0.8rem;">0</small>&ensp;
+										<small style="font-size: 0.8rem;">${post.likeCount }</small>&ensp;
 										<script>
 											$().ready(function(){
 												$.ajax({
@@ -66,30 +66,11 @@
 														if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
 													}
 												})
-												
-												$.ajax({
-													type : "get",
-													url : "${contextPath}/feed/getLikeCount?memberId=" + memberId + "&postId=" + ${post.postId},
-													success : function(data){
-														document.getElementById("likeCount${post.postId}").innerText = data
-													}
-												})
 											})
 										</script>
 										<!-- 댓글 -->
 										<small><i class="bx bx-message-rounded-dots" style="font-size: 1.1rem;"></i></small>
-										<small id="replyCount${post.postId }" style="font-size: 0.8rem;">0</small>
-										<script>
-											$().ready(function(){
-												$.ajax({
-													type : "get",
-													url : "${contextPath}/feed/getReplyCount?postId=" + ${post.postId},
-													success : function(data){
-														$("#replyCount" + ${post.postId}).text(data)
-													}
-												});
-											})
-										</script>
+										<small style="font-size: 0.8rem;">${post.replyCount }</small>
 									</div>
 								</div>
 							</a>

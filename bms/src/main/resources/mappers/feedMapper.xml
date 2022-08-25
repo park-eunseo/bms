@@ -11,7 +11,9 @@
 				THUMBNAIL,
 				CONTENT,
 				POST_PRIVATE,
-				REG_DATE
+				REG_DATE,
+				LIKE_COUNT,
+				REPLY_COUNT
 			)
 		VALUES(
 				#{memberId},
@@ -20,7 +22,9 @@
 				#{thumbnail},
 				#{content},
 				#{postPrivate},
-				NOW()	
+				NOW(),
+				0,
+				0
 		)
 
 	</insert>
@@ -44,7 +48,9 @@
 						TITLE,
 						THUMBNAIL,
 						CONTENT,
-						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
+						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE,
+						LIKE_COUNT,
+		 				REPLY_COUNT
 				FROM
 						POST
 				WHERE
@@ -71,7 +77,9 @@
 						THUMBNAIL,
 						CONTENT,
 						POST_PRIVATE,
-						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
+						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE,
+						LIKE_COUNT,
+		 				REPLY_COUNT
 				FROM
 						POST
 				WHERE
@@ -102,7 +110,9 @@
 		 		THUMBNAIL,
 		 		CONTENT,
 		 		POST_PRIVATE,
-		 		date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE
+		 		date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE,
+		 		LIKE_COUNT,
+		 		REPLY_COUNT
 		FROM
 				POST
 		WHERE
@@ -117,16 +127,6 @@
 				LIKEPOST
 		WHERE 
 				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
-	</select>
-	
-		
-	<select id="selectLikeCount" parameterType="String" resultType="int">
-		SELECT
-				COUNT(*)
-		FROM 
-				LIKEPOST
-		WHERE
-				POST_ID = #{postId}
 	</select>
 	
 	<update id="updatePost" parameterType="PostDto">
@@ -206,15 +206,7 @@
 		WHERE
 				REPLY_ID = #{replyId}
 	</update>
-	
-	<select id="selectReplyCount" parameterType="String" resultType="int">
-		SELECT
-				COUNT(*)
-		FROM 
-				REPLY
-		WHERE
-				POST_ID = #{postId}
-	</select>
+
 	
 	<select id="selectLikeMember" resultType="LikeMemberDto">
 		SELECT
@@ -225,5 +217,39 @@
 				MEMBER_ID = #{memberId} AND FAVORITE_ID = #{favoriteId}
 	</select>
 	
+	<select id="selectLikeCount" parameterType="String" resultType="int">
+		SELECT
+				LIKE_COUNT
+		FROM
+				POST
+		WHERE
+				POST_ID = #{postId}
+	</select>
 	
+	<select id="selectReplyCount" parameterType="String" resultType="int">
+		SELECT
+				REPLY_COUNT
+		FROM
+				POST
+		WHERE
+				POST_ID = #{postId}
+	</select>
+	
+	<update id="updateReplyAdd" parameterType="ReplyDto">
+		UPDATE
+				POST
+		SET
+				REPLY_COUNT = REPLY_COUNT + 1
+		WHERE
+				POST_ID = #{postId}
+	</update>
+	
+	<update id="updateReplyCancel" parameterType="ReplyDto">
+		UPDATE
+				POST
+		SET
+				REPLY_COUNT = REPLY_COUNT - 1
+		WHERE
+				POST_ID = #{postId}
+	</update>
 </mapper>

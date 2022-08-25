@@ -20,4 +20,5 @@ public class LikePostDto {
 	public void setPostId(String postId) {
 		this.postId = postId;
 	}
+
 }

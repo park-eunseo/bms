@@ -21,6 +21,26 @@
 				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
 	</delete>
 
+	<update id="updateLikeAdd" parameterType="LikePostDto">
+		UPDATE
+				POST
+		SET 
+				LIKE_COUNT = LIKE_COUNT + 1
+
+		WHERE
+				POST_ID = #{postId}		
+	</update>
+	
+	<update id="updateLikeCancel" parameterType="LikePostDto">
+		UPDATE
+				POST
+		SET 
+				LIKE_COUNT = LIKE_COUNT - 1
+
+		WHERE
+				POST_ID = #{postId}		
+	</update>
+	
 	<select id="selectLikePostList" parameterType="String" resultType="PostDto">
 		SELECT
 				P.MEMBER_ID AS MEMBER_ID,
@@ -79,7 +99,7 @@
 					  JOIN POST P
 					  ON R.POST_ID = P.POST_ID
 		WHERE
-				R.MEMBER_ID = #{id}
+				R.MEMBER_ID = #{id} AND R.CONTENT != ''
 		ORDER BY
 				R.REG_DATE DESC
 				

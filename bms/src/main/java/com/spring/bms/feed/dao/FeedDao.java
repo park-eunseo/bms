@@ -19,10 +19,10 @@ public interface FeedDao {
 	public void deletePost(String postId) throws Exception;
 	public void insertReply(ReplyDto replyDto) throws Exception;
 	public List<ReplyDto> selectReplyList(String postId) throws Exception;
-	public void deleteReply(String replyId) throws Exception;
+	public void deleteReply(ReplyDto replyDto) throws Exception;
 	public void updateReply(ReplyDto replyDto) throws Exception;
 	public boolean selectLikePost(LikePostDto likePostDto) throws Exception;
 	public boolean selectLikeMember(LikeMemberDto likeMemberDto) throws Exception;
-	public int selectLikeCount(String postId) throws Exception;
 	public int selectReplyCount(String postId) throws Exception;
+	public int selectLikeCount(String postId) throws Exception;
 }
