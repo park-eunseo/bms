@@ -24,4 +24,9 @@ public class MainServiceImpl implements MainService {
 		return mainDao.selectFavoriteList(id);
 	}
 
+	@Override
+	public int getSearchResultCount(Map<String, Object> countMap) throws Exception {
+		return mainDao.selectSearchResultCount(countMap);
+	}
+
 }

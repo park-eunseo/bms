@@ -38,19 +38,78 @@
 				ID = #{id}
 	</select>
 	
-	<select id="selectPostList" parameterType="hashmap" resultType="PostDto">
+	<select id="selectPostList" parameterType="map" resultType="map">
 		<choose>
 			<when test='sessionId != id'> <!-- 내 피드가 아닌 다른 회원 피드라면 비공개된 글 제외하고 반환 -->
 				SELECT
-						POST_ID,
-						MEMBER_ID,
-						CATEGORY_TITLE,
-						TITLE,
-						THUMBNAIL,
-						CONTENT,
-						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE,
-						LIKE_COUNT,
-		 				REPLY_COUNT
+						POST_ID 		AS postId,
+						MEMBER_ID		AS memberId,
+						CATEGORY_TITLE	AS categoryTitle,
+						TITLE			AS title,
+						THUMBNAIL		AS thumbnail,
+						CONTENT			AS content,
+						date_format(REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
+						LIKE_COUNT		AS likeCount,
+		 				REPLY_COUNT		AS replyCount
+				FROM
+						POST
+				WHERE
+						MEMBER_ID = #{id} AND POST_PRIVATE = 'N' AND
+				<choose>
+					<when test='category == null'>
+						(TITLE LIKE CONCAT('%', #{searchWord}, '%') OR CONTENT LIKE CONCAT('%',
+						#{searchWord}, '%'))
+					</when>
+					<otherwise>
+						CATEGORY_TITLE = #{category}
+					</otherwise>
+				</choose>
+			
+				ORDER BY
+						REG_DATE DESC
+				LIMIT
+						#{startIndex}, #{viewPostCount}
+			</when>
+			<otherwise> <!-- 내 피드라면 비공개까지 전부 반환 -->
+				SELECT
+						POST_ID 		AS postId,
+						MEMBER_ID		AS memberId,
+						CATEGORY_TITLE	AS categoryTitle,
+						TITLE			AS title,
+						THUMBNAIL		AS thumbnail,
+						CONTENT			AS content,
+						POST_PRIVATE 	AS postPrivate,
+						date_format(REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
+						LIKE_COUNT		AS likeCount,
+		 				REPLY_COUNT		AS replyCount
+				FROM
+						POST
+				WHERE
+						MEMBER_ID = #{id} AND
+				<choose>
+					<when test='category == null'>
+						(TITLE LIKE CONCAT('%', #{searchWord}, '%') OR CONTENT LIKE CONCAT('%',
+						#{searchWord}, '%'))
+					</when>
+					<otherwise>
+						CATEGORY_TITLE = #{category}
+					</otherwise>
+				</choose>
+			
+				ORDER BY
+						REG_DATE DESC
+				LIMIT
+						#{startIndex}, #{viewPostCount}
+			</otherwise>
+		</choose>
+
+	</select>
+	
+	<select id="selectToTalPostCount" parameterType="map" resultType="int">
+		<choose>
+			<when test='sessionId != id'> <!-- 내 계정이 아니라면 비공개 글 제외하고 -->
+				SELECT
+						COUNT(*)
 				FROM
 						POST
 				WHERE
@@ -68,18 +127,9 @@
 				ORDER BY
 						REG_DATE DESC
 			</when>
-			<otherwise> <!-- 내 피드라면 비공개까지 전부 반환 -->
+			<otherwise>
 				SELECT
-						POST_ID,
-						MEMBER_ID,
-						CATEGORY_TITLE,
-						TITLE,
-						THUMBNAIL,
-						CONTENT,
-						POST_PRIVATE,
-						date_format(REG_DATE, '%Y-%m-%d %H:%i') REGDATE,
-						LIKE_COUNT,
-		 				REPLY_COUNT
+						COUNT(*)
 				FROM
 						POST
 				WHERE
@@ -98,7 +148,6 @@
 						REG_DATE DESC
 			</otherwise>
 		</choose>
-
 	</select>
 	
 	<select id="selectOnePost" parameterType="String" resultType="PostDto">

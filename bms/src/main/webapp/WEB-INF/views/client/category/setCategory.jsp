@@ -26,6 +26,11 @@
 	}
 	
 	function setCategory(obj){
+		if(obj.innerText == '전체') {
+			alert("기본 카테고리는 수정할 수 없습니다.")
+			return false
+		}
+		
 		document.getElementById("resetCategory").value = obj.innerText
 		document.getElementById("categoryId").value = obj.getAttribute("data-value")
 		

@@ -36,15 +36,6 @@
 </style>
 <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
 <script>
-<%-- 	var selected = document.getElementsByClassName("menu-item active")[0] // 선택 전 선택되어 있었던 카테고리 
-	var select = '<%=(String)session.getAttribute("category")%>'
-	
-	
-	if(selected.id != select){ // 카테고리 설정 미완성
-		selected.className = "menu-item"
-		document.getElementById(title).className += ' active'
-	} --%>
-	
 	$().ready(function(){
 		var memberId = '<%=(String) session.getAttribute("memberId")%>'
 		var likeMember = false
@@ -159,19 +150,16 @@
 			<c:forEach var="category" items="${categoryList }">
 				<c:choose>
 					<c:when test="${category.categoryTitle eq '전체'}">
-						<li class="menu-item active" id="${category.categoryTitle}">
-							<a href="${contextPath }/feed?id=${memberInfo.id}"
-							class="menu-link" onclick="active('${category.categoryTitle }')">
+						<li class="menu-item <c:if test="${empty nowCategory}">active</c:if>" id="${category.categoryTitle}">
+							<a href="${contextPath }/feed?id=${memberInfo.id}" class="menu-link" >
 								<i class="menu-icon tf-icons bx bx-home-alt"></i> 전체
 						</a>
 						</li>
 					</c:when>
 					<c:otherwise>
-						<li class="menu-item" id="${category.categoryTitle }"><a
-							href="${contextPath}/feed?id=${memberInfo.id}&category=${category.categoryTitle }"
-							onclick="active('${category.categoryTitle }')" class="menu-link">
-								<i
-								class="menu-icon tf-icons bx bx-chevron-right bx-flip-vertical"></i>
+						<li class="menu-item <c:if test="${nowCategory eq category.categoryTitle}">active</c:if>" id="${category.categoryTitle }"><a
+							href="${contextPath}/feed?id=${memberInfo.id}&category=${category.categoryTitle }" class="menu-link">
+								<i class="menu-icon tf-icons bx bx-chevron-right bx-flip-vertical"></i>
 								${category.categoryTitle }
 						</a></li>
 					</c:otherwise>

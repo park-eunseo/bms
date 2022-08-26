@@ -24,4 +24,9 @@ public class MainDaoImpl implements MainDao {
 		return sqlSession.selectList("main.selectFavoritePostList", id);
 	}
 
+	@Override
+	public int selectSearchResultCount(Map<String, Object> countMap) throws Exception {
+		return sqlSession.selectOne("main.selectSearchResultCount", countMap);
+	}
+
 }

@@ -29,7 +29,7 @@ public class FeedDaoImpl implements FeedDao {
 	}
 	
 	@Override
-	public List<PostDto> selectPostList(Map<String, String> postMap) throws Exception {
+	public List<Map<String, Object>> selectPostList(Map<String, Object> postMap) throws Exception {
 		return sqlSession.selectList("feed.selectPostList", postMap);
 	}
 
@@ -100,6 +100,11 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public int selectReplyCount(String postId) throws Exception {
 		return sqlSession.selectOne("feed.selectReplyCount", postId);
+	}
+	
+	@Override
+	public int selectToTalPostCount(Map<String, Object> countMap) throws Exception {
+		return sqlSession.selectOne("feed.selectToTalPostCount", countMap);
 	}
 
 }

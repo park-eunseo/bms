@@ -49,38 +49,79 @@ public class FeedController {
 	private CategoryService categoryService;
 	
 	@GetMapping("")
-	public String feed(@RequestParam("id") String id, 
+	public ModelAndView feed(@RequestParam("id") String id, 
 						@RequestParam(name = "searchWord", defaultValue = "") String searchWord, 
 						@RequestParam(name = "category", required = false) String category,
+						@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
 						HttpServletRequest request) throws Exception {
 		
 		HttpSession session = request.getSession();
-		Map<String, String> postMap = new HashMap<>();
-		postMap.put("id", id);
-		postMap.put("sessionId", (String)session.getAttribute("memberId"));
+		ModelAndView mv = new ModelAndView();
+		
+		String sessionId = (String)session.getAttribute("memberId");
+		
+		int viewPostCount = 8;
+		int startIndex = (currentPage - 1) * viewPostCount;
+		
+		Map<String, Object> postMap = new HashMap<>();
+		postMap.put("id", id);	// 피드 주인 회원
+		postMap.put("sessionId", sessionId);	// 로그인한 회원
+		postMap.put("viewPostCount", viewPostCount);
+		postMap.put("startIndex", startIndex);
+		
+		Map<String, Object> countMap = new HashMap<>();
+		countMap.put("id", id);
+		countMap.put("sessionId", sessionId);
 		
 		if(category == null) {
 			postMap.put("searchWord", searchWord);
+			countMap.put("searchWord", searchWord);
 		} else {
 			postMap.put("category", category);
+			countMap.put("category", category);
 		}
 		
-		List<PostDto> postList = feedService.getPostList(postMap);
+		int totalPostCount = feedService.getTotalPostCount(countMap); // 가져올 검색 결과 수 
+		int addPage = totalPostCount % viewPostCount == 0 ? 0 : 1;
+		int totalPageBlock = totalPostCount / viewPostCount + addPage; // 필요한 총 페이지 블럭 개수
+		
+		int startPageBlock = 1;
+		
+		if(currentPage % 5 == 0) startPageBlock = (currentPage / 5 - 1) * 5 + 1; // 시작 블록 번호
+		else startPageBlock = (currentPage / 5) * 5 + 1;
+		
+		int endPageBlock = startPageBlock + 5 - 1; // 마지막 블록 번호
+		
+		if(endPageBlock > totalPageBlock) endPageBlock = totalPageBlock; // 끝 번호가 총 개수를 넘어간다면 끝 번호가 마지막
+		
+		if(viewPostCount > totalPostCount) { // 검색 결과 개수가 한 페이지에 보여질 결과 수보다 많으면 블록 하나만 필요
+			startPageBlock = 1;
+			endPageBlock = 0;
+		}		
+		
+		List<Map<String, Object>> postList = feedService.getPostList(postMap);
 
-		for (PostDto postDto : postList) {
-			String content = postDto.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-
+		for (Map<String, Object> list : postList) {
 			// 게시글 내용 html 태그 다 제거 후
-			if (content.length() > 50) 
-				content = content.substring(0, 50) + "...";
-				postDto.setContent(content);
+			String content = list.get("content").toString().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+			list.put("content", content);
 		}
 
+		session.setAttribute("nowCategory", category);
 		session.setAttribute("memberInfo", feedService.getOneMember(id)); 		// 해당 블로그 회원의 정보 select
-		session.setAttribute("memberPostList", postList); 						// 해당 회원의 게시물 전체 select
+		session.setAttribute("postList", postList); 						// 해당 회원의 게시물 전체 select
 		session.setAttribute("categoryList", categoryService.getCategoryList(id));  // 해당 회원의 카테고리 전체 select
 		
-		return "/feedHome";
+		mv.addAllObjects(postMap);
+		mv.addObject("startPageBlock", startPageBlock);
+		mv.addObject("endPageBlock", endPageBlock);		
+		mv.addObject("totalPageBlock", totalPageBlock);		
+		mv.addObject("totalPostCount", totalPostCount);		
+		mv.addObject("viewPostCount", viewPostCount);
+		mv.addObject("currentPage", currentPage);	
+		mv.setViewName("/feedHome");
+		
+		return mv;
 	}
 
 	@GetMapping("/writePost")
@@ -297,7 +338,7 @@ public class FeedController {
 
 		File file = new File(filePath);
 		if (file.exists()) { // 받아온 파일이 존재한다면
-			Thumbnails.of(file).size(800, 800).outputFormat("png").toOutputStream(out);
+			Thumbnails.of(file).size(700, 400).outputFormat("png").toOutputStream(out);
 		} else {
 			System.out.println("파일없음");
 		}

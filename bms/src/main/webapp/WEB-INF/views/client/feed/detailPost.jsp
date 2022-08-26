@@ -17,6 +17,13 @@
 	color: burlywood;
 }
 
+.category {
+	text-align-last: center;
+	color: #515050ed;
+	font-weight: 200;
+	padding-bottom: 10px;
+}
+
 .replyBtn {
 	font-size: smaller;
 	padding-block: 2px;
@@ -244,13 +251,11 @@
 			</div>
 			<div></div>
 			<div class="row pt-md-4" style="margin-top: -20px;">
-				<h4
-					style="text-align-last: center; color: #7676767d; font-weight: 200; padding-bottom: 10px;">
-					[${detailPost.categoryTitle }]</h4>
+				<h4 class="category">[${detailPost.categoryTitle }]</h4>
 				<h2 class="mb-3"
 					style="text-align-last: center; word-break: break-all; padding-bottom: 20px; color: #000000">${detailPost.title }</h2>
 				<span class="text-muted" style="text-align: -webkit-left;">${detailPost.regDate }
-					<c:if test="${detailPost.postPrivate eq 'Y' }">&ensp;|&ensp;비공개</c:if>	
+					<c:if test="${detailPost.postPrivate eq 'Y' }">&ensp;|&ensp;비공개</c:if>
 				</span>
 				<hr style="height: 0.03rem; margin-top: 1rem;">
 				<p style="text-align-last: center; color: #000000">${detailPost.content }</p>
@@ -263,8 +268,7 @@
 							class="btn bx bx-heart"
 							style="font-size: 1.2rem; color: red; margin-bottom: -15px; margin-left: -20px;">
 						</button>
-						<h6 id="likeCount" class="count"
-							style="margin-left: -22px;">${detailPost.likeCount }</h6>
+						<h6 id="likeCount" class="count" style="margin-left: -22px;">${detailPost.likeCount }</h6>
 						&ensp;
 						<!-- 댓글 -->
 						<i class="bx bx-message-rounded-dots"
@@ -354,8 +358,7 @@
 																		<div
 																			style="display: flex; justify-content: space-between;">
 																			<div>
-																				<span class="re_right">ㄴ</span>
-																				<img
+																				<span class="re_right">ㄴ</span> <img
 																					src="${contextPath }/member/thumbnails?profileName=${reply2.profileName}"
 																					onclick="location.href='${contextPath}/feed?id=${reply2.memberId }'"
 																					class="w-px-40 rounded-circle profileImg">
@@ -365,7 +368,8 @@
 																					<span class="author">작성자</span>
 																				</c:if>
 																			</div>
-																			<c:if test="${reply2.memberId eq sessionScope.memberId}">
+																			<c:if
+																				test="${reply2.memberId eq sessionScope.memberId}">
 																				<!-- 내 계정에서 쓴 댓글이면 수정 가능하게 -->
 																				<div class="btn-group"
 																					id="replySetting${reply2.replyId }">
@@ -388,8 +392,10 @@
 																			</c:if>
 																		</div>
 																		<!--  댓글 정보, 답댓글 달 때 버튼(댓글 수정할 때 바뀌는 부분) -->
-																		<div id="modifyReply${reply2.replyId }" style="padding-left: 17px;">
-																			<a href="${contextPath}/feed?id=${reply1.memberId }" class="mention">@${reply2.mention }</a>
+																		<div id="modifyReply${reply2.replyId }"
+																			style="padding-left: 17px;">
+																			<a href="${contextPath}/feed?id=${reply1.memberId }"
+																				class="mention">@${reply2.mention }</a>
 																			<p id="content${reply2.replyId }"
 																				style="margin-left: 0.4rem; display: inline;">${reply2.content }</p>
 																			<div style="margin-bottom: 0.6rem;">
@@ -423,10 +429,14 @@
 																				type="submit" value="등록" class="btn"
 																				style="padding: 3px 10px;">
 																		</div>
-																		<input type="hidden" name="memberId" value="${sessionScope.memberId }"> 
-																		<input type="hidden" name="postId" value="${detailPost.postId }"> 
-																		<input type="hidden" name="topReplyId" value="${reply1.replyId }"> 
-																		<input type="hidden" name="mention" value="${reply2.nickname }">
+																		<input type="hidden" name="memberId"
+																			value="${sessionScope.memberId }"> <input
+																			type="hidden" name="postId"
+																			value="${detailPost.postId }"> <input
+																			type="hidden" name="topReplyId"
+																			value="${reply1.replyId }"> <input
+																			type="hidden" name="mention"
+																			value="${reply2.nickname }">
 																	</form>
 																</div>
 															</c:if>
@@ -470,11 +480,11 @@
 								</c:when>
 								<c:otherwise>
 									<div class="comment-body" style="text-align-last: center;">
-										<span style="font-size: large; color: darkgray;">첫 댓글을 남겨보세요.</span>
+										<span style="font-size: large; color: darkgray;">첫 댓글을
+											남겨보세요.</span>
 									</div>
 								</c:otherwise>
-							</c:choose>
-						</li>
+							</c:choose></li>
 					</ul>
 					<!-- END comment-list -->
 
@@ -484,10 +494,10 @@
 							onsubmit="return replyCheck()" method="post" class="p-3 bg-light"
 							style="margin-top: -40px;">
 							<div class="form-group">
-								<i class="bx bx-message-rounded-dots"></i> &ensp;
-									<label for="message">댓글</label>
-								<textarea name="content" id="content" placeholder="댓글을 남겨보세요." cols="30" rows="5"
-									class="form-control basicTReply"></textarea>
+								<i class="bx bx-message-rounded-dots"></i> &ensp; <label
+									for="message">댓글</label>
+								<textarea name="content" id="content" placeholder="댓글을 남겨보세요."
+									cols="30" rows="5" class="form-control basicTReply"></textarea>
 								<small id="replyAlert" style="color: red;"></small>
 							</div>
 							<div class="form-group"

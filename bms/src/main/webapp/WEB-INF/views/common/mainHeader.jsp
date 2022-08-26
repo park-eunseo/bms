@@ -26,12 +26,12 @@
 		var searchKeyword = $("#searchKeyword").val()
 		var searchWord = $("#searchWord").val()
 		
-		if(searchWord == "") {
-			alert("검색어를 입력해 주세요.")
-			return false
-		}
-
 		if (window.event.keyCode == 13) {	// 엔터 
+			if(searchWord == "") {
+				alert("검색어를 입력해 주세요.")
+				return false
+			}
+
 			location.href = "${contextPath}/search?searchKeyword=" + searchKeyword + "&searchWord=" + searchWord
 		} 
 	}

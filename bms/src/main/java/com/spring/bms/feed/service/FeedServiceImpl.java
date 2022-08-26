@@ -29,7 +29,7 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
-	public List<PostDto> getPostList(Map<String, String> postMap) throws Exception {
+	public List<Map<String, Object>> getPostList(Map<String, Object> postMap) throws Exception {
 		return feedDao.selectPostList(postMap);
 	}
 
@@ -86,6 +86,11 @@ public class FeedServiceImpl implements FeedService {
 	@Override
 	public int getReplyCount(String postId) throws Exception {
 		return feedDao.selectReplyCount(postId);
+	}
+
+	@Override
+	public int getTotalPostCount(Map<String, Object> countMap) throws Exception {
+		return feedDao.selectToTalPostCount(countMap);
 	}
 
 }

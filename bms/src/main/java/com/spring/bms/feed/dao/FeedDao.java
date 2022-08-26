@@ -12,7 +12,7 @@ import com.spring.bms.member.dto.MemberDto;
 public interface FeedDao {
 
 	public void insertPost(PostDto postDto) throws Exception;
-	public List<PostDto> selectPostList(Map<String, String> postMap) throws Exception;
+	public List<Map<String, Object>> selectPostList(Map<String, Object> postMap) throws Exception;
 	public MemberDto selectOneMember(String id) throws Exception;
 	public PostDto selectOnePost(String postId) throws Exception;
 	public void updatePost(PostDto postDto) throws Exception;
@@ -25,4 +25,5 @@ public interface FeedDao {
 	public boolean selectLikeMember(LikeMemberDto likeMemberDto) throws Exception;
 	public int selectReplyCount(String postId) throws Exception;
 	public int selectLikeCount(String postId) throws Exception;
+	public int selectToTalPostCount(Map<String, Object> countMap) throws Exception;
 }

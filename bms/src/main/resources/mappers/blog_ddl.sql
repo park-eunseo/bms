@@ -59,7 +59,10 @@ CREATE TABLE POST (
         ON DELETE CASCADE
 );
 
+insert into post(member_id, category_title, title, content, post_private, reg_date, like_count, reply_count) 
+values('dlcnd', '음식', 'ㅁㅁ', 'ㅁㅁㅁㅁ', 'N', NOW(), 0, 0);
 select * from post;
+alter table post auto_increment = 39;
 update post set like_count = 0 where post_id = 38;
 
 		SELECT

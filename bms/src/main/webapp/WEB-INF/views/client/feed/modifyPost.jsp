@@ -83,8 +83,6 @@
 				<div class="col-md-10" style="width: 900px;">
 					<select class="form-select form-select-sm" name="categoryTitle"
 						style="display: inline-block; box-shadow: none; max-width: max-content;">
-						<option value="all"
-							<c:if test="${detailPost.categoryTitle eq '전체' }">selected</c:if>>전체</option>
 						<c:forEach var="category" items="${categoryList }">
 							<option value="${category.categoryTitle }"
 								<c:if test="${detailPost.categoryTitle eq category.categoryTitle }">selected</c:if>>

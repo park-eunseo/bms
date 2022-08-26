@@ -2,6 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="main">
+	<select id="selectFavoritePostList" parameterType="String" resultType="map"> <!-- 즐겨찾는 회원들의 최근 3일 간의 글 -->	
+		SELECT 				
+				M.ID			AS id,
+				M.NICKNAME		AS nickname,
+				M.BLOG_NAME		AS blogName,
+				M.PROFILE_NAME	AS profile,
+				P.POST_ID		AS postId,
+				P.TITLE 		AS title,
+				P.CONTENT		AS content,
+				P.THUMBNAIL		AS thumbnail,
+				date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
+				P.LIKE_COUNT	AS likeCount,
+				P.REPLY_COUNT	AS replyCount					
+		FROM
+				POST P JOIN MEMBER M ON P.MEMBER_ID = M.ID
+		WHERE
+				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = #{id}) AND
+				P.REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 3 DAY) AND NOW() AND
+				P.POST_PRIVATE = 'N'
+		ORDER BY 
+				P.REG_DATE DESC
+	</select>
+	
 	<select id="selectSearchList" parameterType="hashmap" resultType="hashmap">
 			<if test='searchKeyword == "member"'>
 				SELECT
@@ -14,6 +37,8 @@
 				WHERE
 						ID LIKE CONCAT ('%', #{searchWord}, '%') OR
 						NICKNAME LIKE CONCAT ('%', #{searchWord}, '%')
+				LIMIT
+						#{startIndex}, #{viewResultCount}
 			</if>
 			<if test='searchKeyword == "blogName"'>
 				SELECT
@@ -26,6 +51,8 @@
 						MEMBER
 				WHERE
 						BLOG_NAME LIKE CONCAT ('%', #{searchWord}, '%')
+				LIMIT
+						#{startIndex}, #{viewResultCount}
 			</if>
 			<if test='searchKeyword == "post"'>
 				SELECT
@@ -48,38 +75,49 @@
 						P.POST_PRIVATE = 'N'
 				<if test='sort != null'>
 					<if test='sort == "like"'>
-						ORDER BY P.LIKE_COUNT DESC
+						ORDER BY P.LIKE_COUNT DESC, P.REG_DATE DESC
 					</if>
 					<if test='sort == "reply"'>
-						ORDER BY P.REPLY_COUNT DESC
+						ORDER BY P.REPLY_COUNT DESC,  P.REG_DATE DESC
 					</if>
 				</if>
-				<if test='sort == null'>
+				<if test='sort == ""'>
 					ORDER BY P.REG_DATE DESC
 				</if>
+				LIMIT
+						#{startIndex}, #{viewResultCount}
 			</if>
 	</select>
 	
-	<select id="selectFavoritePostList" parameterType="String" resultType="map"> <!-- 즐겨찾는 회원들의 최근 3일 간의 글 -->	
-		SELECT 				
-				M.ID			AS id,
-				M.NICKNAME		AS nickname,
-				M.BLOG_NAME		AS blogName,
-				M.PROFILE_NAME	AS profile,
-				P.POST_ID		AS postId,
-				P.TITLE 		AS title,
-				P.CONTENT		AS content,
-				P.THUMBNAIL		AS thumbnail,
-				date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
-				P.LIKE_COUNT	AS likeCount,
-				P.REPLY_COUNT	AS replyCount					
-		FROM
-				POST P JOIN MEMBER M ON P.MEMBER_ID = M.ID
-		WHERE
-				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = #{id}) AND
-				P.REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 3 DAY) AND NOW() AND
-				P.POST_PRIVATE = 'N'
-		ORDER BY 
-				P.REG_DATE DESC
+	<select id="selectSearchResultCount" parameterType="map" resultType="int">
+		<if test='searchKeyword == "member"'>
+				SELECT
+						COUNT(*)
+				FROM
+						MEMBER
+				WHERE
+						ID LIKE CONCAT ('%', #{searchWord}, '%') OR
+						NICKNAME LIKE CONCAT ('%', #{searchWord}, '%')
+			</if>
+			<if test='searchKeyword == "blogName"'>
+				SELECT
+						COUNT(*)
+				FROM
+						MEMBER
+				WHERE
+						BLOG_NAME LIKE CONCAT ('%', #{searchWord}, '%')
+			</if>
+			<if test='searchKeyword == "post"'>
+				SELECT
+						COUNT(*)
+				FROM
+						POST P
+							 JOIN MEMBER M
+						ON P.MEMBER_ID = M.ID
+				WHERE
+						(P.TITLE LIKE CONCAT ('%', #{searchWord}, '%') OR
+						P.CONTENT LIKE CONCAT ('%', #{searchWord}, '%')) AND
+						P.POST_PRIVATE = 'N'
+			</if>
 	</select>
 </mapper>

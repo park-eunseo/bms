@@ -14,7 +14,7 @@ import com.spring.bms.member.dto.MemberDto;
 public interface FeedService {
 	public void addPost(PostDto postDto) throws Exception;
 	public MemberDto getOneMember(String id) throws Exception;
-	public List<PostDto> getPostList(Map<String, String> postMap) throws Exception;
+	public List<Map<String, Object>> getPostList(Map<String, Object> postMap) throws Exception;
 	public PostDto getOnePost(String postId) throws Exception;
 	public void modifyPost(PostDto postDto) throws Exception;
 	public void deletePost(String postId) throws Exception;
@@ -27,5 +27,7 @@ public interface FeedService {
 	public boolean getLikeMember(LikeMemberDto likeMemberDto) throws Exception;
 	public int getLikeCount(String postId) throws Exception;
 	public int getReplyCount(String postId) throws Exception;
+	
+	public int getTotalPostCount(Map<String, Object> countMap) throws Exception;
 
 }
