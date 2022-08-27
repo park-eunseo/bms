@@ -30,11 +30,6 @@ public class ManageDaoImpl implements ManageDao {
 	}
 
 	@Override
-	public List<PostDto> selectLikePostList(String id) throws Exception {		// 좋아하는 게시글 목록
-		return sqlSession.selectList("manage.selectLikePostList", id);
-	}
-
-	@Override
 	public void insertLikeMember(LikeMemberDto likeMemberDto) throws Exception { // 좋아하는 회원 insert
 		sqlSession.insert("manage.insertLikeMember", likeMemberDto);
 	}
@@ -45,13 +40,13 @@ public class ManageDaoImpl implements ManageDao {
 	}
 
 	@Override
-	public List<MemberDto> selectLikeMemberList(String id) throws Exception {		// 좋아하는 회원 목록
-		return sqlSession.selectList("manage.selectMemberList", id);
+	public int selectTotalRowCount(Map<String, Object> countMap) throws Exception {
+		return sqlSession.selectOne("manage.selectTotalRowCount", countMap);
 	}
 
 	@Override
-	public List<Map<String, String>> selectMyReplyList(String id) throws Exception {
-		return sqlSession.selectList("manage.selectMyReplyList", id);
+	public List<Map<String, Object>> selectManageList(Map<String, Object> manageMap) throws Exception {
+		return sqlSession.selectList("manage.selectManageList", manageMap);
 	}
 
 }

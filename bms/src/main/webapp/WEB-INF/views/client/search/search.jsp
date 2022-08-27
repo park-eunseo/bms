@@ -13,6 +13,18 @@
 	margin-right: 0.2rem;
 }
 
+.thumbnail {
+	height: 9.5rem;
+	width: 95%;
+	object-fit: cover;
+}
+
+.sideText {
+	display: flex;
+	justify-content: space-between;
+	margin-block-start: 10px;
+}
+
 .pageBlock {
 	justify-content: center;
 	margin-block-start: 4rem;
@@ -37,6 +49,14 @@
 	-webkit-line-clamp: 3;
 	-webkit-box-orient: vertical;
 	margin-block: 10px;
+	min-height: 57px;
+}
+
+.title {
+	margin-block: 10px;
+	font-size: large;
+	font-weight: 500;
+	color: black;
 }
 
 .searchResult {
@@ -139,27 +159,59 @@
 				</c:forEach>
 			</c:if>
 			<c:if test="${searchKeyword eq 'post'}">
-				<hr>
 				<c:forEach var="post" items="${searchList }">
 					<div>
-						<div class="mb-3">
-							<div class="col-md-8" style="width: 100%">
-								<p>
-									<img
-										src="${contextPath }/member/thumbnails?profileName=${post.profile}"
-										class="w-px-40 rounded-circle profileImg"> <a
-										href="${contextPath}/feed?id=${post.memberId }" class="id">
-										${post.nickname } · ${post.blogName }</a>
-								</p>
-								<a
-									href="${contextPath }/feed/detailPost?id=${post.memberId }&postId=${post.postId}">
-									<h6 style="margin-block: 10px;">${post.title }</h6> <span
-									class="contentText">${post.content }</span>
-								</a> <small>${post.regDate }</small>
+						<hr>
+						<div class="<c:if test="${not empty post.thumbnail }">row</c:if>">
+							<div class="col-md-8"
+								style="<c:if test="${empty post.thumbnail }">width:100%;</c:if>">
+								<div>
+									<div>
+										<img
+											src="${contextPath }/member/thumbnails?profileName=${post.profile}"
+											class="w-px-40 rounded-circle profileImg"> <a
+											href="${contextPath}/feed?id=${post.id }" class="id">${post.nickname }</a>
+									</div>
+									<a
+										href="${contextPath }/feed/detailPost?id=${post.id}&postId=${post.postId}">
+										<p class="title">${post.title }</p> <span
+										class="card-text contentText">${post.content }</span>
+									</a>
+									<div class="sideText">
+										<small class="text-muted">${post.regDate }</small>
+										<div>
+											<!-- 좋아요 -->
+											<small id="likeBtn${post.postId}" class='bx bx-heart'
+												style="color: red; font-size: 0.9rem;"></small> <small
+												style="font-size: 0.8rem;">${post.likeCount }</small>&ensp;
+											<script>
+														$().ready(function(){
+															$.ajax({
+																type : "get",
+																url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
+																success : function(data){
+																	if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
+																}
+															})
+														})
+													</script>
+											<!-- 댓글 -->
+											<small><i class="bx bx-message-rounded-dots"
+												style="font-size: 0.9rem;"></i></small> <small
+												style="font-size: 0.8rem;">${post.replyCount }</small>
+										</div>
+									</div>
+								</div>
 							</div>
+							<c:if test="${not empty post.thumbnail }">
+								<div class="col-md-4">
+									<img class="thumbnail"
+										src="<c:if test="${not empty post.thumbnail }">${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}</c:if>"
+										alt="Card image">
+								</div>
+							</c:if>
 						</div>
 					</div>
-					<hr>
 				</c:forEach>
 			</c:if>
 		</div>

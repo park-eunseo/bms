@@ -20,13 +20,18 @@ public class MainDaoImpl implements MainDao {
 	}
 
 	@Override
-	public List<Map<String, Object>> selectFavoriteList(String id) throws Exception {
-		return sqlSession.selectList("main.selectFavoritePostList", id);
+	public List<Map<String, Object>> selectFavoriteList(Map<String, Object> postMap) throws Exception {
+		return sqlSession.selectList("main.selectFavoritePostList", postMap);
 	}
 
 	@Override
 	public int selectSearchResultCount(Map<String, Object> countMap) throws Exception {
 		return sqlSession.selectOne("main.selectSearchResultCount", countMap);
+	}
+
+	@Override
+	public int selectTotalPostCount(String id) throws Exception {
+		return sqlSession.selectOne("main.selectTotalPostCount", id);
 	}
 
 }

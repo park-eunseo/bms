@@ -67,6 +67,9 @@
 <script>
 	var memberId = '<%=(String) session.getAttribute("memberId")%>'
 	
+	$().ready(function(){
+		$("#currentBlock${currentPage}").addClass("active")	
+	})
 </script>
 </head>
 <body>
@@ -129,12 +132,12 @@
 		</c:if>
 		<c:if test="${not empty sessionScope.memberId }">
 
-			<div class="container" style="width: 700px; background-color: white;">
+			<div class="container" style="width: 700px; min-height: 300px; background-color: white;">
 				<c:if test="${not empty postList }">
 					<h6 class="comment">즐겨찾는 회원의 최신 글을 확인해 보세요 🙌</h6>
 				</c:if>
 				<c:if test="${empty postList }">
-					<h6 class="comment">회원을 즐겨찾기하고 소식을 확인해 보세요 🙌</h6>
+					<h6 class="comment" style="text-align:center;">회원을 즐겨찾기하고 소식을 확인해 보세요 🙌</h6>
 				</c:if>
 
 				<div class="row mb-5">
@@ -142,9 +145,7 @@
 						<c:forEach var="post" items="${postList }">
 							<div>
 								<hr>
-								<div
-									class="<c:if test="${not empty post.thumbnail }">row</c:if>"
-									id="row">
+								<div class="<c:if test="${not empty post.thumbnail }">row</c:if>" >
 									<div class="col-md-8"
 										style="<c:if test="${empty post.thumbnail }">width:100%;</c:if>">
 										<div>
@@ -185,42 +186,47 @@
 											</div>
 										</div>
 									</div>
-									<div class="col-md-4" id="thumbnailDiv"
-										style="display: <c:if test="${empty post.thumbnail }">none</c:if>">
-										<img class="thumbnail"
-											src="${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}"
-											alt="Card image">
-									</div>
+									<c:if test="${not empty post.thumbnail }">
+										<div class="col-md-4">
+											<img class="thumbnail"
+												src="<c:if test="${not empty post.thumbnail }">${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}</c:if>"
+												alt="Card image">
+										</div>
+									</c:if>
 								</div>
 							</div>
 						</c:forEach>
-						<ul class="pagination pageBlock">
-							<li class="page-item prev"><a class="page-link"
-								href="javascript:void(0);"> <i
-									class="tf-icon bx bx-chevron-left"></i>
-							</a></li>
-							<li class="page-item active"><a class="page-link"
-								href="javascript:void(0);">1</a></li>
-							<li class="page-item"><a class="page-link"
-								href="javascript:void(0);">2</a></li>
-							<li class="page-item"><a class="page-link"
-								href="javascript:void(0);">3</a></li>
-							<li class="page-item"><a class="page-link"
-								href="javascript:void(0);">4</a></li>
-							<li class="page-item"><a class="page-link"
-								href="javascript:void(0);">5</a></li>
-							<li class="page-item next"><a class="page-link"
-								href="javascript:void(0);"> <i
-									class="tf-icon bx bx-chevron-right"></i>
-							</a></li>
-						</ul>
+						<c:if test="${totalPostCount gt 0 }">
+							<div>
+								<ul class="pagination pageBlock">
+									<c:if test="${startPageBlock gt 5 }">
+										<li class="page-item prev"><a class="page-link"
+											href="${contextPath }/?currentPage=${startPageBlock-5}">
+												<i class="tf-icon bx bx-chevron-left"></i>
+										</a></li>
+									</c:if>
+									<c:forEach var="i" begin="${startPageBlock }"
+										end="${endPageBlock }">
+										<li class="page-item" id="currentBlock${i }"><a
+											class="page-link"
+											href="${contextPath }/?currentPage=${i}">${i }</a>
+										</li>
+									</c:forEach>
+									<c:if
+										test="${endPageBlock le totalPostCount && endPageBlock ge 5 && endPageBlock ne totalPageBlock}">
+										<li class="page-item next"><a class="page-link"
+											href="${contextPath }/?currentPage=${startPageBlock+5}">
+												<i class="tf-icon bx bx-chevron-right"></i>
+										</a></li>
+									</c:if>
+								</ul>
+							</div>
+						</c:if>
 					</c:if>
 				</div>
 			</div>
 		</c:if>
 	</div>
 	<!-- Service End -->
-
-
 </body>
 </html>

@@ -15,12 +15,16 @@
   <head>
     <meta charset="utf-8" />
  	<script>
-		 // 가입 정보 기입에 필요한 조건 불충족 시 알림
+ 		var pwRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/
+ 		var telRegExp = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
+ 		var mailRegExp = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/)
+ 		
+		// 가입 정보 기입에 필요한 조건 불충족 시 알림
  		function pwAlert(){
  			var pw = document.getElementById("password")
  			
- 			if(pw.value.length < 8 || pw.value.length > 20){
- 				document.getElementById("pwAlert").innerText = "8~20자의 영문 소문자, 숫자를 입력해 주세요."
+ 			if(!pwRegExp.test(pw.value)){
+ 				document.getElementById("pwAlert").innerText = "영문 대소문자, 숫자, 특수문자를 포함한 8~20자를 입력해 주세요."
  			} else {
  				document.getElementById("pwAlert").innerText = ""
  			}
@@ -42,8 +46,8 @@
  		function telAlert(){
  			var tel = document.getElementById("tel")
  			
- 			if(tel.value == "" || tel.value.length < 11){
- 				document.getElementById("telAlert").innerText = "전화번호 11자리 이상 입력해 주세요."
+ 			if(!telRegExp.test(tel.value)){
+ 				document.getElementById("telAlert").innerText = "전화번호를 '-'를 포함해 다시 입력해 주세요."
  			} else {
  				document.getElementById("telAlert").innerText = ""
  			}
@@ -52,7 +56,9 @@
  		function emailAlert(){
  			var email = document.getElementById("email")
  			
- 			if(email.value != ""){
+ 			if(!mailRegExp.test(email.value)){
+ 				document.getElementById("emailAlert").innerText = "이메일을 다시 입력해 주세요."
+ 			} else {
  				document.getElementById("emailAlert").innerText = ""
  			}
  		}
@@ -64,8 +70,8 @@
  			var email = document.inputForm.email
  			var intro = document.inputForm.intro
  			
- 			if(pw.value == "") {
- 				document.getElementById("pwAlert").innerText = "비밀번호는 필수 입력값입니다."
+ 			if(pw.value == "" || !pwRegExp.test(pw.value)) {
+ 				document.getElementById("pwAlert").innerText = "5~12자의 영문 대소문자, 숫자를 입력해 주세요."
  				pw.focus()
  				return false
  			}
@@ -74,19 +80,19 @@
  				document.getElementById("pwAlert2").innerText = "비밀번호 확인은 필수입니다."
  				pw2.focus()
  				return false
- 			}			
+ 			}	
  			
- 			if(tel.value == "") {
- 				document.getElementById("telAlert").innerText = "전화번호는 필수 입력값입니다."
+ 			if(tel.value == "" || !telRegExp.test(tel.value)) {
+ 				document.getElementById("telAlert").innerText = "전화번호는 '-'를 포함하여 입력해 주세요."
  				tel.focus()
  				return false
  			}
  			
- 			if(email.value == "") {
- 				document.getElementById("emailAlert").innerText = "이메일은 필수 입력값입니다."
+ 			if(email.value == "" || !mailRegExp.test(email.value)) {
+ 				document.getElementById("emailAlert").innerText = "이메일을 다시 입력해 주세요."
  				email.focus()
  				return false
- 			}	
+ 			}
  			
  			if(intro.value.length > 50){
  	 			document.getElementById("intro").focus()

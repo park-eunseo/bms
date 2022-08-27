@@ -56,8 +56,18 @@ public class FeedDaoImpl implements FeedDao {
 
 	@Override
 	public void deleteReply(ReplyDto replyDto) throws Exception {
-		sqlSession.update("feed.deleteReply", replyDto);
-		sqlSession.update("feed.updateReplyCancel", replyDto);
+		// 하위 댓글(답댓글)이면 DB 완전 삭제
+		if(sqlSession.selectOne("feed.selectCheckTopReply", replyDto) != null) {
+			sqlSession.delete("feed.deleteReply", replyDto);
+			sqlSession.update("feed.updateReplyCancel", replyDto);
+		} 
+		// 하위 댓글을 가지고 있지 않으면 DB 완전 삭제
+		else if((int)sqlSession.selectOne("feed.selectCheckSubReply", replyDto) == 0) {
+			sqlSession.delete("feed.deleteReply", replyDto);
+			sqlSession.update("feed.updateReplyCancel", replyDto);
+		} else {	// 하위 댓글을 가지고 있으면 내용만 삭제
+			sqlSession.update("feed.deleteReplyContent", replyDto);
+		}
 	}
 	
 	@Override

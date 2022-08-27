@@ -1,6 +1,5 @@
 package com.spring.bms.manage.controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,35 +28,60 @@ public class ManageController {
 	private ManageService manageService;
 	
 	@GetMapping("/manageList")
-	public ModelAndView manageList(HttpServletRequest request) throws Exception {
+	public ModelAndView manageList(HttpServletRequest request,
+									@RequestParam(name="manage", defaultValue = "member") String manage,
+									@RequestParam(name="currentPage", defaultValue = "1") int currentPage) throws Exception {
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
+		String id = (String)session.getAttribute("memberId");
 		
-		List<PostDto> likePostList = manageService.getLikePostList((String)session.getAttribute("memberId"));
+		int viewRowCount = 10;
+		int startIndex = (currentPage - 1) * viewRowCount;
 		
-		for (PostDto postDto : likePostList) {
-			String title = postDto.getTitle();
-			
-			if(title.length() > 15) { postDto.setTitle(title.substring(0, 15) + "..."); }
-			
-			String content = postDto.getContent().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
-			content = content.replaceAll("&lt(;)?(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?&gt(;)?", "");
-
-			if (content.length() > 20) { content = content.substring(0, 20) + "..."; }
-			
-			postDto.setContent(content);
+		Map<String, Object> manageMap = new HashMap<>();
+		manageMap.put("id", id);
+		manageMap.put("manage", manage);
+		manageMap.put("viewRowCount", viewRowCount);
+		manageMap.put("startIndex", startIndex);
+		
+		Map<String, Object> countMap = new HashMap<>();
+		countMap.put("id", id);
+		countMap.put("manage", manage);
+		
+		int totalRowCount = manageService.getTotalRowCount(countMap);
+		int addPage = totalRowCount % viewRowCount == 0 ? 0 : 1;
+		int totalPageBlock = totalRowCount / viewRowCount + addPage;
+		
+		int startPageBlock = 1;
+		
+		if(currentPage % 5 == 0) startPageBlock = (currentPage / 5 - 1) * 5 + 1; // 시작 블록 번호
+		else startPageBlock = (currentPage / 5) * 5 + 1;
+		
+		int endPageBlock = startPageBlock + 5 - 1; // 마지막 블록 번호
+		
+		if(endPageBlock > totalPageBlock) endPageBlock = totalPageBlock; 
+		
+		if(viewRowCount > totalRowCount) {
+			startPageBlock = 1;
+			endPageBlock = 0;
+		}	
+		
+		List<Map<String, Object>> manageList = manageService.getManageList(manageMap);
+		
+		if(manage.equals("post")) {
+			for (Map<String, Object> map : manageList) {
+				String content = map.get("content").toString().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");	
+				map.put("content", content);
+			}	
 		}
 		
-		List<Map<String, String>> replyList = manageService.getMyReplyList((String)session.getAttribute("memberId"));
-		
-		for (Map<String, String> reply : replyList) {	
-			if(reply.get("title").length() > 15) { reply.put("title", reply.get("title").substring(0, 15) + "..."); }
-			if(reply.get("reply").length() > 20) { reply.put("reply", reply.get("reply").substring(0, 20) + "..."); }		
-		}
-		
-		mv.addObject("likePostList", likePostList);
-		mv.addObject("likeMemberList", manageService.getLikeMemberList((String)session.getAttribute("memberId")));
-		mv.addObject("myReplyList",  replyList);
+		mv.addObject("manageList", manageList);
+		mv.addObject("manage", manage);
+		mv.addObject("startPageBlock", startPageBlock);
+		mv.addObject("endPageBlock", endPageBlock);		
+		mv.addObject("totalPageBlock", totalPageBlock);		
+		mv.addObject("totalRowCount", totalRowCount);	  	
+		mv.addObject("currentPage", currentPage);	
 		mv.setViewName("/manageList");
 		
 		return mv;

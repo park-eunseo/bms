@@ -21,21 +21,55 @@ public class MainController {
 	private MainService mainService;
 	
 	@GetMapping("/")
-	public ModelAndView mainHome(HttpServletRequest request) throws Exception {
-		// 로그인 한 상태라면 즐겨찾는 회원 글 최신 기준 두세 개씩 가져와서 띄우기
+	public ModelAndView mainHome(HttpServletRequest request,
+								@RequestParam(name="currentPage", defaultValue = "1") int currentPage) throws Exception {
+		// 로그인 한 상태라면 즐겨찾는 회원 글 최신글 가져와서 띄우기
 		// 로그인 안 한 상태면 랜덤 게시글 세 개 가져와서 띄우기 
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
 		
 		if((String)session.getAttribute("memberId") != null) {
-			List<Map<String, Object>> list = mainService.getFavoriteList((String)session.getAttribute("memberId"));
+			String id = (String)session.getAttribute("memberId");
 			
-			for (Map<String, Object> map : list) {
+			int viewPostCount = 6;
+			int startIndex = (currentPage - 1) * viewPostCount;
+			
+			Map<String, Object> postMap = new HashMap<>();
+			postMap.put("id", id);
+			postMap.put("startIndex", startIndex);
+			postMap.put("viewPostCount", viewPostCount);		
+			
+			int totalPostCount = mainService.getTotalPostCount(id);
+			int addPage = totalPostCount % viewPostCount == 0 ? 0 : 1;
+			int totalPageBlock = totalPostCount / viewPostCount + addPage;
+			
+			int startPageBlock = 1;
+			
+			if(currentPage % 5 == 0) startPageBlock = (currentPage / 5 - 1) * 5 + 1; // 시작 블록 번호
+			else startPageBlock = (currentPage / 5) * 5 + 1;
+			
+			int endPageBlock = startPageBlock + 5 - 1; // 마지막 블록 번호
+			
+			if(endPageBlock > totalPageBlock) endPageBlock = totalPageBlock; 
+			
+			if(viewPostCount > totalPostCount) {
+				startPageBlock = 1;
+				endPageBlock = 0;
+			}	
+			
+			List<Map<String, Object>> postList = mainService.getFavoriteList(postMap);
+			
+			for (Map<String, Object> map : postList) {
 				String content = map.get("content").toString().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
 				map.put("content", content);
 			}
 			
-			mv.addObject("postList", list);	
+			mv.addObject("postList", postList);	
+			mv.addObject("startPageBlock", startPageBlock);
+			mv.addObject("endPageBlock", endPageBlock);		
+			mv.addObject("totalPageBlock", totalPageBlock);		
+			mv.addObject("totalPostCount", totalPostCount);	  	
+			mv.addObject("currentPage", currentPage);	
 		}
 		
 		mv.setViewName("/mainHome");
@@ -104,13 +138,12 @@ public class MainController {
 			}
 		}
 		
-		mv.addObject("searchList", list);
 		mv.addAllObjects(listMap);
+		mv.addObject("searchList", list);
 		mv.addObject("startPageBlock", startPageBlock);
 		mv.addObject("endPageBlock", endPageBlock);		
 		mv.addObject("totalPageBlock", totalPageBlock);		
 		mv.addObject("totalResultCount", totalResultCount);		
-		mv.addObject("viewResultCount", viewResultCount);
 		mv.addObject("currentPage", currentPage);
 		mv.setViewName("/search");
 		

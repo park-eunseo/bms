@@ -16,19 +16,12 @@
 	<!-- Content -->
 
 	<div class="container-xxl">
-		<div class="authentication-wrapper authentication-basic container-p-y">
+		<div class="authentication-wrapper authentication-basic">
 			<div class="authentication-inner py-4">
 				<!-- Forgot Password -->
 				<div class="card">
 					<div class="card-body">
-						<!-- Logo -->
-						<div class="app-brand justify-content-center">
-							<a href="${contextPath }/main" class="app-brand-link gap-2"> <span
-								class="app-brand-text demo text-body fw-bolder">sim8log</span>
-							</a>
-						</div>
-						<!-- /Logo -->
-						<h4 class="mb-2">Forgot Password? 🔒</h4>
+						<h4 class="mb-2">비밀번호 찾기 🔒</h4>
 						<p class="mb-4">ID와 등록하신 전화번호를 입력하세요.</p>
 
 						<form id="formAuthentication" onsubmit="return numCheck()" class="mb-3" action="#" method="POST"> <!-- 인증 번호 맞는지 확인 후 action, id 보내기 -->
@@ -62,7 +55,7 @@
 							</a>
 						</div>
 					</div>
-				</div>
+					</div>
 				<!-- /Forgot Password -->
 			</div>
 		</div>

@@ -28,11 +28,6 @@ public class ManageServiceImpl implements ManageService {
 	}
 
 	@Override
-	public List<PostDto> getLikePostList(String id) throws Exception {
-		return manageDao.selectLikePostList(id);
-	}
-
-	@Override
 	public void addLikeMember(LikeMemberDto likeMemberDto) throws Exception {
 		manageDao.insertLikeMember(likeMemberDto);
 	}
@@ -43,12 +38,12 @@ public class ManageServiceImpl implements ManageService {
 	}
 
 	@Override
-	public List<MemberDto> getLikeMemberList(String id) throws Exception {
-		return manageDao.selectLikeMemberList(id);
+	public int getTotalRowCount(Map<String, Object> countMap) throws Exception {
+		return manageDao.selectTotalRowCount(countMap);
 	}
 
 	@Override
-	public List<Map<String, String>> getMyReplyList(String id) throws Exception {
-		return manageDao.selectMyReplyList(id);
+	public List<Map<String, Object>> getManageList(Map<String, Object> manageMap) throws Exception {
+		return manageDao.selectManageList(manageMap);
 	}
 }

@@ -238,7 +238,32 @@
 				
 	</select>
 	
-	<update id="deleteReply" parameterType="String"> <!-- 삭제하려는 댓글이지만 답글에 영향 끼치지 않기 위해 내용만 삭제해 준다. -->
+	<select id="selectCheckTopReply" parameterType="ReplyDto" resultType="ReplyDto">
+		SELECT
+				TOP_REPLY_ID
+		FROM
+				REPLY
+		WHERE
+				REPLY_ID = #{replyId}
+	</select>
+	
+	<select id="selectCheckSubReply" parameterType="ReplyDto" resultType="int"> <!-- 지우고 싶은 댓글에 하위 댓글이 있는지 -->
+		SELECT
+				count(*)
+		FROM
+				REPLY
+		WHERE
+				TOP_REPLY_ID = #{replyId}
+	</select>
+	
+	<delete id="deleteReply" parameterType="ReplyDto">
+		DELETE FROM
+					REPLY
+		WHERE
+					REPLY_ID = #{replyId}
+	</delete>
+	
+	<update id="deleteReplyContent" parameterType="ReplyDto"> <!-- 삭제하려는 댓글이지만 하위 댓글에 영향 끼치지 않기 위해 내용만 삭제해 준다. -->
 		UPDATE
 				REPLY
 		SET

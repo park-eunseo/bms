@@ -12,11 +12,8 @@ public interface ManageDao {
 
 	public void insertLikePost(LikePostDto likePostDto) throws Exception;
 	public void deleteLikePost(LikePostDto likePostDto) throws Exception;
-	public List<PostDto> selectLikePostList(String id) throws Exception;
 	public void insertLikeMember(LikeMemberDto likeMemberDto) throws Exception;
 	public void deleteLikeMember(LikeMemberDto likeMemberDto) throws Exception;
-	public List<MemberDto> selectLikeMemberList(String id) throws Exception;
-	public List<Map<String, String>> selectMyReplyList(String id) throws Exception;
-
-
+	public int selectTotalRowCount(Map<String, Object> countMap) throws Exception;
+	public List<Map<String, Object>> selectManageList(Map<String, Object> manageMap) throws Exception;
 }

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="main">
-	<select id="selectFavoritePostList" parameterType="String" resultType="map"> <!-- 즐겨찾는 회원들의 최근 3일 간의 글 -->	
+	<select id="selectFavoritePostList" parameterType="map" resultType="map"> <!-- 즐겨찾는 회원들의 최근 3일 간의 글 -->	
 		SELECT 				
 				M.ID			AS id,
 				M.NICKNAME		AS nickname,
@@ -15,6 +15,21 @@
 				date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
 				P.LIKE_COUNT	AS likeCount,
 				P.REPLY_COUNT	AS replyCount					
+		FROM
+				POST P JOIN MEMBER M ON P.MEMBER_ID = M.ID
+		WHERE
+				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = #{id}) AND
+				P.REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 3 DAY) AND NOW() AND
+				P.POST_PRIVATE = 'N'
+		ORDER BY 
+				P.REG_DATE DESC
+		LIMIT
+				#{startIndex}, #{viewPostCount}
+	</select>
+	
+	<select id="selectTotalPostCount" parameterType="String" resultType="int">
+		SELECT 				
+					COUNT(*)	
 		FROM
 				POST P JOIN MEMBER M ON P.MEMBER_ID = M.ID
 		WHERE
@@ -56,7 +71,7 @@
 			</if>
 			<if test='searchKeyword == "post"'>
 				SELECT
-						M.ID 			AS memberId,
+						M.ID 			AS id,
 						M.NICKNAME		AS nickname,
 						M.PROFILE_NAME 	AS profile,
 						M.BLOG_NAME		AS blogName,
@@ -64,7 +79,9 @@
 						P.TITLE 		AS title,
 						P.CONTENT 		AS content,
 						P.THUMBNAIL		AS thumbnail,
-						date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate
+						date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
+						P.LIKE_COUNT	AS likeCount,
+						P.REPLY_COUNT	AS replyCount
 				FROM
 						POST P
 							 JOIN MEMBER M

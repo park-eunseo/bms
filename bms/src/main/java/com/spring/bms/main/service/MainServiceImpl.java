@@ -20,13 +20,18 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public List<Map<String, Object>> getFavoriteList(String id) throws Exception {
-		return mainDao.selectFavoriteList(id);
+	public List<Map<String, Object>> getFavoriteList(Map<String, Object> postMap) throws Exception {
+		return mainDao.selectFavoriteList(postMap);
 	}
 
 	@Override
 	public int getSearchResultCount(Map<String, Object> countMap) throws Exception {
 		return mainDao.selectSearchResultCount(countMap);
+	}
+
+	@Override
+	public int getTotalPostCount(String id) throws Exception {
+		return mainDao.selectTotalPostCount(id);
 	}
 
 }

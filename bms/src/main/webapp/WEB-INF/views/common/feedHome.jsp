@@ -71,15 +71,14 @@
 	var memberId = '<%=(String)session.getAttribute("memberId")%>'
 		
 	$().ready(function(){
-		$("#currentBlock" + ${currentPage}).addClass("active")	
-	})
+		$("#currentBlock${currentPage}").addClass("active")	
+	});
 </script>
 </head>
 
 <body>
-
 	<!-- 블로그 카드 시작 부분 -->
-	<div class="container-xxl flex-grow-1 container-p-y" style="width: 90%">
+	<div class="container-xxl flex-grow-1 container-p-y" style="width: 90%; min-height: 500px;">
 		<div class="row" style="justify-content: center;">
 		<span style="padding-left: 20px">전체(${totalPostCount })</span>
 			<c:if test="${not empty postList }">
@@ -109,16 +108,16 @@
 												style="color: red; font-size: 0.9rem;"></small> <small
 												style="font-size: 0.8rem;">${post.likeCount }</small>&ensp;
 											<script>
-														$().ready(function(){
-															$.ajax({
-																type : "get",
-																url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
-																success : function(data){
-																	if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
-																}
-															})
+													$().ready(function(){
+														$.ajax({
+															type : "get",
+															url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
+															success : function(data){
+																if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
+															}
 														})
-													</script>
+													})
+											</script>
 											<!-- 댓글 -->
 											<small><i class="bx bx-message-rounded-dots"
 												style="font-size: 0.9rem;"></i></small> <small
@@ -127,12 +126,13 @@
 									</div>
 								</div>
 							</div>
-							<div class="col-md-4"
-								style="display: <c:if test="${empty post.thumbnail }">none</c:if>">
-								<img class="thumbnail"
-									src="${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}"
-									alt="Card image">
-							</div>
+							<c:if test="${not empty post.thumbnail }">
+								<div class="col-md-4">
+									<img class="thumbnail"
+										src="<c:if test="${not empty post.thumbnail }">${contextPath }/feed/thumbnails?thumbnail=${post.thumbnail}</c:if>"
+										alt="Card image">
+								</div>
+							</c:if>
 						</div>
 					</div>
 				</c:forEach>

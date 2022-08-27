@@ -2,6 +2,95 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="manage">
+	<select id="selectTotalRowCount" parameterType="map" resultType="int">
+		<choose>
+			<when test='manage == "member"'>
+				SELECT
+						COUNT(*)
+				FROM
+						MEMBER M 
+						   	JOIN LIKEMEMBER L
+						   	ON M.ID = L.FAVORITE_ID
+				WHERE
+						L.MEMBER_ID = #{id}
+			</when>
+			<when test='manage == "post"'>
+				SELECT
+						COUNT(*)
+				FROM
+						POST P 
+							 LEFT JOIN LIKEPOST L
+							 ON P.POST_ID = L.POST_ID
+				WHERE
+						L.MEMBER_ID = #{id} 
+			</when>
+			<otherwise>
+				SELECT
+						COUNT(*)
+				FROM 
+						REPLY R
+							  JOIN POST P
+							  ON R.POST_ID = P.POST_ID
+				WHERE
+						R.MEMBER_ID = #{id} AND R.CONTENT != ''
+				ORDER BY
+						R.REG_DATE DESC
+			</otherwise>
+		</choose>
+	</select>
+	
+	<select id="selectManageList" parameterType="map" resultType="map">
+		<choose>
+			<when test='manage == "member"'>
+				SELECT
+						L.FAVORITE_ID AS id,
+						M.BLOG_NAME   AS blogName,
+						M.NICKNAME 	  AS nickname
+				FROM
+						MEMBER M 
+							   JOIN LIKEMEMBER L
+							   ON M.ID = L.FAVORITE_ID
+				WHERE
+						L.MEMBER_ID = #{id}
+				LIMIT
+						#{startIndex}, #{viewRowCount}
+			</when>
+			<when test='manage == "post"'>
+				SELECT
+						P.MEMBER_ID AS id,
+						P.TITLE		AS title,
+						P.CONTENT 	AS content,
+						P.POST_ID 	AS postId
+				FROM
+						POST P 
+							 LEFT JOIN LIKEPOST L
+							 ON P.POST_ID = L.POST_ID
+				WHERE
+						L.MEMBER_ID = #{id}
+				LIMIT
+						#{startIndex}, #{viewRowCount}						
+			</when>
+			<otherwise>
+				SELECT
+						P.MEMBER_ID AS id,
+						R.POST_ID 	AS postId,
+						P.TITLE 	AS title,
+						R.CONTENT 	AS reply,
+						R.REPLY_ID	AS replyId
+				FROM 
+						REPLY R
+							  JOIN POST P
+							  ON R.POST_ID = P.POST_ID
+				WHERE
+						R.MEMBER_ID = #{id} AND R.CONTENT != ''
+				ORDER BY
+						R.REG_DATE DESC
+				LIMIT
+						#{startIndex}, #{viewRowCount}
+			</otherwise>
+		</choose>
+	</select>
+	
 	<insert id="insertLikePost" parameterType="LikePostDto">
 		INSERT INTO
 				LIKEPOST(
@@ -40,34 +129,7 @@
 		WHERE
 				POST_ID = #{postId}		
 	</update>
-	
-	<select id="selectLikePostList" parameterType="String" resultType="PostDto">
-		SELECT
-				P.MEMBER_ID AS MEMBER_ID,
-				P.TITLE	AS TITLE,
-				P.CONTENT AS CONTENT,
-				P.POST_ID AS POST_ID
-		FROM
-				POST P 
-					 LEFT JOIN LIKEPOST L
-					 ON P.POST_ID = L.POST_ID
-		WHERE
-				L.MEMBER_ID = #{id} 
-				
-	</select>
-	
-	<select id="selectMemberList" parameterType="String" resultType="MemberDto">
-		SELECT
-				L.FAVORITE_ID AS ID,
-				M.NICKNAME 	AS NICKNAME
-		FROM
-				MEMBER M 
-					   JOIN LIKEMEMBER L
-					   ON M.ID = L.FAVORITE_ID
-		WHERE
-				L.MEMBER_ID = #{id}
-	</select>
-	
+
 	<insert id="insertLikeMember" parameterType="LikeMemberDto">
 		INSERT INTO
 					LIKEMEMBER(
@@ -86,22 +148,4 @@
 		WHERE
 				MEMBER_ID = #{memberId} AND FAVORITE_ID = #{favoriteId}
 	</delete>
-	
-
-	<select id="selectMyReplyList" parameterType="String" resultType="java.util.HashMap">
-		SELECT
-				R.POST_ID 	AS postId,
-				P.TITLE 	AS title,
-				R.CONTENT 	AS reply,
-				R.REPLY_ID	AS replyId
-		FROM 
-				REPLY R
-					  JOIN POST P
-					  ON R.POST_ID = P.POST_ID
-		WHERE
-				R.MEMBER_ID = #{id} AND R.CONTENT != ''
-		ORDER BY
-				R.REG_DATE DESC
-				
-	</select>
 </mapper>

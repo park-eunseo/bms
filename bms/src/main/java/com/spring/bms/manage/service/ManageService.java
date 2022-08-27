@@ -12,9 +12,8 @@ public interface ManageService {
 
 	public void addLikePost(LikePostDto likePostDto) throws Exception;
 	public void notLikePost(LikePostDto likePostDto) throws Exception;
-	public List<PostDto> getLikePostList(String id) throws Exception;
 	public void addLikeMember(LikeMemberDto likeMemberDto) throws Exception;
 	public void notLikeMember(LikeMemberDto likeMemberDto) throws Exception;
-	public List<MemberDto> getLikeMemberList(String id) throws Exception;
-	public List<Map<String, String>> getMyReplyList(String id) throws Exception;
+	public int getTotalRowCount(Map<String, Object> countMap) throws Exception;
+	public List<Map<String, Object>> getManageList(Map<String, Object> manageMap) throws Exception;
 }
