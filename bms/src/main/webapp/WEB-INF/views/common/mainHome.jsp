@@ -26,6 +26,16 @@
 	min-height: 57px;
 }
 
+.randomContent {
+	font-size: initial;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	display: -webkit-box;
+	-webkit-line-clamp: 3;
+	-webkit-box-orient: vertical;
+}
+
 .thumbnail {
 	height: 9.5rem;
 	width: 95%;
@@ -62,6 +72,18 @@
 	margin-block-start: 4rem;
 }
 
+.postTitle {
+    height: 25px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    font-size: 18px;
+    font-weight: 500;
+    color: black;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -76,47 +98,33 @@
 	<div class="content-wrapper">
 		<div class="container-xxl container-p-y" style="width: 900px;">
 			<h6 class="comment">/ 추천 게시글 /</h6>
-			<hr>
+			<br>
 			<div class="card-group mb-5">
-				<div class="card">
-					<img class="card-img-top" src="../assets/img/elements/4.jpg"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">This is a wider card with supporting text
-							below as a natural lead-in to additional content. This content is
-							a little bit longer.</p>
+			 <c:forEach var="list" items="${randomList }">
+					<div class="card">
+						<c:if test="${not empty list.thumbnail }">
+							<img class="card-img-top" style="height: 100px; object-fit: cover;"
+								src="${contextPath }/feed/thumbnails?thumbnail=${list.thumbnail}"
+								onclick="location.href='${contextPath }/feed/detailPost?id=${list.id}&postId=${list.postId}'">
+						</c:if>
+						<div>
+							<img
+								src="${contextPath }/member/thumbnails?profileName=${list.profile}"
+								class="w-px-40 rounded-circle profileImg" style="margin: 0.7rem;"> <a
+								href="${contextPath}/feed?id=${list.id }" class="id">${list.nickname }</a>
+						</div>
+						<div class="card-body" style="padding: 1rem 1rem; padding-top: 0;">
+							<a href="${contextPath }/feed/detailPost?id=${list.id}&postId=${list.postId}">
+								<h5 class="card-title postTitle">${list.title }</h5>
+								<p class="card-text randomContent"
+									style="<c:if test="${empty list.thumbnail}">-webkit-line-clamp: 6;</c:if>">${list.content }</p>
+							</a>
+						</div>
+						<div style="padding: 1rem 1rem;">
+							<small class="text-muted">${list.regDate }</small>
+						</div>
 					</div>
-					<div class="card-footer">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
-				</div>
-				<div class="card">
-					<img class="card-img-top" src="../assets/img/elements/5.jpg"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">This card has supporting text below as a
-							natural lead-in to additional content.</p>
-					</div>
-					<div class="card-footer">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
-				</div>
-				<div class="card">
-					<img class="card-img-top" src="../assets/img/elements/1.jpg"
-						alt="Card image cap">
-					<div class="card-body">
-						<h5 class="card-title">Card title</h5>
-						<p class="card-text">This is a wider card with supporting text
-							below as a natural lead-in to additional content. This card has
-							even longer content than the first to show that equal height
-							action.</p>
-					</div>
-					<div class="card-footer">
-						<small class="text-muted">Last updated 3 mins ago</small>
-					</div>
-				</div>
+				</c:forEach>
 			</div>
 		</div>
 

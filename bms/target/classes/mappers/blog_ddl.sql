@@ -9,7 +9,8 @@ CREATE TABLE MEMBER (
     profile_name VARCHAR(300),
     blog_name 	VARCHAR(20),
     nickname 	VARCHAR(10),
-    intro 		VARCHAR(60)
+    intro 		VARCHAR(60),
+    reg_date	DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
 select * from member;
@@ -58,12 +59,30 @@ CREATE TABLE POST (
         REFERENCES member (id)
         ON DELETE CASCADE
 );
-
-insert into post(member_id, category_title, title, content, post_private, reg_date, like_count, reply_count) 
-values('dlcnd', '음식', 'ㅁㅁ', 'ㅁㅁㅁㅁ', 'N', NOW(), 0, 0);
-select * from post;
+		SELECT 
+				M.ID			AS id,
+				M.NICKNAME		AS nickname,
+				M.BLOG_NAME		AS blogName,
+				M.PROFILE_NAME	AS profile,
+				P.POST_ID		AS postId,
+				P.TITLE 		AS title,
+				P.CONTENT		AS content,
+				P.THUMBNAIL		AS thumbnail,
+				date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
+				P.LIKE_COUNT	AS likeCount,
+				P.REPLY_COUNT	AS replyCount		
+		FROM
+				POST P 
+					 JOIN MEMBER M 
+					 ON P.MEMBER_ID = M.ID
+			WHERE
+				P.MEMBER_ID not in ('dlcnd')	
+		ORDER BY
+				 RAND() 
+		LIMIT 3;
+select * from post order by rand() LIMIT 3;
 alter table post auto_increment = 39;
-update post set like_count = 0 where post_id = 38;
+update post set reply_count = 0 where post_id between 20 and 80;
 
 		SELECT
 				P.MEMBER_ID AS MEMBER_ID,

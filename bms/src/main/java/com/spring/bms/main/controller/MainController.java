@@ -22,15 +22,24 @@ public class MainController {
 	
 	@GetMapping("/")
 	public ModelAndView mainHome(HttpServletRequest request,
-								@RequestParam(name="currentPage", defaultValue = "1") int currentPage) throws Exception {
-		// 로그인 한 상태라면 즐겨찾는 회원 글 최신글 가져와서 띄우기
-		// 로그인 안 한 상태면 랜덤 게시글 세 개 가져와서 띄우기 
+								@RequestParam(name="currentPage", defaultValue = "1") int currentPage) throws Exception {		
 		HttpSession session = request.getSession();
 		ModelAndView mv = new ModelAndView();
 		
-		if((String)session.getAttribute("memberId") != null) {
-			String id = (String)session.getAttribute("memberId");
-			
+		String id = (String)session.getAttribute("memberId");
+		
+		// 랜덤 글 띄우기
+		List<Map<String, Object>> randomList = mainService.getRandomPost(id);
+		
+		for (Map<String, Object> map : randomList) {
+			String content = map.get("content").toString().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");
+			map.put("content", content);
+		}
+		
+		mv.addObject("randomList", randomList);
+		
+		// 로그인 한 상태라면 즐겨찾는 회원 글 최신글 가져와서 띄우기
+		if(id != null) {			
 			int viewPostCount = 6;
 			int startIndex = (currentPage - 1) * viewPostCount;
 			

@@ -16,7 +16,8 @@ public class MemberDto {
 	private String blogName;
 	private String nickname;
 	private String intro;
-	
+	private String regDate;
+
 	public String getId() {
 		return id;
 	}
@@ -84,4 +85,10 @@ public class MemberDto {
 		this.intro = intro;
 	}
 	
+	public String getRegDate() {
+		return regDate;
+	}
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
+	}
 }

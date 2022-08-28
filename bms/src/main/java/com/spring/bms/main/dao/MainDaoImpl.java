@@ -34,4 +34,9 @@ public class MainDaoImpl implements MainDao {
 		return sqlSession.selectOne("main.selectTotalPostCount", id);
 	}
 
+	@Override
+	public List<Map<String, Object>> selectRandomPost(String id) throws Exception {
+		return sqlSession.selectList("main.selectRandomPost", id);
+	}
+
 }

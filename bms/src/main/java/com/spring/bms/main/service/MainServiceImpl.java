@@ -34,4 +34,9 @@ public class MainServiceImpl implements MainService {
 		return mainDao.selectTotalPostCount(id);
 	}
 
+	@Override
+	public List<Map<String, Object>> getRandomPost(String id) throws Exception {
+		return mainDao.selectRandomPost(id);
+	}
+
 }

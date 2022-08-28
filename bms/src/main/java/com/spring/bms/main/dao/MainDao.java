@@ -11,5 +11,6 @@ public interface MainDao {
 	public List<Map<String, Object>> selectFavoriteList(Map<String, Object> postMap) throws Exception;
 	public int selectSearchResultCount(Map<String, Object> countMap) throws Exception;
 	public int selectTotalPostCount(String id) throws Exception;
+	public List<Map<String, Object>> selectRandomPost(String id) throws Exception;
 
 }
