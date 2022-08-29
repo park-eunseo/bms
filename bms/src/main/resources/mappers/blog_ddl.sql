@@ -10,40 +10,13 @@ CREATE TABLE MEMBER (
     blog_name 	VARCHAR(20),
     nickname 	VARCHAR(10),
     intro 		VARCHAR(60),
-    reg_date	DATETIME DEFAULT CURRENT_TIMESTAMP
+    reg_date	DATETIME DEFAULT CURRENT_TIMESTAMP, -- 가입일
+    recent_login DATETIME DEFAULT CURRENT_TIMESTAMP -- 최근 접속일
 );
 
 select * from member;
+delete from member where id in ('dlcnd111', 'dlcnd1111', 'dlcnd2', 'dlcnd3', 'qkswl11');
 
-SELECT 				-- 즐겨찾는 회원들의 최근 3일 간의 글
-		TITLE
-FROM
-		POST
-WHERE
-	MEMBER_ID = (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = 'qkswl') AND
-	REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 3 DAY) AND NOW();
-
-SELECT * FROM POST WHERE REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 3 DAY) AND NOW();
-
-		SELECT 				
-				M.ID			AS id,
-				M.NICKNAME		AS nickname,
-				M.BLOG_NAME		AS blogName,
-				M.PROFILE_NAME	AS profile,
-				P.POST_ID		AS postId,
-				P.TITLE 		AS title,
-				P.CONTENT		AS content,
-				P.THUMBNAIL		AS thumbnail,
-				date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
-				P.LIKE_COUNT	AS likeCount,
-				P.REPLY_COUNT	AS replyCount					
-		FROM
-				POST P JOIN MEMBER M ON  P.MEMBER_ID = M.ID
-		WHERE
-				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = 'qkswl') AND
-				P.REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 5 DAY) AND NOW() AND
-				P.POST_PRIVATE = 'N';
-                
 CREATE TABLE POST (
     post_id			INT AUTO_INCREMENT PRIMARY KEY,
     member_id 		VARCHAR(20) NOT NULL,
@@ -59,29 +32,9 @@ CREATE TABLE POST (
         REFERENCES member (id)
         ON DELETE CASCADE
 );
-		SELECT 
-				M.ID			AS id,
-				M.NICKNAME		AS nickname,
-				M.BLOG_NAME		AS blogName,
-				M.PROFILE_NAME	AS profile,
-				P.POST_ID		AS postId,
-				P.TITLE 		AS title,
-				P.CONTENT		AS content,
-				P.THUMBNAIL		AS thumbnail,
-				date_format(P.REG_DATE, '%Y-%m-%d %H:%i') AS regDate,
-				P.LIKE_COUNT	AS likeCount,
-				P.REPLY_COUNT	AS replyCount		
-		FROM
-				POST P 
-					 JOIN MEMBER M 
-					 ON P.MEMBER_ID = M.ID
-			WHERE
-				P.MEMBER_ID not in ('dlcnd')	
-		ORDER BY
-				 RAND() 
-		LIMIT 3;
-select * from post order by rand() LIMIT 3;
-alter table post auto_increment = 39;
+
+select * from post;
+update post set reply_count = 7 where post_id = 79;
 update post set reply_count = 0 where post_id between 20 and 80;
 
 		SELECT
@@ -125,11 +78,15 @@ CREATE TABLE reply (
     top_reply_id INT NULL,
     mention		 VARCHAR(45), -- 언급된 회원
     content 	 TEXT NOT NULL,
-    reg_date 	 DATETIME DEFAULT CURRENT_TIMESTAMP
+    reg_date 	 DATETIME DEFAULT CURRENT_TIMESTAMP,
+	FOREIGN KEY (member_id)
+        REFERENCES member (id)
+        ON DELETE CASCADE
 );
 
 select * from reply;
-DELETE FROM REPLY WHERE REPLY_ID between 1 and 40;
+DELETE FROM REPLY WHERE REPLY_ID = 20;
+select * from post where post_id = (select post_id from reply where member_id = 'dlcnd11');
 
 CREATE TABLE likePost (
     like_post_id INT AUTO_INCREMENT PRIMARY KEY,
@@ -163,3 +120,6 @@ CREATE TABLE MANAGER(
 	id varchar(20) primary key,
     password varchar(20) not null
 );
+
+select * from manager;
+INSERT INTO MANAGER VALUES("admin", "admin11!");

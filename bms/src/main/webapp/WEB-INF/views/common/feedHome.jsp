@@ -141,6 +141,9 @@
 		<c:if test="${empty postList}">
 			<h6 style="text-align-last: center;">게시글이 없습니다.</h6>
 		</c:if>
+		<c:if test="${empty memberInfo}">
+			<h6 style="text-align-last: center;">탈퇴한 회원입니다.</h6>
+		</c:if>
 	</div>
 	<c:if test="${totalPostCount gt 0 }">
 		<div>

@@ -80,7 +80,7 @@
 	}
 	
 	$().ready(function(){
-		$("#currentBlock" + ${currentPage}).addClass("active")	
+		$("#currentBlock${currentPage}").addClass("active")	
 	})
 </script>
 </head>

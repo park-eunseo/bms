@@ -63,7 +63,7 @@
 	<!-- Navbar Start -->
 	<nav
 		class="navbar navbar-expand-lg navbar-light sticky-top p-0" style="background-color: #f4f4f4;">
-		<a href="${contextPath }/"
+		<a href="${contextPath }/<c:if test="${sessionScope.role eq 'admin' }">admin</c:if>"
 			class="navbar-brand d-flex align-items-center px-4">
 			<span class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a>
@@ -74,6 +74,7 @@
 		<!-- Search -->
 		<div class="navbar-collapse collapse" id="navbarCollapse">
 			<div>
+				<c:if test="${sessionScope.role eq 'client' }">
 					<!-- 전체 회원 범위 -->
 					<div class="input-group" style="box-shadow: none">
 						<select id="searchKeyword" name="searchKeyword" class="form-select selectBox form-select-sm" style="box-shadow: none">
@@ -86,6 +87,7 @@
 							<i class="tf-icons bx bx-search"></i>
 						</button>
 					</div>
+				</c:if>
 			</div>
 			<c:choose>
 				<c:when test="${sessionScope.memberId eq null }"> <!-- 가져올 세션이 없다면, 로그인한 회원이 없다면 -->
@@ -109,10 +111,8 @@
 				<c:otherwise> <!-- 세션이 있고 관리자 계정이라면 -->	
 				 <div class="navbar-nav ms-auto p-4 p-lg-0" style="right: 0px;">
 		             <div class="nav-item dropdown">
-		                <a href="${contextPath }/feed" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">${sessionScope.memberNickname } 님</a>
+		                <a href="${contextPath }/feed" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">관리자 님</a>
 		                  <div class="dropdown-menu bg-light m-0">
-		                      <a href="#" class="dropdown-item">회원 관리</a>
-		                      <a href="${contextPath }/member/modify?id=${sessionScope.memberId}">내 정보 수정</a>
 		                      <a href="${contextPath }/member/logout" class="dropdown-item">로그아웃</a>
 		                  </div>
 		              </div>         

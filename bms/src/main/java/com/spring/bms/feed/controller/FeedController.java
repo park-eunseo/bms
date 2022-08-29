@@ -100,7 +100,7 @@ public class FeedController {
 		}		
 		
 		List<Map<String, Object>> postList = feedService.getPostList(postMap);
-
+		
 		for (Map<String, Object> list : postList) {
 			// 게시글 내용 html 태그 다 제거 후
 			String content = list.get("content").toString().replaceAll("<(/)?([a-zA-Z]*)(\\s[a-zA-Z]*=[^>]*)?(\\s)*(/)?>", "");

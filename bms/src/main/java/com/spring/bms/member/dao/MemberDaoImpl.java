@@ -29,7 +29,8 @@ public class MemberDaoImpl implements MemberDao {
 	}
 
 	@Override
-	public MemberDto selectMember(MemberDto memberDto) throws Exception {
+	public MemberDto selectMember(MemberDto memberDto) throws Exception { // 회원 로그인
+		sqlSession.update("member.updateRecentLogin", memberDto); // 로그인하면서 최근 접속일 수정
 		return sqlSession.selectOne("member.selectLoginMember", memberDto);
 	}
 
@@ -45,7 +46,19 @@ public class MemberDaoImpl implements MemberDao {
 
 	@Override
 	public void deleteMember(String id) throws Exception {
+		sqlSession.update("feed.updateReplyDelete", id);
 		sqlSession.delete("member.deleteMember", id);
+	}
+
+	@Override
+	public boolean selectAdminCheck(MemberDto memberDto) throws Exception {
+		boolean isAdmin = false;
+		
+		if(sqlSession.selectOne("member.selectAdminCheck", memberDto) != null) { // 로그인한 계정이 admin 계정과 동일하다면 반환할 값이 O
+			isAdmin = true;
+		}
+		
+		return isAdmin;
 	}
 
 }

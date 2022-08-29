@@ -2,7 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="member">
-
+	<select id="selectAdminCheck" parameterType="MemberDto" resultType="MemberDto">
+		SELECT
+				*
+		FROM
+				MANAGER
+		WHERE
+				ID = #{id} AND password = #{password}
+	</select>
+	
 	<select id="selectLoginMember" parameterType="MemberDto" resultType="MemberDto">
 		SELECT
 				*
@@ -12,7 +20,16 @@
 				ID = #{id }
 	</select>
 	
-	<select id="selectIdCheck" parameterType="String" resultType="String">
+	<update id="updateRecentLogin" parameterType="MemberDto">
+		UPDATE
+				MEMBER
+		SET
+				RECENT_LOGIN = NOW()
+		WHERE
+				ID = #{id}
+	</update>
+	
+	<select id="selectIdCheck" parameterType="String" resultType="String"> <!-- 회원가입 중복 id 확인 -->
 		SELECT
 				ID
 		FROM	
@@ -35,7 +52,8 @@
 				#{profileName},
 				#{blogName},
 				#{nickname},
-				#{intro}
+				#{intro},
+				NOW()
 		)
 	
 	</insert>
@@ -52,7 +70,7 @@
 		)	
 	</insert>
 	
-	<select id="selectOneMember" parameterType="String" resultType="MemberDto">
+	<select id="selectOneMember" parameterType="String" resultType="MemberDto"> <!-- 회원 정보 수정을 위한 데이터 반환 -->
 		SELECT
 				*
 		FROM

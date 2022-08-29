@@ -72,9 +72,11 @@ public class MemberController {
 				
 				memberDto.setProfileName(fileName);
 			} else {
-				memberDto.setProfileName("basicImg.jpg");  // 파일 요소가 없으면 기본 프로필 사용
-			}
-		}
+				memberDto.setProfileName("basicImg.jpg");  // 업로드한 파일이 없으면 기본 프로필 사용
+			} 
+		}  else {
+			memberDto.setProfileName("basicImg.jpg");  // 파일 요소가 없으면 기본 프로필 사용
+		} 
 		
 		// 들어오는 값이 없을 때 공백 또는 null은 NaN으로 취급되어 저장될 필드가 없어 400 에러 일어남
 		if(multipartRequest.getParameter("blogName").equals("")) memberDto.setBlogName(memberDto.getId());
@@ -113,23 +115,26 @@ public class MemberController {
 	public ResponseEntity<Object> login(MemberDto memberDto, HttpServletRequest request) throws Exception {
 		String jsScript = "";
 		
-		MemberDto loginMember = memberService.selectMember(memberDto);
+		MemberDto loginMember = memberService.selectMember(memberDto); // 일반 클라이언트 계정인지 확인
+		HttpSession session = request.getSession(); // 세션 객체 생성
 		
 		if(loginMember != null) { // 해당 ID가 존재하다면
-			if(pwEncoder.matches(memberDto.getPassword(), loginMember.getPassword())) {
+			if (pwEncoder.matches(memberDto.getPassword(), loginMember.getPassword())) {
 				// matches 메서드를 사용해 회원에게 받은 암호화 전 패스워드와 암호화된 패스워드를 비교해 true 또는 false로 반환
-				
-				HttpSession session = request.getSession(); // 세션 객체 생성
+
 				session.setAttribute("memberId", loginMember.getId());
 				session.setAttribute("memberNickname", loginMember.getNickname());
 				session.setAttribute("memberIntro", loginMember.getIntro());
 				session.setAttribute("memberProfile", loginMember.getProfileName());
 				session.setAttribute("role", "client"); // 관리자인지 회원인지 구분하기 위해
-				
-			    jsScript = "<script>"
-				    	+ "location.href='"+ request.getContextPath()+"/';"
-				    	+ "</script>";
-			} 
+
+				jsScript = "<script>" + "location.href='" + request.getContextPath() + "/';" + "</script>";
+			}
+		} else if(memberService.adminCheck(memberDto)) { // admin 계정인지 확인, true면 admin 계정
+			session.setAttribute("memberId", memberDto.getId());
+			session.setAttribute("role", "admin"); // 관리자인지 회원인지 구분하기 위해
+			
+			jsScript = "<script>" + "location.href='" + request.getContextPath() + "/admin';" + "</script>";
 		}
 		
 		if(jsScript.equals("")) {
@@ -238,7 +243,9 @@ public class MemberController {
 	public ResponseEntity<Object> delete(HttpServletRequest request, @RequestParam("id") String id) throws Exception {
 		HttpSession session = request.getSession();
 		
-		new File("C:\\profile\\" + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+		if(!session.getAttribute("memberProfile").equals("basicImg.jpg")) {
+			new File("C:\\profile\\" + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+		}
 		
 		memberService.deleteMember(id);
 		

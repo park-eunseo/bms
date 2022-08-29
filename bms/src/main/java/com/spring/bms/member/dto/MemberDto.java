@@ -17,7 +17,8 @@ public class MemberDto {
 	private String nickname;
 	private String intro;
 	private String regDate;
-
+	private String recentLogin;
+	
 	public String getId() {
 		return id;
 	}
@@ -91,4 +92,13 @@ public class MemberDto {
 	public void setRegDate(String regDate) {
 		this.regDate = regDate;
 	}
+	
+	public String getRecentLogin() {
+		return recentLogin;
+	}
+	
+	public void setRecentLogin(String recentLogin) {
+		this.recentLogin = recentLogin;
+	}
+
 }

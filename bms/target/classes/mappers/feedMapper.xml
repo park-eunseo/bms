@@ -318,12 +318,27 @@
 				POST_ID = #{postId}
 	</update>
 	
-	<update id="updateReplyCancel" parameterType="ReplyDto">
+	<update id="updateReplyCancel" parameterType="ReplyDto"> <!-- 댓글을 직접 삭제했을 때 -->
 		UPDATE
 				POST
 		SET
 				REPLY_COUNT = REPLY_COUNT - 1
 		WHERE
 				POST_ID = #{postId}
+	</update>
+	
+	<update id="updateReplyDelete" parameterType="String"> <!-- 회원이 탈퇴해 댓글이 삭제된 경우 -->
+		UPDATE
+				POST
+		SET
+				REPLY_COUNT = REPLY_COUNT - 1
+		WHERE
+				POST_ID = (SELECT
+									POST_ID
+							FROM 	
+									REPLY
+							WHERE 
+									MEMBER_ID = #{id}
+						  )
 	</update>
 </mapper>

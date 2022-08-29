@@ -42,4 +42,9 @@ public class MemberServiceImpl implements MemberService {
 	public void deleteMember(String id) throws Exception {
 		memberDao.deleteMember(id);
 	}
+
+	@Override
+	public boolean adminCheck(MemberDto memberDto) throws Exception {
+		return memberDao.selectAdminCheck(memberDto);
+	}
 }
