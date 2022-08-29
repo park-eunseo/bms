@@ -21,8 +21,8 @@ public class AdminDaoImpl implements AdminDao {
 	}
 
 	@Override
-	public int selectTotalMemberCount() throws Exception {
-		return sqlSession.selectOne("admin.selectTotalMemberCount");
+	public int selectTotalMemberCount(String searchWord) throws Exception {
+		return sqlSession.selectOne("admin.selectTotalMemberCount", searchWord);
 	}
 
 	@Override
@@ -33,5 +33,15 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public List<PostDto> selectPostList(Map<String, Object> postMap) throws Exception {
 		return sqlSession.selectList("admin.selectPostList", postMap);
+	}
+
+	@Override
+	public void deleteMember(String memberId) throws Exception {
+		sqlSession.delete("admin.deleteMember", memberId);
+	}
+
+	@Override
+	public void deletePost(String postId) throws Exception {
+		sqlSession.delete("admin.deletePost", postId);
 	}
 }

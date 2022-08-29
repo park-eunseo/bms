@@ -21,8 +21,8 @@ public class AdminServiceImpl implements AdminService {
 	}
 
 	@Override
-	public int getTotalMemberCount() throws Exception {
-		return adminDao.selectTotalMemberCount();
+	public int getTotalMemberCount(String searchWord) throws Exception {
+		return adminDao.selectTotalMemberCount(searchWord);
 	}
 
 	@Override
@@ -33,6 +33,16 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public List<PostDto> getPostList(Map<String, Object> postMap) throws Exception {
 		return adminDao.selectPostList(postMap);
+	}
+
+	@Override
+	public void deleteMember(String memberId) throws Exception {
+		adminDao.deleteMember(memberId);
+	}
+
+	@Override
+	public void deletePost(String postId) throws Exception {
+		adminDao.deletePost(postId);
 	}
 
 }

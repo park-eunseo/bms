@@ -32,6 +32,23 @@
 	$().ready(function(){
 		$("#currentBlock${currentPage}").addClass("active")	
 	})
+	
+	function deletePost(postId){
+		var deletePost = confirm("선택한 게시글이 삭제되며 복구할 수 없습니다. 삭제하시겠습니까?")
+		
+		if(deletePost){
+			$.ajax({
+				type:"get",
+				url:"${contextPath}/admin/deletePost?postId=" + postId,
+				success:function(){
+					alert("게시글 삭제가 완료되었습니다.")
+					history.go(0)
+				}
+			})
+		} else {
+			return false
+		}
+	}
 </script>
 </head>
 <body>
@@ -73,7 +90,7 @@
 									</td>
 									<td>${post.regDate }</td>
 									<td>
-										<button type="button" onclick="deleteMember()"
+										<button type="button" onclick="deletePost('${post.postId}')"
 											style="width: 1.5rem; height: 1.5rem;"
 											class="btn btn-icon btn-outline-danger">
 											<i class='bx bxs-user-minus'></i>

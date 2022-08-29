@@ -8,8 +8,10 @@ import com.spring.bms.member.dto.MemberDto;
 
 public interface AdminService {
 	public List<MemberDto> getMemberList(Map<String, Object> memberMap) throws Exception;
-	public int getTotalMemberCount() throws Exception;
+	public int getTotalMemberCount(String searchWord) throws Exception;
 	public int getTotalPostCount(String memberId) throws Exception;
 	public List<PostDto> getPostList(Map<String, Object> postMap) throws Exception;
+	public void deleteMember(String memberId) throws Exception;
+	public void deletePost(String postId) throws Exception;
 
 }

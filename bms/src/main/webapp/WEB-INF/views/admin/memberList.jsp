@@ -26,7 +26,24 @@
 	function search(){
 		if (window.event.keyCode == 13) {
 			var searchWord = document.getElementById("searchWord")
-			location.href = "${contextPath}/feed?id=${memberInfo.id}&searchWord=" + searchWord.value
+			location.href = "${contextPath}/admin?searchWord=" + searchWord.value
+		}
+	}
+	
+	function deleteMember(memberId){
+		var deleteMember = confirm("해당 회원의 정보가 전부 삭제됩니다. 탈퇴시키겠습니까?")
+		
+		if(deleteMember){
+			$.ajax({
+				type:"get",
+				url:"${contextPath}/admin/deleteMember?id=" + memberId,
+				success:function(){
+					alert("회원 강제 탈퇴가 완료되었습니다.")
+					history.go(0)
+				}
+			})
+		} else {
+			return false
 		}
 	}
 </script>
@@ -38,7 +55,7 @@
 		<div class="input-group memberSearch">
 			<span class="input-group-text"><i
 				class="tf-icons bx bx-search"></i></span> 
-			<input type="text" class="form-control" onkeyup="search()" placeholder="검색할 회원 정보를 입력하세요.">
+			<input type="text" class="form-control" id="searchWord" onkeyup="search()" placeholder="검색할 회원 ID를 입력하세요.">
 		</div>
 		<div class="table-responsive text-nowrap" style="padding: 1rem; padding-top: 0;">
 			<span>전체(${totalMemberCount })</span>
@@ -46,7 +63,7 @@
 				<thead>
 					<tr>
 						<th>번호</th>
-						<th>회원(블로그명)</th>
+						<th>ID(블로그명)</th>
 						<th>전화번호</th>
 						<th>email</th>
 						<th>생년월일</th>
@@ -71,7 +88,7 @@
 									<td>${member.regDate }</td>
 									<td>${member.recentLogin }</td>
 									<td>
-										<button type="button" onclick="deleteMember()"
+										<button type="button" onclick="deleteMember('${member.id}')"
 											style="width: 1.5rem; height: 1.5rem;"
 											class="btn btn-icon btn-outline-danger">
 											<i class='bx bxs-user-minus'></i>

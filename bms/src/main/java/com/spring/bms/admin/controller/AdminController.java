@@ -7,6 +7,8 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +26,7 @@ public class AdminController {
 	
 	@GetMapping("")
 	public ModelAndView admin(HttpServletRequest request, 
+							@RequestParam(name="searchWord", defaultValue = "") String searchWord,
 							@RequestParam(name="currentPage", defaultValue = "1") int currentPage) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
@@ -31,10 +34,11 @@ public class AdminController {
 		int startIndex = (currentPage - 1) * viewMemberCount;
 		
 		Map<String, Object> memberMap = new HashMap<>();
+		memberMap.put("searchWord", searchWord);
 		memberMap.put("startIndex", startIndex);
 		memberMap.put("viewMemberCount", viewMemberCount);
 		
-		int totalMemberCount = adminService.getTotalMemberCount();
+		int totalMemberCount = adminService.getTotalMemberCount(searchWord);
 		int addPage = totalMemberCount % viewMemberCount == 0 ? 0 : 1;
 		int totalPageBlock = totalMemberCount / viewMemberCount + addPage;
 		
@@ -112,5 +116,17 @@ public class AdminController {
 		mv.setViewName("admin/postList");
 		
 		return mv;
-}
+	}
+	
+	@GetMapping("/deleteMember") // 관리자의 회원 삭제
+	public ResponseEntity<Object> deleteMember(@RequestParam("id") String memberId) throws Exception{
+		adminService.deleteMember(memberId);
+		return new ResponseEntity<Object>(HttpStatus.OK);	
+	}
+	
+	@GetMapping("/deletePost")	// 관리자의 게시글 삭제
+	public ResponseEntity<Object> deletePost(@RequestParam("postId") String postId) throws Exception{
+		adminService.deletePost(postId);
+		return new ResponseEntity<Object>(HttpStatus.OK);	
+	}
 }

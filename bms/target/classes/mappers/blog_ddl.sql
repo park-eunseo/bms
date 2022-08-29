@@ -34,17 +34,8 @@ CREATE TABLE POST (
 );
 
 select * from post;
-update post set reply_count = 0 where post_id = 77;
+update post set reply_count = 0 where post_id = 69;
 update post set reply_count = 0 where post_id between 20 and 80;
-
-		SELECT
-				P.MEMBER_ID AS MEMBER_ID,
-				P.TITLE	AS TITLE,
-				P.CONTENT AS CONTENT
-		FROM
-				POST P LEFT JOIN LIKEPOST L
-				ON P.POST_ID = L.POST_ID
-		WHERE L.MEMBER_ID = 'dlcnd';
                 
 CREATE TABLE CATEGORY (
     category_id 		INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,11 +72,14 @@ CREATE TABLE reply (
     reg_date 	 DATETIME DEFAULT CURRENT_TIMESTAMP,
 	FOREIGN KEY (member_id)
         REFERENCES member (id)
+        ON DELETE CASCADE,
+	FOREIGN KEY (post_id)
+        REFERENCES post (post_id)
         ON DELETE CASCADE
 );
 
 select * from reply;
-DELETE FROM REPLY WHERE REPLY_ID =8;
+DELETE FROM REPLY WHERE REPLY_ID = 9;
 select * from post where post_id = (select post_id from reply where member_id = 'dlcnd11');
 
 CREATE TABLE likePost (
@@ -94,6 +88,9 @@ CREATE TABLE likePost (
     post_id 	 VARCHAR(20), -- 좋아요 누른 게시글 ID
     FOREIGN KEY (member_id)
         REFERENCES member (id)
+        ON DELETE CASCADE,
+	FOREIGN KEY (post_id)
+        REFERENCES post (post_id)
         ON DELETE CASCADE
 );
 
