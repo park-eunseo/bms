@@ -18,6 +18,16 @@
 	border-bottom-width: 1px;
 	color: black;
 }
+
+.email {
+	width: 84%;
+	display: inline-block;
+	margin-bottom: 0.5rem;
+}
+
+.checkBtn {
+	padding: 0.3rem 0.8rem;
+}
 </style>
 <meta charset="utf-8" />
 <script>
@@ -52,7 +62,7 @@
  			var pw = document.getElementById("password")
  			var pw2 = document.getElementById("password2")
  			
- 			if(pw.value == pw2.value) {
+ 			if(pw.value == pw2.value && pwRegExp.test(pw.value)) {
  				document.getElementById("pwAlert2").innerText = "비밀번호 확인이 완료되었습니다."
  	 			document.getElementById("pwAlert2").style.color = "green"
  			} else {
@@ -131,7 +141,7 @@
  				return false
  			}
  			
- 			if(pw2.value == "") {
+ 			if(pw2.value == "" || !pwRegExp.test(pw.value)) {
  				document.getElementById("pwAlert2").innerText = "비밀번호 확인은 필수입니다."
  				pw2.focus()
  				return false
@@ -151,6 +161,14 @@
  			
  			if(email.value == "" || !mailRegExp.test(email.value)) {
  				document.getElementById("emailAlert").innerText = "이메일을 다시 입력해 주세요."
+ 				email.focus()
+ 				return false
+ 			}
+ 			
+ 			var checkMsg = document.getElementById("emailCheckMsg")
+ 			
+ 			if(checkMsg.innerText == "" || checkMsg.style.color != "green"){
+ 				alert("이메일 인증은 필수입니다.")
  				email.focus()
  				return false
  			}
@@ -240,6 +258,40 @@
  			reader.readAsDataURL(event.target.files[0]) // 바이너리 파일을 encode 문자열로 반환
  		}
  		
+		var codeNum;
+		
+ 		function mailCheckBtn(){
+ 			var email = $("#email").val()
+			$("#sendMail").attr('disabled',true);
+ 			
+ 			$.ajax({
+ 				type:"get",
+ 				url:"${contextPath}/member/mailCheck?email=" + email,
+ 				async: false,
+ 				success:function(data){
+ 					$("#checkNumber").css("display", "inline")
+ 		 			$("#emailCheck").css("display", "")
+ 		 			
+ 		 			codeNum = data
+ 		 			alert("해당 이메일로 인증번호가 발송되었습니다.")
+ 				}
+ 			})	
+ 		}
+ 		
+ 		function checkEmailNum(){
+ 			var checkMsg = $("#emailCheckMsg")
+ 			
+ 			if($("#checkNumber").val() == codeNum){
+ 				checkMsg.text("인증이 완료되었습니다.")
+ 				checkMsg.css("color", "green")
+ 				$("#email").attr("readonly", true)
+ 				$("#checkNumber").attr('readonly',true);
+ 		 		$("#emailCheck").attr('disabled',true);
+ 			} else {
+ 				checkMsg.text("인증 번호가 일치하지 않습니다.")
+ 				checkMsg.css("color", "red")
+ 			}
+ 		}
  	</script>
 <body>
 	<!-- Content -->
@@ -317,10 +369,23 @@
 
 							<div class="mb-3">
 								<label for="email" class="form-label">EMAIL</label> <span
-									style="color: #e44444">*</span> <input type="email"
-									class="form-control" id="email" name="email"
-									onblur="emailAlert()" placeholder="sim8log@naver.com" /> <small
-									id="emailAlert" style="color: red"></small>
+									style="color: #e44444">*</span><br> 
+								<input type="email" class="form-control email" id="email" name="email"
+									onblur="emailAlert()" placeholder="sim8log@naver.com" />
+								<button type="button" class="btn btn-primary"
+									onclick="mailCheckBtn()" id="sendMail"
+									style="padding: 0.5rem; font-size: 0.5rem; display: inline-block;">인증번호 전송</button>
+								<small id="emailAlert" style="color: red"></small>
+								<!-- 번호 맞는지 확인 -->
+								<div class="mb-3" style="text-align: left;">
+									<input type="text" class="form-control" id="checkNumber"
+										name="checkNumber" placeholder="인증번호 6자리를 입력하세요."
+										style="width: 250px; display: none;" />
+									<button class="btn btn-primary checkBtn" id="emailCheck" onclick="checkEmailNum()" 
+											style="display: none;">확인</button>
+									<small id="emailCheckMsg"></small>
+								</div>
+								
 							</div>
 
 							<div class="mb-3">
@@ -530,7 +595,8 @@
 												동의를 거부할 권리가 있습니다. 회원가입 시 수집하는 최소한의 개인정보, 즉, 필수 항목에 대한 수집 및
 												이용 동의를 거부하실 경우, 회원가입이 어려울 수 있습니다.</span>
 										</p>
-										<button type="button" class="btn btn-primary me-2" onclick="termsClick()">동의</button>
+										<button type="button" class="btn btn-primary me-2"
+											onclick="termsClick()">동의</button>
 										<button type="button" class="btn btn-outline-secondary"
 											data-bs-dismiss="offcanvas">취소</button>
 									</div>

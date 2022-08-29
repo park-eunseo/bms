@@ -51,7 +51,7 @@ public class FeedController {
 	@GetMapping("")
 	public ModelAndView feed(@RequestParam("id") String id, 
 						@RequestParam(name = "searchWord", defaultValue = "") String searchWord, 
-						@RequestParam(name = "category", required = false) String category,
+						@RequestParam(name = "category", defaultValue = "전체") String category,
 						@RequestParam(name = "currentPage", defaultValue = "1") int currentPage,
 						HttpServletRequest request) throws Exception {
 		
@@ -107,12 +107,12 @@ public class FeedController {
 			list.put("content", content);
 		}
 
-		session.setAttribute("nowCategory", category);
 		session.setAttribute("memberInfo", feedService.getOneMember(id)); 		// 해당 블로그 회원의 정보 select
 		session.setAttribute("postList", postList); 						// 해당 회원의 게시물 전체 select
 		session.setAttribute("categoryList", categoryService.getCategoryList(id));  // 해당 회원의 카테고리 전체 select
 		
 		mv.addAllObjects(postMap);
+		mv.addObject("nowCategory", category);
 		mv.addObject("startPageBlock", startPageBlock);
 		mv.addObject("endPageBlock", endPageBlock);		
 		mv.addObject("totalPageBlock", totalPageBlock);		
@@ -177,6 +177,7 @@ public class FeedController {
 			mv.addObject("memberInfo", feedService.getOneMember(id));
 		}
 		
+		mv.addObject("nowCategory", feedService.getOnePost(postId).getCategoryTitle());
 		mv.addObject("detailPost", feedService.getOnePost(postId));
 		mv.addObject("replyList", feedService.getReplyList(postId));
 		mv.setViewName("/detailPost");

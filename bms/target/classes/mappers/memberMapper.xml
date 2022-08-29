@@ -85,7 +85,6 @@
 		SET
 				PASSWORD = #{password},
 				TEL = #{tel},
-				EMAIL = #{email},
 				PROFILE_NAME = #{profileName},
 				BLOG_NAME = #{blogName},
 				NICKNAME = #{nickname},

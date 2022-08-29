@@ -50,7 +50,7 @@
 		<beans:property name="defaultEncoding" value="utf-8" />
 	</beans:bean>
 	
-
+	
 	<!-- spring security -->
 	<beans:bean id="bcryptPasswordEncoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
@@ -58,5 +58,4 @@
 	<context:component-scan base-package="com.spring.bms" />
 	
 	<aop:aspectj-autoproxy />
-
 </beans:beans>

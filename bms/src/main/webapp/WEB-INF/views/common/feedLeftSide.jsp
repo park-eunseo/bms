@@ -90,7 +90,7 @@
 	class="layout-menu menu-vertical menu bg-menu-theme"
 	data-bg-class="bg-menu-theme">
 	<div class="app-brand demo">
-		<a href="${contextPath }/" class="app-brand-link"> <span
+		<a href="${contextPath }/<c:if test="${sessionScope.role eq 'admin' }">admin</c:if>" class="app-brand-link"> <span
 			class="app-brand-text demo menu-text fw-bolder ms-2">sim8log</span>
 		</a> <a href="javascript:void(0);" style="left: 14rem;"
 			class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -125,7 +125,7 @@
 					</ul>
 				</c:if>
 				<p class="intro">${memberInfo.intro}</p>
-				<c:if test="${memberInfo.id ne sessionScope.memberId }">
+				<c:if test="${memberInfo.id ne sessionScope.memberId && sessionScope.role eq 'client'}">
 					<!-- 현재 로그인 중인 회원과 다른 회원의 피드일 경우 보여짐 -->
 					<div class="d-block">
 						<input type="checkbox" class="btn-check" id="likeMember">
@@ -135,13 +135,15 @@
 			</div>
 		</div>
 	</div>
-	<div style="align-self: self-end;">
-		<!-- 카테고리 설정 -->
-		<button class="btn"
-			onclick="location.href='${contextPath}/setCategory'">
-			<i class='bx bxs-cog' style="font-size: 1.3rem; color: #4e4e4e"></i>
-		</button>
-	</div>
+	<c:if test="${sessionScope.memberId eq memberInfo.id }">
+		<div style="align-self: self-end;">
+			<!-- 카테고리 설정 -->
+			<button class="btn"
+				onclick="location.href='${contextPath}/setCategory'">
+				<i class='bx bxs-cog' style="font-size: 1.3rem; color: #4e4e4e"></i>
+			</button>
+		</div>
+	</c:if>
 	<div>
 		<!-- 사이드 메뉴 -->
 		<ul class="menu-inner py-1">
@@ -150,7 +152,7 @@
 			<c:forEach var="category" items="${categoryList }">
 				<c:choose>
 					<c:when test="${category.categoryTitle eq '전체'}">
-						<li class="menu-item <c:if test="${empty nowCategory}">active</c:if>" id="${category.categoryTitle}">
+						<li class="menu-item <c:if test="${nowCategory eq '전체'}">active</c:if>" id="${category.categoryTitle}">
 							<a href="${contextPath }/feed?id=${memberInfo.id}" class="menu-link" >
 								<i class="menu-icon tf-icons bx bx-home-alt"></i> 전체
 						</a>

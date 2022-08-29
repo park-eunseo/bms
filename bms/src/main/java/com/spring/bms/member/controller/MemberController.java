@@ -6,6 +6,7 @@ import java.io.OutputStream;
 import java.util.Iterator;
 import java.util.UUID;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -26,19 +27,22 @@ import org.springframework.web.multipart.MultipartRequest;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.spring.bms.member.dto.MemberDto;
+import com.spring.bms.member.service.MailCheckService;
 import com.spring.bms.member.service.MemberService;
 
 import net.coobird.thumbnailator.Thumbnails;
 
 @Controller
 @RequestMapping("/member")
-public class MemberController {
-	
+public class MemberController {	
 	@Autowired
 	private MemberService memberService;
 	
 	@Autowired
 	private BCryptPasswordEncoder pwEncoder;  // 회원 비밀번호 암호화
+	
+	@Autowired
+	private MailCheckService mailCheckService;
 	
 	@GetMapping("/register")
 	public String register() {
@@ -104,6 +108,12 @@ public class MemberController {
 	@GetMapping("/registerIdCheck")
 	public ResponseEntity<String> registerIdCheck(@RequestParam(name = "id") String id) throws Exception {	
 		return new ResponseEntity<String>(memberService.registerIdCheck(id), HttpStatus.OK);
+	}
+	
+	@GetMapping("/mailCheck")
+	public ResponseEntity<Object> mailCheck(@RequestParam("email") String email) throws MessagingException{
+		System.out.println("컨트롤러 email: "+email);
+		return new ResponseEntity<Object>(mailCheckService.sendMail(email), HttpStatus.OK);
 	}
 	
 	@GetMapping("/login")

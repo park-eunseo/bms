@@ -17,7 +17,6 @@
  	<script>
  		var pwRegExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,20}$/
  		var telRegExp = /^[0-9]{2,3}-[0-9]{3,4}-[0-9]{4}/;
- 		var mailRegExp = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/)
  		
 		// 가입 정보 기입에 필요한 조건 불충족 시 알림
  		function pwAlert(){
@@ -34,7 +33,7 @@
  			var pw = document.getElementById("password")
  			var pw2 = document.getElementById("password2")
  			
- 			if(pw.value == pw2.value) {
+ 			if(pw.value == pw2.value && pwRegExp.test(pw.value)) {
  				document.getElementById("pwAlert2").innerText = "비밀번호 확인이 완료되었습니다."
  	 			document.getElementById("pwAlert2").style.color = "green"
  			} else {
@@ -53,21 +52,10 @@
  			}
  		}
  		
- 		function emailAlert(){
- 			var email = document.getElementById("email")
- 			
- 			if(!mailRegExp.test(email.value)){
- 				document.getElementById("emailAlert").innerText = "이메일을 다시 입력해 주세요."
- 			} else {
- 				document.getElementById("emailAlert").innerText = ""
- 			}
- 		}
- 		
  		function inputCheck(){
  			var pw = document.inputForm.password
  			var pw2 = document.inputForm.password2
  			var tel = document.inputForm.tel
- 			var email = document.inputForm.email
  			var intro = document.inputForm.intro
  			
  			if(pw.value == "" || !pwRegExp.test(pw.value)) {
@@ -76,7 +64,7 @@
  				return false
  			}
  			
- 			if(pw2.value == "") {
+ 			if(pw2.value == "" || !pwRegExp.test(pw2.value)) {
  				document.getElementById("pwAlert2").innerText = "비밀번호 확인은 필수입니다."
  				pw2.focus()
  				return false
@@ -88,11 +76,6 @@
  				return false
  			}
  			
- 			if(email.value == "" || !mailRegExp.test(email.value)) {
- 				document.getElementById("emailAlert").innerText = "이메일을 다시 입력해 주세요."
- 				email.focus()
- 				return false
- 			}
  			
  			if(intro.value.length > 50){
  	 			document.getElementById("intro").focus()
@@ -243,7 +226,7 @@
                   <label for="email" class="form-label">EMAIL</label>
                   <span style="color:#e44444">*</span>
                   <input type="email" class="form-control" value="${memberDto.email }"
-                  		id="email" name="email" onblur="emailAlert()"placeholder="sim8log@naver.com" />
+                  		id="email" name="email" disabled="disabled"  />
                   <small id="emailAlert" style="color:red"></small>
                 </div>
                 
@@ -251,7 +234,7 @@
                	  <label for="birth" class="form-label">BIRTH</label>
                	  <span style="color:#e44444">*</span>
                   <input class="form-control" type="date" value="${memberDto.birth }"
-                  		id="html5-date-input" name="birth" onblur="birthAlert()" disabled="disabled" />
+                  		id="html5-date-input" name="birth"  disabled="disabled" />
                   <small id="birthAlert" style="color:red"></small>
                 </div>
                 
