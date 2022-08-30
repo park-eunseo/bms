@@ -96,6 +96,7 @@
 								<small id="pwAlert2"></small>
 							</div>
 							<p>
+								<input type="hidden" name="id" value="${id }">
 								<button class="btn btn-primary d-grid w-100">변경하기</button>
 							</p>
 						</form>

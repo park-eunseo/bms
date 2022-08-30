@@ -305,7 +305,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/newPassword")
-	public  ModelAndView newPassword(String id) throws Exception {
+	public ModelAndView newPassword(String id) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		mv.addObject("id", id);
 		mv.setViewName("member/newPassword");

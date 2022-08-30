@@ -81,7 +81,7 @@
 	// 좋아요 버튼값 
 	$.ajax({
 		type : "get",
-		url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId},
+		url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=${detailPost.postId}",
 		success : function(data){
 			if(data) { 
 				document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart') 
@@ -95,7 +95,7 @@
 	function likeCount() { // 좋아요 개수
 		$.ajax({
 			type : "get",
-			url : "${contextPath}/feed/getLikeCount?postId=" + ${detailPost.postId},
+			url : "${contextPath}/feed/getLikeCount?postId=${detailPost.postId}",
 			success : function(data){
 				document.getElementById("likeCount").innerText = data
 			}
@@ -105,7 +105,7 @@
 	function replyCount() { // 댓글 개수
 		$.ajax({
 			type : "get",
-			url : "${contextPath}/feed/getReplyCount?postId=" + ${detailPost.postId},
+			url : "${contextPath}/feed/getReplyCount?postId=${detailPost.postId}",
 			success : function(data){
 				document.getElementById("replyCount").innerText = data
 			}
@@ -123,19 +123,26 @@
 			$.ajax({
 				type : "get",
 				async : false, // async : true가 기본 설정(비동기식 처리: 병렬적), false(동기식 처리: 직렬적)
-				url : "${contextPath}/manage/notLikePost?memberId=" + memberId + "&postId=" + ${detailPost.postId} // 회원의 해당 게시글 좋아요한 행 제거한 후
+				url : "${contextPath}/manage/notLikePost?memberId=" + memberId + "&postId=${detailPost.postId}" // 회원의 해당 게시글 좋아요한 행 제거한 후
 			});
 			// 비동기식 방식 사용 시 1차 결과값을 기다리지 않고 다음 함수와 같이 실행되기 때문에 2차로 받고자 하는 값을 정확하게 받지 못한다.
 			
 			likeCount()
 			document.getElementById("likePost").classList.replace('bxs-heart', 'bx-heart')
 			likeClick = false
-		} else { // 좋아요 X -> 좋아요 O(좋아요 개수 + 1)
+		} else { // 좋아요 X -> 좋아요 O(좋아요 개수 + 1) & 작성자에게 알림
 			$.ajax({
 				type : "get",
 				async : false, 
-				url : "${contextPath}/manage/likePost?memberId=" + memberId + "&postId=" + ${detailPost.postId}
+				url : "${contextPath}/manage/likePost?memberId=" + memberId + "&postId=${detailPost.postId}"
 			})
+			
+			if(memberId != '${detailPost.memberId}'){ // 본인이 본인 게시글에 누르면 알림 X
+				$.ajax({
+					type : "post",
+					url : "${contextPath}/notice/addNotice?fromId=" + memberId + "&toId=${detailPost.memberId}&postId=${detailPost.postId}&category=like"
+				})
+			}
 			
 			likeCount()
 			document.getElementById("likePost").classList.replace('bx-heart', 'bxs-heart')	
@@ -153,7 +160,7 @@
 		}
 	}
 	
-	function replyCheck(){
+	function replyCheck(){  // 작성자에게 알림
 		var content = document.getElementById("content")	
 		
 		if(memberId == null || memberId == 'null'){
@@ -168,6 +175,13 @@
 		}
 		
 		replyCount()
+		
+		if(memberId != '${detailPost.memberId}'){ // 본인이 본인 게시글에 단 댓글은 알림 X
+			$.ajax({
+				type : "post",
+				url : "${contextPath}/notice/addNotice?fromId=" + memberId + "&toId=${detailPost.memberId}&postId=${detailPost.postId}&category=reply"
+			})
+		}
 	}
 	
 	function re_replyCheck(replyId){ // 댓글 입력값 체크 후 폼 이동
@@ -210,7 +224,7 @@
 		
 		$("#replySetting" + replyId).hide() // 댓글 수정, 삭제 버튼 숨기고
 
-		var replyHtml = "<form action='${contextPath}/feed/modifyReply' onsubmit='return replyCheck()' method='post'>"
+		var replyHtml = "<form action='${contextPath}/feed/modifyReply?id=${detailPost.memberId}' onsubmit='return replyCheck()' method='post'>"
 					+ "<input type='text' class='form-control' style='margin-top: 0.5rem;' name='content' id='content' value='" + content +"'>"
 					+ "<input type='hidden' name='replyId' value='" + replyId +"'>"
 					+ "<input type='hidden' name='postId' value='" + postId +"'>"
@@ -405,7 +419,7 @@
 												<!-- 답댓글 작성란-->
 												<div class="comment-form-wrap"
 													id="re_reply${reply2.replyId }" style="display: none;">
-													<form action="${contextPath }/feed/writeReply"
+													<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
 														onsubmit="return re_replyCheck(${reply2.replyId })"
 														method="post" class="bg-light">
 														<div class="form-group">
@@ -434,7 +448,7 @@
 											<!-- 답댓글 작성란-->
 											<div class="comment-form-wrap"
 												id="re_reply${reply1.replyId }" style="display: none;">
-												<form action="${contextPath }/feed/writeReply"
+												<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
 													onsubmit="return re_replyCheck(${reply1.replyId })"
 													method="post" class="bg-light">
 													<div class="form-group">
@@ -473,7 +487,7 @@
 
 					<!-- 기본 댓글 -->
 					<div class="comment-form-wrap pt-5">
-						<form action="${contextPath }/feed/writeReply"
+						<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
 							onsubmit="return replyCheck()" method="post" class="p-3 bg-light"
 							style="margin-top: -40px;">
 							<div class="form-group">
@@ -488,8 +502,7 @@
 								<input type="submit" value="등록" class="btn btn-primary">
 							</div>
 							<input type="hidden" name="postId" value="${detailPost.postId }">
-							<input type="hidden" name="memberId"
-								value="${sessionScope.memberId }">
+							<input type="hidden" name="memberId" value="${sessionScope.memberId }">
 						</form>
 					</div>
 				</div>

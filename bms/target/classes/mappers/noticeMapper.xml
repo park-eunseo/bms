@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="notice">
+	<insert id="insertNotice" parameterType="NoticeDto">
+		INSERT
+				NOTICE(
+					TO_ID,
+					FROM_ID,
+					POST_ID,
+					CONTENT,
+					CATEGORY,
+					REG_DATE
+				)
+		VALUES(
+			#{toId},
+			#{fromId},
+			#{postId},
+			<if test='category == "like" || category == "reply"'>
+				(SELECT TITLE FROM POST WHERE POST_ID = #{postId}),
+			</if>
+			<if test='category == "re_reply"'>
+				(SELECT CONTENT FROM REPLY WHERE REPLY_ID = #{replyId}),
+			</if>
+			#{category},
+			NOW()
+		)
+	</insert>
+	
+	<select id="selectNoticeList" parameterType="String" resultType="NoticeDto"> <!-- 게시글&댓글, 대댓글로 나누기 -->
+		SELECT
+				(SELECT NICKNAME FROM MEMBER WHERE ID = N.TO_ID) 	TO_ID,
+				(SELECT NICKNAME FROM MEMBER WHERE ID = N.FROM_ID) 	FROM_ID,
+				N.POST_ID 											POST_ID,
+				N.CONTENT											CONTENT,
+				N.CATEGORY											CATEGORY,
+				N.REG_DATE											REG_DATE
+		FROM
+				NOTICE N
+				       JOIN POST P
+				       ON N.POST_ID = P.POST_ID
+		WHERE
+				TO_ID = #{id}
+		ORDER BY
+				N.REG_DATE DESC
+	</select>
+</mapper>

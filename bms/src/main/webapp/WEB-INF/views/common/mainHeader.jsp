@@ -74,7 +74,7 @@
 		<!-- Search -->
 		<div class="navbar-collapse collapse" id="navbarCollapse">
 			<div>
-				<c:if test="${sessionScope.role eq 'client' }">
+				<c:if test="${sessionScope.role ne 'admin' }">
 					<!-- 전체 회원 범위 -->
 					<div class="input-group" style="box-shadow: none">
 						<select id="searchKeyword" name="searchKeyword" class="form-select selectBox form-select-sm" style="box-shadow: none">

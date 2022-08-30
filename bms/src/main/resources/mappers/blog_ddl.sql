@@ -121,3 +121,18 @@ CREATE TABLE MANAGER(
 
 select * from manager;
 INSERT INTO MANAGER VALUES("admin", "admin11!");
+
+CREATE TABLE NOTICE (
+	NOTICE_ID INT AUTO_INCREMENT PRIMARY KEY,
+    TO_ID 	  VARCHAR(20), -- 알림받은 아이디
+    FROM_ID	  VARCHAR(20), -- 알림 보낸 아이디
+    CONTENT	  VARCHAR(50),
+	POST_ID	  INT, -- 해당 게시글 ID, 알림 클릭 시 그 게시글로 이동할 수 있도록
+    CATEGORY  VARCHAR(20), -- 1) 좋아요 누름으로써 생긴 알림 2) 내 게시글에 누군가 단 댓글 알림 3) 내 댓글에 누군가 단 댓글 알림
+    REG_DATE  DATETIME DEFAULT CURRENT_TIMESTAMP -- 알림 보낸 시간
+);
+
+select * from NOTICE;
+insert notice(to_id, from_id, content)
+values('qkswl', 'dlcnd', (select title from notice n join post p on n.post_id = p.post_id where n.post_id = 41));
+DELETE FROM NOTICE WHERE NOTICE_ID = 1;

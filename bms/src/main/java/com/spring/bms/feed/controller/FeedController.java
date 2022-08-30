@@ -36,6 +36,8 @@ import com.spring.bms.feed.dto.ReplyDto;
 import com.spring.bms.feed.service.FeedService;
 import com.spring.bms.manage.dto.LikeMemberDto;
 import com.spring.bms.manage.dto.LikePostDto;
+import com.spring.bms.notice.controller.NoticeController;
+import com.spring.bms.notice.dto.NoticeDto;
 
 import net.coobird.thumbnailator.Thumbnails;
 
@@ -265,14 +267,15 @@ public class FeedController {
 	}
 	
 	@PostMapping("/writeReply") // 댓글 작성
-	public ResponseEntity<Object> writeReply(HttpServletRequest request, ReplyDto replyDto) throws Exception {
+	public ResponseEntity<Object> writeReply(HttpServletRequest request, ReplyDto replyDto,
+											@RequestParam("id") String id) throws Exception {
 		feedService.writeReply(replyDto);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
 		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
-								"/feed/detailPost?postId=" + replyDto.getPostId() + "';</script>";
+								"/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -291,14 +294,15 @@ public class FeedController {
 	}
 
 	@PostMapping("/modifyReply")
-	public ResponseEntity<Object> modifyReply(HttpServletRequest request, ReplyDto replyDto) throws Exception{
+	public ResponseEntity<Object> modifyReply(HttpServletRequest request, ReplyDto replyDto,
+										@RequestParam("id") String id) throws Exception{
 		feedService.modifyReply(replyDto);
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
 		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
-								"/feed/detailPost?postId=" + replyDto.getPostId() + "';</script>";
+								"/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
