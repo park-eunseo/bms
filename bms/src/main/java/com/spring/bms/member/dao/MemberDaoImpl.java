@@ -61,4 +61,20 @@ public class MemberDaoImpl implements MemberDao {
 		return isAdmin;
 	}
 
+	@Override
+	public boolean selectMemberCheck(MemberDto memberDto) throws Exception {
+		boolean isMember = false;
+		
+		if(sqlSession.selectOne("member.selectMemberCheck", memberDto) != null) { // 회원 비밀번호 변경을 위한 정보 찾기
+			isMember = true;
+		}
+		
+		return isMember;
+	}
+
+	@Override
+	public void updateNewPassword(MemberDto memberDto) throws Exception {
+		sqlSession.update("member.updateNewPassword", memberDto);
+	}
+
 }

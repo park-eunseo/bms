@@ -11,5 +11,7 @@ public interface MemberDao {
 	public void updateMember(MemberDto memberDto) throws Exception;
 	public void deleteMember(String id) throws Exception;
 	public boolean selectAdminCheck(MemberDto memberDto) throws Exception;
+	public boolean selectMemberCheck(MemberDto memberDto) throws Exception;
+	public void updateNewPassword(MemberDto memberDto) throws Exception;
 	
 }

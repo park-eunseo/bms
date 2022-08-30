@@ -93,6 +93,7 @@
  		
  		function emailAlert(){
  			var email = document.getElementById("email")
+ 			var mailRegExp = RegExp(/^[A-Za-z0-9_\.\-]+@[A-Za-z0-9\-]+\.[A-Za-z0-9\-]+/)
  			
  			if(!mailRegExp.test(email.value)){
  				document.getElementById("emailAlert").innerText = "이메일을 다시 입력해 주세요."
@@ -141,11 +142,11 @@
  				return false
  			}
  			
- 			if(pw2.value == "" || !pwRegExp.test(pw.value)) {
+ 			if(pw2.value == "" || !pwRegExp.test(pw.value) || pw.value != pw2.value) {
  				document.getElementById("pwAlert2").innerText = "비밀번호 확인은 필수입니다."
  				pw2.focus()
  				return false
- 			}
+ 			} 
  			
  			if(name.value == "" || !nameRegExp.test(name.value)) {
  				document.getElementById("nameAlert").innerText = "이름은 한글로 입력해 주세요."
@@ -184,7 +185,7 @@
  	 			return false
  			}
  			
- 			if(termss.checked == false ){
+ 			if(terms.checked == false ){
  				document.getElementById("termsAlert").innerText = "약관에 동의해야 가입할 수 있습니다."
  				termss.focus()
  				return false
@@ -260,20 +261,22 @@
  		
 		var codeNum;
 		
- 		function mailCheckBtn(){
+ 		function mailSendBtn(){
+ 			var id = $("#id").val()
  			var email = $("#email").val()
 			$("#sendMail").attr('disabled',true);
  			
  			$.ajax({
  				type:"get",
- 				url:"${contextPath}/member/mailCheck?email=" + email,
- 				async: false,
+ 				url:"${contextPath}/member/newPassword?id=" + id + "&email=" + email,
  				success:function(data){
- 					$("#checkNumber").css("display", "inline")
- 		 			$("#emailCheck").css("display", "")
- 		 			
- 		 			codeNum = data
- 		 			alert("해당 이메일로 인증번호가 발송되었습니다.")
+ 					if(data){
+ 						$("#checkNumber").css("display", "inline")
+	 		 			$("#emailCheck").css("display", "")
+	 		 			
+	 		 			codeNum = data
+	 		 			alert("해당 이메일로 인증번호가 발송되었습니다.")
+ 					}
  				}
  			})	
  		}
@@ -373,7 +376,7 @@
 								<input type="email" class="form-control email" id="email" name="email"
 									onblur="emailAlert()" placeholder="sim8log@naver.com" />
 								<button type="button" class="btn btn-primary"
-									onclick="mailCheckBtn()" id="sendMail"
+									onclick="mailSendBtn()" id="sendMail"
 									style="padding: 0.5rem; font-size: 0.5rem; display: inline-block;">인증번호 전송</button>
 								<small id="emailAlert" style="color: red"></small>
 								<!-- 번호 맞는지 확인 -->

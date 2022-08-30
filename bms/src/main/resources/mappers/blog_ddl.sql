@@ -15,6 +15,7 @@ CREATE TABLE MEMBER (
 );
 
 select * from member;
+update member set email = '0917283@naver.com' where id = 'dlcnd';
 delete from member where id in ('dlcnd111', 'dlcnd1111', 'dlcnd2', 'dlcnd3', 'qkswl11');
 
 CREATE TABLE POST (

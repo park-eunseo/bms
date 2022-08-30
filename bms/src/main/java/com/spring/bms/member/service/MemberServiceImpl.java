@@ -47,4 +47,14 @@ public class MemberServiceImpl implements MemberService {
 	public boolean adminCheck(MemberDto memberDto) throws Exception {
 		return memberDao.selectAdminCheck(memberDto);
 	}
+
+	@Override
+	public boolean getMemberCheck(MemberDto memberDto) throws Exception {
+		return memberDao.selectMemberCheck(memberDto);
+	}
+
+	@Override
+	public void updateNewPassword(MemberDto memberDto) throws Exception {
+		memberDao.updateNewPassword(memberDto);
+	}
 }

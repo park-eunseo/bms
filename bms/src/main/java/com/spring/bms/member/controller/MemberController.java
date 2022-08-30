@@ -112,7 +112,6 @@ public class MemberController {
 	
 	@GetMapping("/mailCheck")
 	public ResponseEntity<Object> mailCheck(@RequestParam("email") String email) throws MessagingException{
-		System.out.println("컨트롤러 email: "+email);
 		return new ResponseEntity<Object>(mailCheckService.sendMail(email), HttpStatus.OK);
 	}
 	
@@ -294,5 +293,39 @@ public class MemberController {
 		return "member/forgotPassword";
 	}
 	
+	@PostMapping("/forgotPassword")
+	public  ResponseEntity<Object> forgotPassword(MemberDto memberDto) throws Exception {
+		boolean isCheck = memberService.getMemberCheck(memberDto);
+		
+		if(isCheck) { // true라면 해당되는 회원이 있다
+			return mailCheck(memberDto.getEmail());
+		} else {
+			return new ResponseEntity<Object>("", HttpStatus.OK);
+		}
+	}
 	
+	@PostMapping("/newPassword")
+	public  ModelAndView newPassword(String id) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("id", id);
+		mv.setViewName("member/newPassword");
+		
+		return mv;
+	}
+	
+	@PostMapping("/updatePassword")
+	public ResponseEntity<Object> updatePassword(HttpServletRequest request, MemberDto memberDto) throws Exception {
+		memberDto.setPassword(pwEncoder.encode(memberDto.getPassword()));
+		memberService.updateNewPassword(memberDto);
+			
+		String jsScript = "<script>"
+				+ "alert('비밀번호 변경이 완료되었습니다.');"
+				+ "location.href = '" + request.getContextPath() + "/member/login';"
+				+ "</script>";
+
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
 }

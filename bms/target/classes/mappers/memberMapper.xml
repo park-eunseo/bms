@@ -99,4 +99,22 @@
 		WHERE 
 					ID = #{id}
 	</delete>
+	
+	<select id="selectMemberCheck" parameterType="MemberDto" resultType="MemberDto">
+		SELECT	
+				*
+		FROM
+				MEMBER
+		WHERE
+				ID = #{id } AND EMAIL = #{email}
+	</select>
+	
+	<update id="updateNewPassword" parameterType="MemberDto">
+		UPDATE
+				MEMBER
+		SET
+				PASSWORD = #{password}
+		WHERE
+				ID = #{id}
+	</update>
 </mapper>

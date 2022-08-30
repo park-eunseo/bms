@@ -27,8 +27,8 @@ public class MailCheckService {
 		System.out.println("email:" + email);
 		String setFrom = "qkrmstj78@gmail.com";
 		String toMail = email;
-		String title = "심플로그 회원가입 이메일 인증 번호입니다.";
-		String content = "<p>심플로그를 방문해 주셔서 감사합니다</p>"
+		String title = "심플로그 이메일 인증 번호입니다.";
+		String content = "<p>심플로그를 방문해 주셔서 감사합니다.</p>"
 						+ "<p>심플로그 인증 번호: " + authNumber + "<p>"
 						+ "<p>해당 인증 번호를 확인란에 입력 후 확인 버튼을 눌러주세요.</p>";
 		
