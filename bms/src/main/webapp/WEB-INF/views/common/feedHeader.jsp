@@ -61,23 +61,39 @@
 			dataType : "json",
 			success : function(data){
 				var list = ""
-				$(data).each(function(key, value){
-					var category = value.category;
-					
+
+				if(data != ""){
+					$(data).each(function(key, value){
+							var category = value.category;
+						
+							list += "<li>";
+							list += "<div class='dropdown-item' style='margin-bottom: 0;'>";
+							list += "<a href='${contextPath}/feed/detailPost?id=" + memberId +"&postId=" + value.postId +"' style='color: black;'>";
+							if(category == "like"){ list += value.fromId + " 님이 ["+ value.content +"] 글에 좋아요를 눌렀습니다." }
+							else if(category == "reply"){ list += value.fromId + " 님이 ["+ value.content +"] 글에 댓글을 남겼습니다." }
+							else if(category == "re_reply"){ list += value.fromId + " 님이 ["+ value.content +"] 댓글에 답댓글을 남겼습니다." };
+							list += "</a>";
+							list += "<small style='display: block;'>" + timeForToday(value.regDate) + "</small>";
+							list += "</div>";
+							list += "<hr style='margin: auto;'>";
+							list += "</li>";
+					});
+				} else {
 					list += "<li>";
 					list += "<div class='dropdown-item' style='margin-bottom: 0;'>";
-					list += "<a href='${contextPath}/feed/detailPost?id=" + memberId +"&postId=" + value.postId +"' style='color: black;'>";
-					if(category == "like"){ list += value.fromId + " 님이 ["+ value.content +"] 글에 좋아요를 눌렀습니다." }
-					else if(category == "reply"){ list += value.fromId + " 님이 ["+ value.content +"] 글에 댓글을 남겼습니다." }
-					else if(category == "re_reply"){ list += value.fromId + " 님이 ["+ value.content +"]에 답댓글을 남겼습니다." };
-					list += "</a>";
-					list += "<small style='display: block;'>" + timeForToday(value.regDate) + "</small>";
+					list += "<span >새 알림이 없습니다.</span>"
 					list += "</div>";
-					list += "<hr style='margin: auto;'>";
 					list += "</li>";
-				});
-				
+				}
 				$("#noticeList").html(list)
+			}
+		})
+		
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/notice/noticeCount?id=" + memberId,
+			success : function(data){
+				$("#noticeCount").text(data)
 			}
 		})
 	})
@@ -137,9 +153,9 @@
 				<!-- 알림 -->
 				<button type="button" class="btn rounded-pill headerBtn"
 					data-bs-toggle="dropdown" aria-expanded="false">
-					<span class="tf-icons bx bxs-bell"></span> <span
-						class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20"
-						style="top: -8px; margin-left: -5px;">4</span>
+					<span class="tf-icons bx bxs-bell"></span> 
+					<span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20"
+						style="top: -8px; margin-left: -5px;" id="noticeCount">0</span>
 				</button>
 				<ul class="dropdown-menu" style="left: auto; position: absolute; right: 0;" id="noticeList">
 

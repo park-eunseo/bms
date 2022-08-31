@@ -34,7 +34,7 @@
 				N.POST_ID 											POST_ID,
 				N.CONTENT											CONTENT,
 				N.CATEGORY											CATEGORY,
-				N.REG_DATE											REG_DATE
+				date_format(N.REG_DATE, '%Y-%m-%d %H:%i') 			REG_DATE
 		FROM
 				NOTICE N
 				       JOIN POST P
@@ -43,5 +43,14 @@
 				TO_ID = #{id}
 		ORDER BY
 				N.REG_DATE DESC
+	</select>
+	
+	<select id="selectNoticeCount" parameterType="String" resultType="int">
+		SELECT
+				COUNT(*)
+		FROM
+				NOTICE
+		WHERE 	
+				TO_ID = #{id}
 	</select>
 </mapper>

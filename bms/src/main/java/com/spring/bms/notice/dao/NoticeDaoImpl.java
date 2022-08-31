@@ -24,4 +24,9 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sqlSession.selectList("notice.selectNoticeList", id);
 	}
 
+	@Override
+	public int selectNoticeCount(String id) throws Exception {
+		return sqlSession.selectOne("notice.selectNoticeCount", id);
+	}
+
 }

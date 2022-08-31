@@ -160,7 +160,7 @@
 		}
 	}
 	
-	function replyCheck(){  // 작성자에게 알림
+	function replyCheck(action){  // 작성자에게 알림
 		var content = document.getElementById("content")	
 		
 		if(memberId == null || memberId == 'null'){
@@ -176,7 +176,7 @@
 		
 		replyCount()
 		
-		if(memberId != '${detailPost.memberId}'){ // 본인이 본인 게시글에 단 댓글은 알림 X
+		if(memberId != '${detailPost.memberId}' && action != 'modify'){ // 본인이 본인 게시글에 단 댓글과 수정한 댓글은 알림 X
 			$.ajax({
 				type : "post",
 				url : "${contextPath}/notice/addNotice?fromId=" + memberId + "&toId=${detailPost.memberId}&postId=${detailPost.postId}&category=reply"
@@ -197,6 +197,14 @@
 		}	
 		
 		replyCount()
+		
+		if(memberId != '${detailPost.memberId}'){ // 본인이 본인 게시글에 단 댓글은 알림 X
+			$.ajax({
+				type : "post",
+				url : "${contextPath}/notice/addNotice?fromId=" + memberId 
+						+ "&toId=${detailPost.memberId}&postId=${detailPost.postId}&replyId=" + replyId + "&category=re_reply"
+			})
+		}
 		
 	}
 	
@@ -224,7 +232,7 @@
 		
 		$("#replySetting" + replyId).hide() // 댓글 수정, 삭제 버튼 숨기고
 
-		var replyHtml = "<form action='${contextPath}/feed/modifyReply?id=${detailPost.memberId}' onsubmit='return replyCheck()' method='post'>"
+		var replyHtml = "<form action='${contextPath}/feed/modifyReply?id=${detailPost.memberId}' onsubmit='return replyCheck('modify')' method='post'>"
 					+ "<input type='text' class='form-control' style='margin-top: 0.5rem;' name='content' id='content' value='" + content +"'>"
 					+ "<input type='hidden' name='replyId' value='" + replyId +"'>"
 					+ "<input type='hidden' name='postId' value='" + postId +"'>"

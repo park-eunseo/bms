@@ -23,4 +23,9 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectNoticeList(id);
 	}
 
+	@Override
+	public int getNoticeCount(String id) throws Exception {
+		return noticeDao.selectNoticeCount(id);
+	}
+
 }

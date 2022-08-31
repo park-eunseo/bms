@@ -37,4 +37,10 @@ public class NoticeController {
 		}
 		return noticeList;
 	}
+	
+	@ResponseBody
+	@GetMapping("/noticeCount")
+	public int getNoticeCount(String id) throws Exception {
+		return noticeService.getNoticeCount(id);
+	}
 }

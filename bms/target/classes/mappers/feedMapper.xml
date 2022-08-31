@@ -235,7 +235,8 @@
 				ON R.MEMBER_ID = M.ID
 		WHERE
 				POST_ID = #{postId}
-				
+		ORDER BY
+				R.REG_DATE ASC
 	</select>
 	
 	<select id="selectCheckTopReply" parameterType="ReplyDto" resultType="ReplyDto">

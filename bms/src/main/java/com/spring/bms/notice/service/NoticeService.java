@@ -8,5 +8,6 @@ public interface NoticeService {
 
 	public void addNotice(NoticeDto noticeDto) throws Exception;
 	public List<NoticeDto> getNoticeList(String id) throws Exception;
+	public int getNoticeCount(String id) throws Exception;
 
 }
