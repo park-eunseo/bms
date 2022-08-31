@@ -40,7 +40,20 @@
 	
 	<insert id="insertMember" parameterType="MemberDto">
 		INSERT INTO 
-					MEMBER
+					MEMBER(
+					 	ID,
+					 	PASSWORD,
+					 	NAME,
+					 	TEL,
+					 	EMAIL,
+					 	BIRTH,
+					 	GENDER,
+					 	PROFILE_NAME,
+					 	BLOG_NAME,
+					 	NICKNAME,
+					 	INTRO,
+					 	REG_DATE
+					)
 		VALUES(
 				#{id},
 				#{password},

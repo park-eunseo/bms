@@ -42,17 +42,20 @@
 
         const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
         if (betweenTime < 1) return '방금 전';
-        if (betweenTime < 60) {
-            return betweenTime + "분 전";
-        }
+        if (betweenTime < 60) {  return betweenTime + "분 전"; }
 
         const betweenTimeHour = Math.floor(betweenTime / 60);
-        if (betweenTimeHour < 24) {
-            return betweenTimeHour + "시간 전";
-        }
+        if (betweenTimeHour < 24) { return betweenTimeHour + "시간 전"; }
 
         return value;
- }
+ 	}	
+	
+	function noticeClick(postId){ // 알림 클릭 시 제거
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/notice/deleteNotice?toId=" + memberId + "&postId=" + postId
+		})
+	}
 	
 	$().ready(function(){
 		$.ajax({
@@ -68,7 +71,8 @@
 						
 							list += "<li>";
 							list += "<div class='dropdown-item' style='margin-bottom: 0;'>";
-							list += "<a href='${contextPath}/feed/detailPost?id=" + memberId +"&postId=" + value.postId +"' style='color: black;'>";
+							list += "<a href='${contextPath}/feed/detailPost?id=" + memberId +"&postId=" + value.postId +"' style='color: black;' ";
+							list += "onclick='noticeClick(" + value.postId + ")'>";
 							if(category == "like"){ list += value.fromId + " 님이 ["+ value.content +"] 글에 좋아요를 눌렀습니다." }
 							else if(category == "reply"){ list += value.fromId + " 님이 ["+ value.content +"] 글에 댓글을 남겼습니다." }
 							else if(category == "re_reply"){ list += value.fromId + " 님이 ["+ value.content +"] 댓글에 답댓글을 남겼습니다." };

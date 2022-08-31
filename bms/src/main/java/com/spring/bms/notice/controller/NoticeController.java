@@ -43,4 +43,9 @@ public class NoticeController {
 	public int getNoticeCount(String id) throws Exception {
 		return noticeService.getNoticeCount(id);
 	}
+	
+	@GetMapping("/deleteNotice")
+	public void deleteNoticr(NoticeDto noticeDto) throws Exception {
+		noticeService.deleteNotice(noticeDto);
+	}
 }

@@ -268,7 +268,7 @@
  			
  			$.ajax({
  				type:"get",
- 				url:"${contextPath}/member/newPassword?id=" + id + "&email=" + email,
+ 				url:"${contextPath}/member/mailCheck?email=" + email,
  				success:function(data){
  					if(data){
  						$("#checkNumber").css("display", "inline")

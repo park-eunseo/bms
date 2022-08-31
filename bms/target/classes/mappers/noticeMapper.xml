@@ -53,4 +53,14 @@
 		WHERE 	
 				TO_ID = #{id}
 	</select>
+	
+	<delete id="deleteNotice" parameterType="NoticeDto">
+		DELETE FROM 
+					NOTICE
+		WHERE
+					NOTICE_ID IN (SELECT N.NOTICE_ID
+								  FROM (SELECT 	* 
+								  		FROM NOTICE
+								  		WHERE TO_ID = #{toId} AND POST_ID = #{postId}) AS N )
+	</delete>
 </mapper>

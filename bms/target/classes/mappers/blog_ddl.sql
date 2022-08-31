@@ -132,7 +132,7 @@ CREATE TABLE NOTICE (
     REG_DATE  DATETIME DEFAULT CURRENT_TIMESTAMP -- 알림 보낸 시간
 );
 
-select * from NOTICE;
+select * from NOTICE;                    
 insert notice(to_id, from_id, content)
 values('qkswl', 'dlcnd', (select title from notice n join post p on n.post_id = p.post_id where n.post_id = 41));
 DELETE FROM NOTICE WHERE NOTICE_ID = 5;

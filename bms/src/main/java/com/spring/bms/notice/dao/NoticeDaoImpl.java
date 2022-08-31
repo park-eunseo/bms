@@ -29,4 +29,9 @@ public class NoticeDaoImpl implements NoticeDao {
 		return sqlSession.selectOne("notice.selectNoticeCount", id);
 	}
 
+	@Override
+	public void deleteNotice(NoticeDto noticeDto) throws Exception {
+		sqlSession.delete("notice.deleteNotice", noticeDto);
+	}
+
 }

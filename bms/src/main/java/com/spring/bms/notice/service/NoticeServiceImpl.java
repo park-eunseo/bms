@@ -28,4 +28,9 @@ public class NoticeServiceImpl implements NoticeService {
 		return noticeDao.selectNoticeCount(id);
 	}
 
+	@Override
+	public void deleteNotice(NoticeDto noticeDto) throws Exception {
+		noticeDao.deleteNotice(noticeDto);
+	}
+
 }

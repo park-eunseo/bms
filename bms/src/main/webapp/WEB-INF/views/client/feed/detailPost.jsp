@@ -184,7 +184,7 @@
 		}
 	}
 	
-	function re_replyCheck(replyId){ // 댓글 입력값 체크 후 폼 이동
+	function re_replyCheck(replyId, replyMemberId){ // 댓글 입력값 체크 후 폼 이동(replyId: 상위 댓글 ID,replyMemberId: 상위 댓글 회원 ID)
 		if(memberId == null || memberId == 'null'){
 			alert("로그인 후 이용 가능합니다.")
 			location.href = "${contextPath}/member/login"
@@ -198,14 +198,22 @@
 		
 		replyCount()
 		
-		if(memberId != '${detailPost.memberId}'){ // 본인이 본인 게시글에 단 댓글은 알림 X
+		// 본인이 본인 게시글에 단 댓글 알림 X
+		if(memberId != '${detailPost.memberId}'){ 
+			// 답댓글 단 상위 댓글에게 답댓글 알림
 			$.ajax({
 				type : "post",
 				url : "${contextPath}/notice/addNotice?fromId=" + memberId 
-						+ "&toId=${detailPost.memberId}&postId=${detailPost.postId}&replyId=" + replyId + "&category=re_reply"
+						+ "&toId=" + replyMemberId +"&postId=${detailPost.postId}&replyId=" + replyId + "&category=re_reply"
+			})
+			
+			// 답댓글 단 작성자에게 댓글 알림
+			$.ajax({
+				type : "post",
+				url : "${contextPath}/notice/addNotice?fromId=" + memberId 
+						+ "&toId=${detailPost.memberId}&postId=${detailPost.postId}&replyId=" + replyId + "&category=reply"
 			})
 		}
-		
 	}
 	
 	function re_reply(replyId){ // 답글 버튼 누르면 입력란 보이게
@@ -428,7 +436,7 @@
 												<div class="comment-form-wrap"
 													id="re_reply${reply2.replyId }" style="display: none;">
 													<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
-														onsubmit="return re_replyCheck(${reply2.replyId })"
+														onsubmit="return re_replyCheck('${reply2.replyId }', '${reply2.memberId }')"
 														method="post" class="bg-light">
 														<div class="form-group">
 															<textarea name="content" id="reContent${reply2.replyId }"
@@ -457,7 +465,7 @@
 											<div class="comment-form-wrap"
 												id="re_reply${reply1.replyId }" style="display: none;">
 												<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
-													onsubmit="return re_replyCheck(${reply1.replyId })"
+													onsubmit="return re_replyCheck('${reply1.replyId }', '${reply1.memberId }')"
 													method="post" class="bg-light">
 													<div class="form-group">
 														<textarea name="content" id="reContent${reply1.replyId }"
