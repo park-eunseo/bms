@@ -45,7 +45,6 @@
 .comment {
 	text-align: justify;
 	color: black;
-	font-weight: 200;
 	margin-bottom: 0px;
 }
 
@@ -92,29 +91,106 @@
 }
 
 .noticeHeader {
-	background-color: #cee5ee;
+	background-color: #90cbf0;
 	padding: 15px;
 	font-size: larger;
 }
 
 .noticeBox {
 	margin-bottom: 10px;
-	padding: 10px;
+	padding: 8px;
+	color: #525252;
+	display: flex;
+	justify-content: space-between;
+}
+
+.noticeTime {
+	display: block;
+	font-size: 10px;
+	color: lightslategray;
+}
+
+.noNotice {
+	text-align: -webkit-center;
+	margin-top: 1rem;
+	color: gray;
 }
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
 	var memberId = '<%=(String) session.getAttribute("memberId")%>'
 	
+	function timeForToday(value) { // 날짜 계산, 알림이 몇 분 전, 몇 시간 전 도착인지 이외는 날짜 표시
+        const today = new Date();
+        const timeValue = new Date(value);
+
+        const betweenTime = Math.floor((today.getTime() - timeValue.getTime()) / 1000 / 60);
+        if (betweenTime < 1) return '방금 전';
+        if (betweenTime < 60) {  return betweenTime + "분 전"; }
+
+        const betweenTimeHour = Math.floor(betweenTime / 60);
+        if (betweenTimeHour < 24) { return betweenTimeHour + "시간 전"; }
+
+        return value;
+ 	}	
+	
+	function noticeClick(postId){ // 알림 클릭 시 제거
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/notice/deleteNotice?toId=" + memberId + "&postId=" + postId
+		})
+	}
+	
 	$().ready(function(){
 		$("#currentBlock${currentPage}").addClass("active")	
+
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/notice/noticeList?id=" + memberId,
+			dataType : "json",
+			success : function(data){
+				var list = ""
+
+				if(data != ""){
+					$(data).each(function(key, value){
+							var category = value.category;
+							
+							list += "<div class='alert alert-secondary noticeBox' role='alert'>";
+							list += "<div>";
+							list += "<a href='${contextPath}/feed/detailPost?id=" + memberId +"&postId=" + value.postId + "'";
+							list += "onclick='noticeClick(" + value.postId + ")' style='font-size: medium;'>";
+							if(category == "like"){ list += value.fromId + " 님이 글에 좋아요를 눌렀습니다." }
+							else if(category == "reply"){ list += value.fromId + " 님이 댓글을 남겼습니다." }
+							else if(category == "re_reply"){ list += value.fromId + " 님이 답댓글을 남겼습니다." };
+							list += "</a>";
+							list += "<small class='noticeTime'>" + timeForToday(value.regDate) + "</small>";
+							list += "</div>";
+							list += "<div>";
+							list += "<button type='button' onclick='noticeClick(" + value.postId + ")' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button>";
+							list += "</div>";
+							list += "</div>";
+					});
+				} else {
+					list += "<div class='noNotice'>새 알림이 없습니다.</div>"
+				}
+				$("#noticeList").html(list)
+			}
+		})
+		
+		$.ajax({
+			type : "get",
+			url : "${contextPath}/notice/noticeCount?id=" + memberId,
+			success : function(data){
+				$("#noticeCount").text(data)
+			}
+		})
 	})
 </script>
 </head>
 <body>
 	<div class="content-wrapper">
 		<div class="container-xxl container-p-y" style="width: 900px;">
-			<h6 class="comment"># 추천 게시글 </h6>
+			<h6 class="comment"># 추천 게시글</h6>
 			<br>
 			<div class="card-group mb-5">
 				<c:forEach var="list" items="${randomList }">
@@ -254,7 +330,13 @@
 						</c:if>
 					</div>
 				</div>
-
+				<div class="card-body" style="width: 20rem;">
+					<div class="card" style="min-height: 20rem;">
+						<span class="card-header noticeHeader">내 소식</span>
+						<div class="card-body" style="padding: 12px;" id="noticeList">
+						</div>
+					</div>
+				</div>
 			</div>
 		</c:if>
 	</div>

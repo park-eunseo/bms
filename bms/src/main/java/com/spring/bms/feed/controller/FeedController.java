@@ -144,7 +144,8 @@ public class FeedController {
 		postDto.setPostPrivate(multipartRequest.getParameter("postPrivate"));
 
 		Iterator<String> file = multipartRequest.getFileNames();
-		String filePath = "C:\\thumbnailFile\\";
+//		String filePath = "C:\\thumbnailFile\\";
+		String filePath = "/var/lib/tomcat9/thumbnailFile/"; // linux
 
 		if (file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
 			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
@@ -207,7 +208,8 @@ public class FeedController {
 		postDto.setPostPrivate(multipartRequest.getParameter("postPrivate"));
 
 		Iterator<String> file = multipartRequest.getFileNames();
-		String filePath = "C:\\thumbnailFile\\";
+//		String filePath = "C:\\thumbnailFile\\";  window
+		String filePath = "/var/lib/tomcat9/thumbnailFile/"; // linux
 
 		if (file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
 			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
@@ -315,7 +317,9 @@ public class FeedController {
 
 		JsonObject json = new JsonObject();
 
-		String filePath = "C:\\postFile\\";
+//		String filePath = "C:\\postFile\\";				//window
+		String filePath = "/var/lib/tomcat9/postFile/";	// linux
+		
 		String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
 
 		File file = new File(filePath + fileName);
@@ -339,7 +343,8 @@ public class FeedController {
 	public void thumbnails(@RequestParam("thumbnail") String thumbnailName, HttpServletResponse response)
 			throws IOException {
 		OutputStream out = response.getOutputStream(); // 데이터를 출력할 메서드
-		String filePath = "C:\\thumbnailFile\\" + thumbnailName;
+//		String filePath = "C:\\thumbnailFile\\" + thumbnailName;	   // window
+		String filePath = "/var/lib/tomcat9/thumbnailFile/" + thumbnailName; // linux
 
 		File file = new File(filePath);
 		if (file.exists()) { // 받아온 파일이 존재한다면

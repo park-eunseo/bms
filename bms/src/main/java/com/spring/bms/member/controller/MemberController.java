@@ -64,6 +64,7 @@ public class MemberController {
 		
 		Iterator<String> file = multipartRequest.getFileNames();
 		String filePath = "C:\\profile\\";
+//		String filePath = "/var/lib/tomcat9/profile/";
 		
 		if(file.hasNext()) { // 파일을 읽어올 요소가 있는지 확인
 			MultipartFile multipartFile = multipartRequest.getFile(file.next()); // 그 요소를 가져온다
@@ -200,6 +201,7 @@ public class MemberController {
 		
 		Iterator<String> file = multipartRequest.getFileNames();
 		String filePath = "C:\\profile\\";
+//		String filePath = "/var/lib/tomcat9/profile/";
 		
 		if(file.hasNext()) {
 			MultipartFile multipartFile = multipartRequest.getFile(file.next());
@@ -253,8 +255,9 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		
 		if(!session.getAttribute("memberProfile").equals("basicImg.jpg")) {
-			new File("C:\\profile\\" + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
-		}
+			new File("/var/lib/tomcat9/profile/" + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+		} // /var/lib/tomcat9/profile/ : libux, C:\\profile\\ : window
+		 
 		
 		memberService.deleteMember(id);
 		
@@ -274,7 +277,8 @@ public class MemberController {
 	@GetMapping("/thumbnails")
 	public void thumbnails(@RequestParam("profileName") String profileName, HttpServletResponse response) throws IOException {
 		OutputStream out = response.getOutputStream();	 // 데이터를 출력할 메서드
-		String filePath = "C:\\profile\\" + profileName;
+		String filePath = "C:\\profile\\" + profileName; // window 경로
+//		String filePath = "/var/lib/tomcat9/profile/" + profileName; // linux
 		
 		File file = new File(filePath);
 		if(file.exists()) { // 받아온 파일이 존재한다면

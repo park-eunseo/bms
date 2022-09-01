@@ -86,7 +86,7 @@ select * from post where post_id = (select post_id from reply where member_id = 
 CREATE TABLE likePost (
     like_post_id INT AUTO_INCREMENT PRIMARY KEY,
 	member_id 	 VARCHAR(20), -- 자기자신 ID
-    post_id 	 VARCHAR(20), -- 좋아요 누른 게시글 ID
+    post_id 	 INT, -- 좋아요 누른 게시글 ID
     FOREIGN KEY (member_id)
         REFERENCES member (id)
         ON DELETE CASCADE,

@@ -14,7 +14,7 @@
 
 	<!-- DailyFile Appenders -->
 	<appender name="dailyFileAppender" class="org.apache.log4j.DailyRollingFileAppender">
-		<param name="File" value="C:\\bms_logs\\bms.log" />		<!-- 윈도우 개발용 C:\\bms_logs\\bms.log -->
+		<param name="File" value="/var/lib/tomcat9/bms.log" />		<!-- 윈도우 개발용 C:\\bms_logs\\bms.log -->
 																	<!-- 리눅스용 /var/lib/tomcat9/bms.log -->
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="DatePattern" value="'.'yyyy-MM-dd" />

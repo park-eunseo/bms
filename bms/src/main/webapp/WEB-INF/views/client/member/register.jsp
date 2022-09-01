@@ -118,9 +118,9 @@
  			var tel = document.inputForm.tel
  			var email = document.inputForm.email
  			var birth = document.inputForm.birth
- 			var termss =  document.inputForm.termss
+ 			var terms = document.inputForm.terms
  			var intro = document.inputForm.intro
- 			
+
  			var idMsg = document.getElementById("idAlert")
  			
  			if(id.value == "" || !idRegExp.test(id.value)) {
@@ -185,9 +185,9 @@
  	 			return false
  			}
  			
- 			if(terms.checked == false ){
+ 			if(terms.checked == false){
  				document.getElementById("termsAlert").innerText = "약관에 동의해야 가입할 수 있습니다."
- 				termss.focus()
+ 				terms.focus()
  				return false
  			}	
  		}
@@ -468,11 +468,11 @@
 							</div>
 
 							<div class="mt-3">
-								<input class="form-check-input" type="checkbox" id="terms"
-									style="box-shadow: none;" />
+								<input class="form-check-input" type="checkbox" id="terms" name="terms" style="box-shadow: none;" />
 								<button class="btn termsBtn" type="button"
 									data-bs-toggle="offcanvas" data-bs-target="#offcanvasBottom"
 									aria-controls="offcanvasBottom">개인정보 수집 및 이용 동의(필수)</button>
+								<br><small id="termsAlert" style="color: red"></small>
 								<div class="offcanvas offcanvas-bottom" tabindex="-1"
 									id="offcanvasBottom" aria-labelledby="offcanvasBottomLabel"
 									aria-hidden="true" style="visibility: hidden; height: 50%;">

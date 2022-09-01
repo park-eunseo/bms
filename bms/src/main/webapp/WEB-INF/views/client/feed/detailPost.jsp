@@ -184,7 +184,7 @@
 		}
 	}
 	
-	function re_replyCheck(replyId, replyMemberId){ // 댓글 입력값 체크 후 폼 이동(replyId: 상위 댓글 ID,replyMemberId: 상위 댓글 회원 ID)
+	function re_replyCheck(replyId, replyMemberId){ // 댓글 입력값 체크 후 폼 이동(replyId: 상위 댓글 INDEX ID,replyMemberId: 상위 댓글 회원 ID)
 		if(memberId == null || memberId == 'null'){
 			alert("로그인 후 이용 가능합니다.")
 			location.href = "${contextPath}/member/login"
@@ -198,16 +198,19 @@
 		
 		replyCount()
 		
-		// 본인이 본인 게시글에 단 댓글 알림 X
-		if(memberId != '${detailPost.memberId}'){ 
+		// 상위 댓글 ID와 게시글 작성자 ID와 일치하다면 답댓글 알림 X 댓글 알림만
+		if(memberId != replyMemberId && '${detailPost.memberId}' != replyMemberId){	
 			// 답댓글 단 상위 댓글에게 답댓글 알림
 			$.ajax({
 				type : "post",
 				url : "${contextPath}/notice/addNotice?fromId=" + memberId 
 						+ "&toId=" + replyMemberId +"&postId=${detailPost.postId}&replyId=" + replyId + "&category=re_reply"
 			})
-			
-			// 답댓글 단 작성자에게 댓글 알림
+		}
+		
+		// 본인이 본인 게시글에 단 댓글 알림 X
+		if(memberId != '${detailPost.memberId}'){ 
+			// 답댓글 달린 글 작성자에게 댓글 알림
 			$.ajax({
 				type : "post",
 				url : "${contextPath}/notice/addNotice?fromId=" + memberId 
@@ -264,22 +267,23 @@
 	<div style="text-align: -webkit-center;">
 		<div class="col-lg-8 px-md-5 py-5"
 			style="width: 85%; margin-top: -20px; color: black;">
-			<div style="text-align-last: end;">
-				<div class="btn-group">
-					<button type="button" style="width: 2rem; height: 2rem;"
-						class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow"
-						data-bs-toggle="dropdown" aria-expanded="false">
-						<i class="bx bx-dots-vertical-rounded"></i>
-					</button>
-					<ul class="dropdown-menu dropdown-menu-end"
-						style="text-align-last: start; min-inline-size: auto;">
-						<li><a class="dropdown-item"
-							href="${contextPath }/feed/modifyPost?postId=${detailPost.postId}">수정하기</a></li>
-						<li><button class="dropdown-item" onclick="deletePost()">삭제하기</button></li>
-					</ul>
+			<c:if test="${sessionScope.memberId eq detailPost.memberId}">
+				<div style="text-align-last: end;">
+					<div class="btn-group">
+						<button type="button" style="width: 2rem; height: 2rem;"
+							class="btn btn-primary btn-icon rounded-pill dropdown-toggle hide-arrow"
+							data-bs-toggle="dropdown" aria-expanded="false">
+							<i class="bx bx-dots-vertical-rounded"></i>
+						</button>
+						<ul class="dropdown-menu dropdown-menu-end"
+							style="text-align-last: start; min-inline-size: auto;">
+							<li><a class="dropdown-item"
+								href="${contextPath }/feed/modifyPost?postId=${detailPost.postId}">수정하기</a></li>
+							<li><button class="dropdown-item" onclick="deletePost()">삭제하기</button></li>
+						</ul>
+					</div>
 				</div>
-			</div>
-			<div></div>
+			</c:if>
 			<div class="row pt-md-4" style="margin-top: -20px;">
 				<h4 class="category">[${detailPost.categoryTitle }]</h4>
 				<h2 class="mb-3"
