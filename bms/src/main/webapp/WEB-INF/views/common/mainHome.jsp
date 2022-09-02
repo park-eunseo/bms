@@ -304,6 +304,7 @@
 							</c:forEach>
 							<c:if test="${totalPostCount gt 0 }">
 								<div>
+									<hr>
 									<ul class="pagination pageBlock">
 										<c:if test="${startPageBlock gt 5 }">
 											<li class="page-item prev"><a class="page-link"

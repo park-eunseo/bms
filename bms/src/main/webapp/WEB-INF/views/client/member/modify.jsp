@@ -95,7 +95,7 @@
  		}
  		
  		function basicProfile(){ // 프로필 초기화
- 			document.getElementById("profileImg").src = "${contextPath }/member/thumbnails?profileName=basicImg.png"
+ 			document.getElementById("profileImg").src = "${contextPath }/member/thumbnails?profileName=basicImg.jpg"
  			document.getElementById("upload").disabled = true
  		}
  		

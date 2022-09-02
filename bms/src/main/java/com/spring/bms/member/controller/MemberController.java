@@ -213,12 +213,14 @@ public class MemberController {
 				multipartFile.transferTo(f);		
 				memberDto.setProfileName(fileName);		
 				
-				new File(filePath + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
+				if(!session.getAttribute("memberProfile").equals("basicImg.jpg")) { // 프로필 파일 수정 전 파일 삭제(기본 이미지라면 삭제 X)
+					new File(filePath + session.getAttribute("memberProfile")).delete();
+				} 
 			} else { // 파일이 비어있으면(프로필 수정을 안 한 것이므로 그대로)
 				memberDto.setProfileName((String) session.getAttribute("memberProfile"));		
 			}
 		} else {
-			memberDto.setProfileName("basicImg.png");
+			memberDto.setProfileName("basicImg.jpg");
 		}
 	
 		
