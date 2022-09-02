@@ -75,7 +75,7 @@ public class FeedController {
 		countMap.put("id", id);
 		countMap.put("sessionId", sessionId);
 		
-		if(category == null) {
+		if(category.equals("전체")) {
 			postMap.put("searchWord", searchWord);
 			countMap.put("searchWord", searchWord);
 		} else {
@@ -100,7 +100,7 @@ public class FeedController {
 			startPageBlock = 1;
 			endPageBlock = 0;
 		}		
-		
+
 		List<Map<String, Object>> postList = feedService.getPostList(postMap);
 		
 		for (Map<String, Object> list : postList) {
@@ -110,7 +110,7 @@ public class FeedController {
 		}
 
 		session.setAttribute("memberInfo", feedService.getOneMember(id)); 		// 해당 블로그 회원의 정보 select
-		session.setAttribute("postList", postList); 						// 해당 회원의 게시물 전체 select
+		session.setAttribute("postList", postList); 							// 해당 회원의 게시물 전체 select
 		session.setAttribute("categoryList", categoryService.getCategoryList(id));  // 해당 회원의 카테고리 전체 select
 		
 		mv.addAllObjects(postMap);

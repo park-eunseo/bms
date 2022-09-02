@@ -175,7 +175,7 @@
 		}
 		
 		replyCount()
-		
+
 		if(memberId != '${detailPost.memberId}' && action != 'modify'){ // 본인이 본인 게시글에 단 댓글과 수정한 댓글은 알림 X
 			$.ajax({
 				type : "post",

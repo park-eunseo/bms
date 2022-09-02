@@ -17,7 +17,7 @@
 		$.ajax({
 			data : data,
 			type : "POST",
-			url : "${contextPath}/blog/fileUpload",
+			url : "${contextPath}/feed/fileUpload",
 			contentType : false,
 			enctype : "multipart/form-data",
 			processData : false,
