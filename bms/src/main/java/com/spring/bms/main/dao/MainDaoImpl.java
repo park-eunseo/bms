@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bms.admin.dto.ManagerNoticeDto;
 import com.spring.bms.feed.dto.PostDto;
 
 @Repository
@@ -37,6 +38,16 @@ public class MainDaoImpl implements MainDao {
 	@Override
 	public List<Map<String, Object>> selectRandomPost(String id) throws Exception {
 		return sqlSession.selectList("main.selectRandomPost", id);
+	}
+
+	@Override
+	public List<ManagerNoticeDto> selectNoticeList() throws Exception {
+		return sqlSession.selectList("main.selectNoticeList");
+	}
+
+	@Override
+	public ManagerNoticeDto selectOneNotice(String noticeId) throws Exception {
+		return sqlSession.selectOne("main.selectOneNotice", noticeId);
 	}
 
 }

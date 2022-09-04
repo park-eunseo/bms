@@ -4,8 +4,8 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LikePostDto {
-	String memberId;
-	String postId;
+	private String memberId;
+	private String postId;
 	
 	public String getMemberId() {
 		return memberId;

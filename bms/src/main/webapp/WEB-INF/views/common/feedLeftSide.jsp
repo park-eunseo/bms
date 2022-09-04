@@ -29,8 +29,10 @@
 
 .nickname {
 	font-size: 12px;
-	font-weight: bold;
-	color: #616161;
+    font-size: 13px;
+    font-weight: bold;
+    color: #616161;
+    padding-top: 0;
 }
 
 </style>

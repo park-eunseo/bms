@@ -39,8 +39,7 @@
 .nickname {
 	display: inline-block;
 	font-size: inherit;
-	vertical-align: sub;
-	margin-bottom: 0.5rem
+	margin-bottom: 0.7rem
 }
 
 .re_reply {
@@ -71,6 +70,13 @@
 	display: inline;
 	font-size: 15px;
 	color: #626262;
+}
+
+.postBody {
+	width: 85%;
+	margin-top: -20px;
+	color: black;
+	min-height: 40rem;
 }
 </style>
 <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
@@ -265,8 +271,7 @@
 </head>
 <body>
 	<div style="text-align: -webkit-center;">
-		<div class="col-lg-8 px-md-5 py-5"
-			style="width: 85%; margin-top: -20px; color: black;">
+		<div class="col-lg-8 px-md-5 py-5 postBody">
 			<c:if test="${sessionScope.memberId eq detailPost.memberId}">
 				<div style="text-align-last: end;">
 					<div class="btn-group">
@@ -382,93 +387,98 @@
 												<c:if test="${reply1.replyId eq reply2.topReplyId }">
 													<hr>
 													<div>
-													<div class="comment-body" style="padding-left: 20px;">
-														<div
-															style="display: flex; justify-content: space-between;">
-															<div>
-																<span class="re_right">ㄴ</span> <img
-																	src="${contextPath }/member/thumbnails?profileName=${reply2.profileName}"
-																	onclick="location.href='${contextPath}/feed?id=${reply2.memberId }'"
-																	class="w-px-40 rounded-circle profileImg">
-																<h6 class="nickname">${reply2.nickname }</h6>
-																<c:if test="${reply2.memberId eq detailPost.memberId }">
-																	<span class="author">작성자</span>
+														<div class="comment-body" style="padding-left: 20px;">
+															<div
+																style="display: flex; justify-content: space-between;">
+																<div>
+																	<span class="re_right">ㄴ</span> <img
+																		src="${contextPath }/member/thumbnails?profileName=${reply2.profileName}"
+																		onclick="location.href='${contextPath}/feed?id=${reply2.memberId }'"
+																		class="w-px-40 rounded-circle profileImg">
+																	<h6 class="nickname">${reply2.nickname }</h6>
+																	<c:if test="${reply2.memberId eq detailPost.memberId }">
+																		<span class="author">작성자</span>
+																	</c:if>
+																</div>
+																<c:if test="${reply2.memberId eq sessionScope.memberId}">
+																	<!-- 내 계정에서 쓴 댓글이면 수정 가능하게 -->
+																	<div class="btn-group"
+																		id="replySetting${reply2.replyId }">
+																		<button type="button"
+																			style="width: 2rem; height: 2rem;"
+																			class="btn btn-icon rounded-pill dropdown-toggle hide-arrow"
+																			data-bs-toggle="dropdown" aria-expanded="false">
+																			<i class="bx bx-dots-vertical-rounded"></i>
+																		</button>
+																		<ul class="dropdown-menu dropdown-menu-end"
+																			style="text-align-last: start; min-inline-size: auto;">
+																			<li><button class="dropdown-item"
+																					onclick="modifyReply('${reply2.replyId }', '${reply2.postId }')">수정</button></li>
+																			<li><button class="dropdown-item"
+																					onclick="deleteReply('${reply2.replyId}', '${reply2.topReplyId }')">삭제</button></li>
+																		</ul>
+																		<input type="hidden" name="replyId"
+																			value="${reply2.replyId }">
+																	</div>
 																</c:if>
 															</div>
-															<c:if test="${reply2.memberId eq sessionScope.memberId}">
-																<!-- 내 계정에서 쓴 댓글이면 수정 가능하게 -->
-																<div class="btn-group"
-																	id="replySetting${reply2.replyId }">
-																	<button type="button"
-																		style="width: 2rem; height: 2rem;"
-																		class="btn btn-icon rounded-pill dropdown-toggle hide-arrow"
-																		data-bs-toggle="dropdown" aria-expanded="false">
-																		<i class="bx bx-dots-vertical-rounded"></i>
-																	</button>
-																	<ul class="dropdown-menu dropdown-menu-end"
-																		style="text-align-last: start; min-inline-size: auto;">
-																		<li><button class="dropdown-item"
-																				onclick="modifyReply('${reply2.replyId }', '${reply2.postId }')">수정</button></li>
-																		<li><button class="dropdown-item"
-																				onclick="deleteReply('${reply2.replyId}', '${reply2.topReplyId }')">삭제</button></li>
-																	</ul>
-																	<input type="hidden" name="replyId"
-																		value="${reply2.replyId }">
+															<!--  댓글 정보, 답댓글 달 때 버튼(댓글 수정할 때 바뀌는 부분) -->
+															<div id="modifyReply${reply2.replyId }"
+																style="padding-left: 17px;">
+																<a href="${contextPath}/feed?id=${reply1.memberId }"
+																	class="mention">@${reply2.mention }</a>
+																<p id="content${reply2.replyId }"
+																	style="margin-left: 0.4rem; display: inline;">${reply2.content }</p>
+																<div style="margin-bottom: 0.6rem;">
+																	<span class="text-muted" style="font-size: smaller;">${reply2.regDate }</span>
 																</div>
-															</c:if>
-														</div>
-														<!--  댓글 정보, 답댓글 달 때 버튼(댓글 수정할 때 바뀌는 부분) -->
-														<div id="modifyReply${reply2.replyId }"
-															style="padding-left: 17px;">
-															<a href="${contextPath}/feed?id=${reply1.memberId }"
-																class="mention">@${reply2.mention }</a>
-															<p id="content${reply2.replyId }"
-																style="margin-left: 0.4rem; display: inline;">${reply2.content }</p>
-															<div style="margin-bottom: 0.6rem;">
-																<span class="text-muted" style="font-size: smaller;">${reply2.regDate }</span>
-															</div>
-															<div class="form-group" style="margin-top: -4px;">
-																<input type="submit" value="답글"
-																	onclick="re_reply('${reply2.replyId}')"
-																	class="btn btn-outline-dark replyBtn">
+																<div class="form-group" style="margin-top: -4px;">
+																	<input type="submit" value="답글"
+																		onclick="re_reply('${reply2.replyId}')"
+																		class="btn btn-outline-dark replyBtn">
+																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-												
-												<!-- 답댓글 작성란-->
-												<div class="comment-form-wrap"
-													id="re_reply${reply2.replyId }" style="display: none;">
-													<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
-														onsubmit="return re_replyCheck('${reply2.replyId }', '${reply2.memberId }')"
-														method="post" class="bg-light">
-														<div class="form-group">
-															<textarea name="content" id="reContent${reply2.replyId }"
-																style="resize: none; margin-bottom: 5px; margin-top: 8px;"
-																placeholder="${reply2.nickname }님에게 댓글을 남겨보세요."
-																cols="30" rows="2" class="form-control"></textarea>
-														</div>
-														<div class="form-group" style="text-align-last: end;">
-															<input type="button" value="취소"
-																id="reCancel${reply2.replyId }" class="btn"
-																style="padding: 3px 10px;"> <input type="submit"
-																value="등록" class="btn" style="padding: 3px 10px;">
-														</div>
-														<input type="hidden" name="memberId"
-															value="${sessionScope.memberId }"> <input
-															type="hidden" name="postId" value="${detailPost.postId }">
-														<input type="hidden" name="topReplyId"
-															value="${reply1.replyId }"> <input type="hidden"
-															name="mention" value="${reply2.nickname }">
-													</form>
-												</div>
+
+													<!-- 답댓글 작성란-->
+													<div class="comment-form-wrap"
+														id="re_reply${reply2.replyId }" style="display: none;">
+														<form
+															action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
+															onsubmit="return re_replyCheck('${reply2.replyId }', '${reply2.memberId }')"
+															method="post" class="bg-light">
+															<div class="form-group">
+																<textarea name="content"
+																	id="reContent${reply2.replyId }"
+																	style="resize: none; margin-bottom: 5px; margin-top: 8px;"
+																	placeholder="${reply2.nickname }님에게 댓글을 남겨보세요."
+																	cols="30" rows="2" class="form-control"></textarea>
+															</div>
+															<div class="form-group" style="text-align-last: end;">
+																<input type="button" value="취소"
+																	id="reCancel${reply2.replyId }" class="btn"
+																	style="padding: 3px 10px;"> <input
+																	type="submit" value="등록" class="btn"
+																	style="padding: 3px 10px;">
+															</div>
+															<input type="hidden" name="memberId"
+																value="${sessionScope.memberId }"> <input
+																type="hidden" name="postId"
+																value="${detailPost.postId }"> <input
+																type="hidden" name="topReplyId"
+																value="${reply1.replyId }"> <input type="hidden"
+																name="mention" value="${reply2.nickname }">
+														</form>
+													</div>
 												</c:if>
 											</c:forEach>
-											
+
 											<!-- 답댓글 작성란-->
 											<div class="comment-form-wrap"
 												id="re_reply${reply1.replyId }" style="display: none;">
-												<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
+												<form
+													action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
 													onsubmit="return re_replyCheck('${reply1.replyId }', '${reply1.memberId }')"
 													method="post" class="bg-light">
 													<div class="form-group">
@@ -507,7 +517,8 @@
 
 					<!-- 기본 댓글 -->
 					<div class="comment-form-wrap pt-5">
-						<form action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
+						<form
+							action="${contextPath }/feed/writeReply?id=${detailPost.memberId}"
 							onsubmit="return replyCheck()" method="post" class="p-3 bg-light"
 							style="margin-top: -40px;">
 							<div class="form-group">
@@ -522,7 +533,8 @@
 								<input type="submit" value="등록" class="btn btn-primary">
 							</div>
 							<input type="hidden" name="postId" value="${detailPost.postId }">
-							<input type="hidden" name="memberId" value="${sessionScope.memberId }">
+							<input type="hidden" name="memberId"
+								value="${sessionScope.memberId }">
 						</form>
 					</div>
 				</div>

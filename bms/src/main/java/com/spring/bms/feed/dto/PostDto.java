@@ -4,16 +4,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class PostDto {
-	String postId;
-	String memberId;
-	String categoryTitle;
-	String title;
-	String thumbnail;
-	String content;
-	String postPrivate;
-	int likeCount;
-	int ReplyCount;
-	String regDate;
+	private String postId;
+	private String memberId;
+	private String categoryTitle;
+	private String title;
+	private String thumbnail;
+	private String content;
+	private String postPrivate;
+	private int likeCount;
+	private int ReplyCount;
+	private String regDate;
 
 	public String getPostId() {
 		return postId;

@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.spring.bms.admin.dto.ManagerNoticeDto;
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.member.dto.MemberDto;
 
@@ -43,5 +44,35 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public void deletePost(String postId) throws Exception {
 		sqlSession.delete("admin.deletePost", postId);
+	}
+
+	@Override
+	public void insertNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
+		sqlSession.insert("admin.insertNotice", managerNoticeDto);
+	}
+
+	@Override
+	public int selectTotalNoticeCount() throws Exception {
+		return sqlSession.selectOne("admin.selectTotalNoticeCount");
+	}
+
+	@Override
+	public List<ManagerNoticeDto> selectNoticeList(Map<String, Object> noticeMap) throws Exception {
+		return sqlSession.selectList("admin.selectNoticeList", noticeMap);
+	}
+
+	@Override
+	public ManagerNoticeDto selectOneNotice(String noticeId) throws Exception {
+		return sqlSession.selectOne("admin.selectOneNotice", noticeId);
+	}
+
+	@Override
+	public void deleteNotice(String noticeId) throws Exception {
+		sqlSession.delete("admin.deleteNotice", noticeId);
+	}
+
+	@Override
+	public void updateNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
+		sqlSession.update("admin.updateNotice", managerNoticeDto);
 	}
 }

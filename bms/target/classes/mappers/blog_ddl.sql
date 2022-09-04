@@ -83,7 +83,7 @@ select * from reply;
 DELETE FROM REPLY WHERE REPLY_ID = 9;
 select * from post where post_id = (select post_id from reply where member_id = 'dlcnd11');
 
-CREATE TABLE likePost (
+CREATE TABLE LIKE_POST (
     like_post_id INT AUTO_INCREMENT PRIMARY KEY,
 	member_id 	 VARCHAR(20), -- 자기자신 ID
     post_id 	 INT, -- 좋아요 누른 게시글 ID
@@ -99,7 +99,7 @@ select * from likePost;
 delete from likePost where like_post_id = 7;
 
 
-CREATE TABLE likeMember (
+CREATE TABLE LIKE_MEMBER (
     like_member_id 		INT AUTO_INCREMENT PRIMARY KEY,
     member_id 		VARCHAR(20), 	-- 자기자신 ID
 	favorite_id 	VARCHAR(20), -- 친구 추가한 상대방 ID
@@ -119,8 +119,14 @@ CREATE TABLE MANAGER(
     password varchar(20) not null
 );
 
-select * from manager;
-INSERT INTO MANAGER VALUES("admin", "admin11!");
+CREATE TABLE MANAGER_NOTICE (
+	NOTICE_ID 	INT AUTO_INCREMENT PRIMARY KEY,
+    MANAGER_ID	VARCHAR(20) NOT NULL,
+    TITLE	  	VARCHAR(50) NOT NULL,
+    CONTENT	  	TEXT NOT NULL,
+    REG_DATE  	TIMESTAMP
+);
+select * from manager_notice;
 
 CREATE TABLE NOTICE (
 	NOTICE_ID INT AUTO_INCREMENT PRIMARY KEY,
@@ -132,7 +138,3 @@ CREATE TABLE NOTICE (
     REG_DATE  DATETIME DEFAULT CURRENT_TIMESTAMP -- 알림 보낸 시간
 );
 
-select * from NOTICE;                    
-insert notice(to_id, from_id, content)
-values('qkswl', 'dlcnd', (select title from notice n join post p on n.post_id = p.post_id where n.post_id = 41));
-DELETE FROM NOTICE WHERE NOTICE_ID = 5;

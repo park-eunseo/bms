@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class CategoryDto {
-	String categoryId;
-	String memberId;
-	String categoryTitle;
+	private String categoryId;
+	private String memberId;
+	private String categoryTitle;
 	
 	public String getCategoryId() {
 		return categoryId;

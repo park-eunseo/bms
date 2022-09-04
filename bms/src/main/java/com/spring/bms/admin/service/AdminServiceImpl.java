@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.spring.bms.admin.dao.AdminDao;
+import com.spring.bms.admin.dto.ManagerNoticeDto;
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.member.dto.MemberDto;
 
@@ -45,4 +46,33 @@ public class AdminServiceImpl implements AdminService {
 		adminDao.deletePost(postId);
 	}
 
+	@Override
+	public void writeNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
+		adminDao.insertNotice(managerNoticeDto);
+	}
+
+	@Override
+	public int getTotalNoticeCount() throws Exception {
+		return adminDao.selectTotalNoticeCount();
+	}
+
+	@Override
+	public List<ManagerNoticeDto> getNoticeList(Map<String, Object> noticeMap) throws Exception {
+		return adminDao.selectNoticeList(noticeMap);
+	}
+
+	@Override
+	public ManagerNoticeDto getOneNotice(String noticeId) throws Exception {
+		return adminDao.selectOneNotice(noticeId);
+	}
+
+	@Override
+	public void deleteNotice(String noticeId) throws Exception {
+		adminDao.deleteNotice(noticeId);
+	}
+
+	@Override
+	public void modifyNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
+		adminDao.updateNotice(managerNoticeDto);
+	}
 }

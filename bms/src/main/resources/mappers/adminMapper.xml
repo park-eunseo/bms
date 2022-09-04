@@ -47,7 +47,7 @@
 		FROM 
 				POST
 		WHERE
-				member_id = #{memberId}
+				MEMBER_ID = #{memberId}
 		ORDER BY
 				REG_DATE DESC
 		LIMIT
@@ -67,4 +67,64 @@
 		WHERE
 					POST_ID = #{postId}
 	</delete>
+	
+	<insert id="insertNotice" parameterType="ManagerNoticeDto">
+		INSERT INTO
+					MANAGER_NOTICE(
+							MANAGER_ID,
+							TITLE,
+							CONTENT,
+							REG_DATE
+						 	)
+		VALUES(
+			#{managerId},
+			#{title},
+			#{content},
+			NOW()
+		)					
+	</insert>
+	
+	<select id="selectTotalNoticeCount" resultType="int">
+		SELECT
+				COUNT(*)
+		FROM
+				MANAGER_NOTICE
+	</select>
+	
+	<select id="selectNoticeList" parameterType="map" resultType="ManagerNoticeDto">
+		SELECT
+				NOTICE_ID,
+				MANAGER_ID,
+				TITLE,
+				CONTENT,
+				date_format(REG_DATE, '%Y/%m/%d %H:%i') REG_DATE
+		FROM
+				MANAGER_NOTICE
+	</select>
+	
+	<select id="selectOneNotice" parameterType="String" resultType="ManagerNoticeDto">
+		SELECT
+				*
+		FROM
+				MANAGER_NOTICE
+		WHERE
+				NOTICE_ID = #{noticeId}
+	</select>
+	
+	<delete id="deleteNotice" parameterType="String">
+		DELETE FROM
+					MANAGER_NOTICE
+		WHERE
+					NOTICE_ID = #{noticeId}
+	</delete>
+	
+	<update id="updateNotice" parameterType="ManagerNoticeDto">
+		UPDATE
+				MANAGER_NOTICE
+		SET
+				TITLE = #{title},
+				CONTENT = #{content}
+		WHERE
+				NOTICE_ID = #{noticeId}
+	</update>
 </mapper>

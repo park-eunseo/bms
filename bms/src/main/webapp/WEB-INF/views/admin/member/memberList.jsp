@@ -16,28 +16,37 @@
 	justify-content: center;
 	margin-block-start: 4rem;
 }
+
+.notice {
+	text-align-last: end;
+	margin-right: 3rem;
+	margin-top: -15px;
+	margin-bottom: 1rem;
+	font-weight: 600;
+}
 </style>
 <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
 <script>
-	$().ready(function(){
-		$("#currentBlock${currentPage}").addClass("active")	
+	$().ready(function() {
+		$("#currentBlock${currentPage}").addClass("active")
 	})
-	
-	function search(){
-		if (window.event.keyCode == 13) {
+
+	function search() {
+		if (window.event.keyCode == 13) {
 			var searchWord = document.getElementById("searchWord")
-			location.href = "${contextPath}/admin?searchWord=" + searchWord.value
+			location.href = "${contextPath}/admin?searchWord="
+					+ searchWord.value
 		}
 	}
-	
-	function deleteMember(memberId){
+
+	function deleteMember(memberId) {
 		var deleteMember = confirm("해당 회원의 정보가 전부 삭제됩니다. 탈퇴시키겠습니까?")
-		
-		if(deleteMember){
+
+		if (deleteMember) {
 			$.ajax({
-				type:"get",
-				url:"${contextPath}/admin/deleteMember?id=" + memberId,
-				success:function(){
+				type : "get",
+				url : "${contextPath}/admin/deleteMember?id=" + memberId,
+				success : function() {
 					alert("회원 강제 탈퇴가 완료되었습니다.")
 					history.go(0)
 				}
@@ -49,15 +58,21 @@
 </script>
 </head>
 <body>
+	<div class="notice">
+		<a href="${contextPath }/admin/noticeList"><i class="bx bx-chevron-right"></i> 공지사항 목록</a><br> 
+		<a href="${contextPath }/admin/writeNotice"><i class="bx bx-chevron-right"></i> 공지사항 작성</a>
+	</div>
 	<div class="card"
 		style="width: 95%; min-height: 400px; margin-inline: auto;">
 		<h5 class="card-header" style="padding-bottom: 0;">회원 관리 목록</h5>
 		<div class="input-group memberSearch">
 			<span class="input-group-text"><i
-				class="tf-icons bx bx-search"></i></span> 
-			<input type="text" class="form-control" id="searchWord" onkeyup="search()" placeholder="검색할 회원 ID를 입력하세요.">
+				class="tf-icons bx bx-search"></i></span> <input type="text"
+				class="form-control" id="searchWord" onkeyup="search()"
+				placeholder="검색할 회원 ID를 입력하세요.">
 		</div>
-		<div class="table-responsive text-nowrap" style="padding: 1rem; padding-top: 0;">
+		<div class="table-responsive text-nowrap"
+			style="padding: 1rem; padding-top: 0;">
 			<span>전체(${totalMemberCount })</span>
 			<table class="table">
 				<thead>
@@ -80,7 +95,7 @@
 								<tr>
 									<td>${(currentPage-1)*10 + status.count}</td>
 									<td><a
-										href="${contextPath }/admin/postList?id=${member.id}">${member.id }(${member.blogName })</a></td>
+										href="${contextPath }/admin/memberPostList?id=${member.id}">${member.id }(${member.blogName })</a></td>
 									<td>${member.tel }</td>
 									<td>${member.email }</td>
 									<td>${member.birth }</td>
@@ -101,7 +116,8 @@
 					<c:otherwise>
 						<tbody class="table-border-bottom-0">
 							<tr>
-								<td colspan="9" style="text-align-last: center;">가입한 회원이 없습니다.</td>
+								<td colspan="9" style="text-align-last: center;">가입한 회원이
+									없습니다.</td>
 							</tr>
 						</tbody>
 					</c:otherwise>

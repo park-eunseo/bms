@@ -115,6 +115,36 @@
 	margin-top: 1rem;
 	color: gray;
 }
+
+.managerNoticeList {
+	margin-inline: auto;
+	max-width: 900px;
+	margin-top: -2rem;
+}
+
+.noticeRound {
+	margin-left: 3px;
+	padding: 1px 8px;
+	border-width: 1px 1px 1px 1px;
+	border-style: solid;
+	border-radius: 18px;
+	font-size: 10px;
+	color: white;
+	background-color: #de5858;
+}
+
+.noticeBody {
+	margin-inline: 10px;
+	color: #2f2f2f;
+	font-size: initial;
+	padding-top: 0.5px;
+}
+
+.noticeFont {
+	margin-inline: 0.5rem;
+	color: red;
+	font-size: initial;
+}
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -188,6 +218,30 @@
 </script>
 </head>
 <body>
+<c:if test="${sessionScope.role ne 'admin' }">
+		<div class="accordion-item managerNoticeList">
+			<h2 class="accordion-header" id="headingOne">
+				<button type="button" class="accordion-button collapsed"
+					data-bs-toggle="collapse" data-bs-target="#accordionOne"
+					aria-expanded="false" aria-controls="accordionOne">
+					<span class="noticeRound">공지</span>
+					<span class="noticeBody">${noticeList[0].title }</span>
+				</button>
+			</h2>
+			<c:forEach var="notice" items="${noticeList }">
+				<div id="accordionOne" class="accordion-collapse collapse"
+					data-bs-parent="#accordionExample" style="">
+					<div class="accordion-body" style="padding-block: 0;">
+						<span class="noticeFont">공지</span> 
+						<span class="noticeBody">
+						 	<a href="${contextPath }/detailNotice?noticeId=${notice.noticeId}">${notice.title }</a>
+						 </span>
+						<hr style="margin-block: 8px;">
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+	</c:if>
 	<div class="content-wrapper">
 		<div class="container-xxl container-p-y" style="width: 900px;">
 			<h6 class="comment"># 추천 게시글</h6>
@@ -205,7 +259,7 @@
 							<img
 								src="${contextPath }/member/thumbnails?profileName=${list.profile}"
 								class="w-px-40 rounded-circle profileImg"
-								style="margin: 0.7rem;"> <a
+								style="margin: 0.7rem; margin-right: 0.2rem;"> <a
 								href="${contextPath}/feed?id=${list.id }" class="id">${list.nickname }</a>
 						</div>
 						<div class="card-body" style="padding: 1rem 1rem; padding-top: 0;">

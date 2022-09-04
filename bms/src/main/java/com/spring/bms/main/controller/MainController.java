@@ -36,8 +36,6 @@ public class MainController {
 			map.put("content", content);
 		}
 		
-		mv.addObject("randomList", randomList);
-		
 		// 로그인 한 상태라면 즐겨찾는 회원 글 최신글 가져와서 띄우기
 		if(id != null) {			
 			int viewPostCount = 6;
@@ -81,6 +79,8 @@ public class MainController {
 			mv.addObject("currentPage", currentPage);	
 		}
 		
+		mv.addObject("randomList", randomList);
+		mv.addObject("noticeList", mainService.getNoticeList());
 		mv.setViewName("/mainHome");
 		
 		return mv;
@@ -159,4 +159,14 @@ public class MainController {
 		return mv;
 	}
 	
+	@GetMapping("/detailNotice")
+	public ModelAndView detailNotice(HttpServletRequest request, 
+									@RequestParam("noticeId") String noticeId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("detailNotice", mainService.getOneNotice(noticeId));
+		mv.setViewName("/detailNotice");
+		
+		return mv;
+	}
 }

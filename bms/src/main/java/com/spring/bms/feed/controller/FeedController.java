@@ -317,7 +317,7 @@ public class FeedController {
 
 		JsonObject json = new JsonObject();
 
-//		String filePath = "C:\\postFile\\";				//window
+//		String filePath = "C:\\postFile\\";				// window
 		String filePath = "/var/lib/tomcat9/postFile/";	// linux
 		
 		String fileName = UUID.randomUUID() + "_" + multipartFile.getOriginalFilename();
@@ -328,7 +328,7 @@ public class FeedController {
 			InputStream inputStream = multipartFile.getInputStream();
 			FileUtils.copyInputStreamToFile(inputStream, file);
 
-			json.addProperty("url", "/imgUpload/" + fileName); // 이미지 url 전송
+			json.addProperty("url", "/imgUpload/" + fileName); // 이미지 url 전송 
 			json.addProperty("responseCode", "success");
 		} catch (Exception e) {
 			FileUtils.deleteQuietly(file); // 저장된 파일 삭제

@@ -4,14 +4,14 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class NoticeDto {
-	String noticeId;
-	String toId;  	 // 알림 수신자
-	String fromId; 	 // 알림 송신자
-	String postId; 	 // 게시글 ID
-	String replyId; 	 // 답댓글 상위 ID
-	String content;  // 해당 글 또는 댓글 내용
-	String category; // 알림 종류
-	String regDate;  // 알림 시간
+	private String noticeId;
+	private String toId;  	 // 알림 수신자
+	private String fromId; 	 // 알림 송신자
+	private String postId; 	 // 게시글 ID
+	private String replyId;  // 답댓글 상위 ID
+	private String content;  // 해당 글 또는 댓글 내용
+	private String category; // 알림 종류
+	private String regDate;  // 알림 시간
 	
 	public String getNoticeId() {
 		return noticeId;

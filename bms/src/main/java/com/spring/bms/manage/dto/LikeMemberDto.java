@@ -4,9 +4,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class LikeMemberDto {
-	String likeMemberId;
-	String memberId;
-	String favoriteId;
+	private String likeMemberId;
+	private String memberId;
+	private String favoriteId;
 	
 	public String getLikeMemberId() {
 		return likeMemberId;

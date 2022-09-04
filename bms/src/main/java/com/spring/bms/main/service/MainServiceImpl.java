@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.spring.bms.admin.dto.ManagerNoticeDto;
 import com.spring.bms.feed.dto.PostDto;
 import com.spring.bms.main.dao.MainDao;
 
@@ -37,6 +38,16 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public List<Map<String, Object>> getRandomPost(String id) throws Exception {
 		return mainDao.selectRandomPost(id);
+	}
+
+	@Override
+	public List<ManagerNoticeDto> getNoticeList() throws Exception {
+		return mainDao.selectNoticeList();
+	}
+
+	@Override
+	public ManagerNoticeDto getOneNotice(String noticeId) throws Exception {
+		return mainDao.selectOneNotice(noticeId);
 	}
 
 }

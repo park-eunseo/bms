@@ -9,7 +9,7 @@
 						COUNT(*)
 				FROM
 						MEMBER M 
-						   	JOIN LIKEMEMBER L
+						   	JOIN LIKE_MEMBER L
 						   	ON M.ID = L.FAVORITE_ID
 				WHERE
 						L.MEMBER_ID = #{id}
@@ -19,7 +19,7 @@
 						COUNT(*)
 				FROM
 						POST P 
-							 LEFT JOIN LIKEPOST L
+							 LEFT JOIN LIKE_POST L
 							 ON P.POST_ID = L.POST_ID
 				WHERE
 						L.MEMBER_ID = #{id} 
@@ -48,7 +48,7 @@
 						M.NICKNAME 	  AS nickname
 				FROM
 						MEMBER M 
-							   JOIN LIKEMEMBER L
+							   JOIN LIKE_MEMBER L
 							   ON M.ID = L.FAVORITE_ID
 				WHERE
 						L.MEMBER_ID = #{id}
@@ -63,7 +63,7 @@
 						P.POST_ID 	AS postId
 				FROM
 						POST P 
-							 LEFT JOIN LIKEPOST L
+							 LEFT JOIN LIKE_POST L
 							 ON P.POST_ID = L.POST_ID
 				WHERE
 						L.MEMBER_ID = #{id}
@@ -93,7 +93,7 @@
 	
 	<insert id="insertLikePost" parameterType="LikePostDto">
 		INSERT INTO
-				LIKEPOST(
+				LIKE_POST(
 					MEMBER_ID,
 					POST_ID
 				)
@@ -105,7 +105,7 @@
 
 	<delete id="deleteLikePost" parameterType="LikePostDto">
 		DELETE FROM 
-				LIKEPOST
+				LIKE_POST
 		WHERE
 				MEMBER_ID = #{memberId} AND POST_ID = #{postId}
 	</delete>
@@ -132,7 +132,7 @@
 
 	<insert id="insertLikeMember" parameterType="LikeMemberDto">
 		INSERT INTO
-					LIKEMEMBER(
+					LIKE_MEMBER(
 						MEMBER_ID,
 						FAVORITE_ID
 					)
@@ -144,7 +144,7 @@
 	
 	<delete id="deleteLikeMember" parameterType="LikeMemberDto">
 		DELETE FROM
-				LIKEMEMBER
+				LIKE_MEMBER
 		WHERE
 				MEMBER_ID = #{memberId} AND FAVORITE_ID = #{favoriteId}
 	</delete>

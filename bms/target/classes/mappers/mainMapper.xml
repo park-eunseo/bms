@@ -47,7 +47,7 @@
 					 JOIN MEMBER M 
 					 ON P.MEMBER_ID = M.ID
 		WHERE
-				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = #{id}) AND
+				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKE_MEMBER WHERE MEMBER_ID = #{id}) AND
 				P.REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 7 DAY) AND NOW() AND
 				P.POST_PRIVATE = 'N'
 		ORDER BY 
@@ -62,7 +62,7 @@
 		FROM
 				POST P JOIN MEMBER M ON P.MEMBER_ID = M.ID
 		WHERE
-				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKEMEMBER WHERE MEMBER_ID = #{id}) AND
+				P.MEMBER_ID IN (SELECT FAVORITE_ID FROM LIKE_MEMBER WHERE MEMBER_ID = #{id}) AND
 				P.REG_DATE BETWEEN DATE_ADD(NOW(), INTERVAL - 3 DAY) AND NOW() AND
 				P.POST_PRIVATE = 'N'
 		ORDER BY 
@@ -165,5 +165,27 @@
 						P.CONTENT LIKE CONCAT ('%', #{searchWord}, '%')) AND
 						P.POST_PRIVATE = 'N'
 			</if>
+	</select>
+	
+	<select id="selectNoticeList" resultType="ManagerNoticeDto">
+		SELECT
+				*
+		FROM
+				MANAGER_NOTICE
+		ORDER BY
+				REG_DATE DESC
+	</select>
+	
+	<select id="selectOneNotice" parameterType="String" resultType="ManagerNoticeDto">
+		SELECT
+				NOTICE_ID,
+				MANAGER_ID,
+				TITLE,
+				CONTENT,
+				date_format(REG_DATE, '%Y/%m/%d %H:%i') REG_DATE
+		FROM
+				MANAGER_NOTICE
+		WHERE
+				NOTICE_ID = #{noticeId}
 	</select>
 </mapper>

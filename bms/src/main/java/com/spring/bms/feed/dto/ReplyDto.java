@@ -4,15 +4,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ReplyDto {
-	String replyId;
-	String memberId; 	// 본인 ID
-	String nickname; 	// 본인 닉네임
-	String profileName; 
-	String postId;
-	String topReplyId; // 상위 댓글 INDEX ID
-	String mention;    // 답글단 회원 닉네임
-	String content;
-	String regDate;
+	private String replyId;
+	private String memberId; 	// 본인 ID
+	private String nickname; 	// 본인 닉네임
+	private String profileName; 
+	private String postId;
+	private String topReplyId; // 상위 댓글 INDEX ID
+	private String mention;    // 답글단 회원 닉네임
+	private String content;
+	private String regDate;
 
 	public String getReplyId() {
 		return replyId;
