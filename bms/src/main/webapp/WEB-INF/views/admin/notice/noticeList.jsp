@@ -61,7 +61,7 @@
 									<td>${notice.managerId }</td>
 									<td><a
 										href="${contextPath }/admin/detailNotice?noticeId=${notice.noticeId}">${notice.title }</a></td>
-									<td class="text">${notice.content }</td>
+									<td><span class="text">${notice.content }</span></td>
 									<td>${notice.regDate }</td>
 									<td>
 										<button type="button" onclick="deleteNotice('${notice.noticeId}')"

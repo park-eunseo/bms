@@ -218,7 +218,7 @@
 </script>
 </head>
 <body>
-<c:if test="${sessionScope.role ne 'admin' }">
+	<c:if test="${sessionScope.role ne 'admin' && not empty noticeList }">
 		<div class="accordion-item managerNoticeList">
 			<h2 class="accordion-header" id="headingOne">
 				<button type="button" class="accordion-button collapsed"
