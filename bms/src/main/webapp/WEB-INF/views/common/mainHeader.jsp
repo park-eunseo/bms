@@ -53,15 +53,6 @@
 </script>
 </head>
 <body>
-	<!-- Spinner Start -->
-	<div id="spinner"
-		class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
-		<div class="spinner-border text-secondary" role="status">
-			<span class="visually-hidden">Loading</span>
-		</div>
-	</div>
-	<!-- Spinner End -->
-
 	<!-- Navbar Start -->
 	<nav class="navbar navbar-expand-lg navbar-light sticky-top p-0"
 		style="background-color: #f4f4f4; margin-bottom: 2rem;">

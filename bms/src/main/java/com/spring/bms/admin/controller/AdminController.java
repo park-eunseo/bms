@@ -29,9 +29,6 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
-	@Autowired
-	private NoticeController noticeController;
-	
 	@GetMapping("")
 	public ModelAndView admin(@RequestParam(name="searchWord", defaultValue = "") String searchWord,
 							@RequestParam(name="currentPage", defaultValue = "1") int currentPage) throws Exception {
@@ -148,9 +145,10 @@ public class AdminController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "alert('공지사항이 등록되었습니다.');" 
-						+ "location.href = '" + request.getContextPath() + "/admin/noticeList';"
-						+ "</script>";
+		String jsScript = "<script>";
+			   jsScript += "alert('공지사항이 등록되었습니다.');";
+			   jsScript += "location.href = '" + request.getContextPath() + "/admin/noticeList';";
+			   jsScript += "</script>";
 		
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -222,9 +220,10 @@ public class AdminController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "alert('공지사항이 삭제되었습니다.');" 
-						+ "location.href = '" + request.getContextPath() + "/admin/noticeList';"
-						+ "</script>";
+		String jsScript = "<script>";
+				jsScript += "alert('공지사항이 삭제되었습니다.');";
+				jsScript +="location.href = '" + request.getContextPath() + "/admin/noticeList';";
+				jsScript +="</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -247,8 +246,10 @@ public class AdminController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "alert('공지사항이 수정되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/admin/detailNotice?noticeId=" + managerNoticeDto.getNoticeId() + "';" + "</script>";
+		String jsScript = "<script>";
+			   jsScript += "alert('공지사항이 수정되었습니다.');";
+			   jsScript += "location.href = '" + request.getContextPath() + "/admin/detailNotice?noticeId=" + managerNoticeDto.getNoticeId() + "';";
+			   jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}

@@ -72,16 +72,16 @@
 }
 
 .postTitle {
-	height: 25px;
 	overflow: hidden;
 	text-overflow: ellipsis;
 	white-space: normal;
 	display: -webkit-box;
 	-webkit-line-clamp: 1;
 	-webkit-box-orient: vertical;
-	font-size: 18px;
+	font-size: 15px;
 	font-weight: 500;
 	color: black;
+	margin-bottom: 0.5rem;
 }
 
 .containerBox {
@@ -224,18 +224,17 @@
 				<button type="button" class="accordion-button collapsed"
 					data-bs-toggle="collapse" data-bs-target="#accordionOne"
 					aria-expanded="false" aria-controls="accordionOne">
-					<span class="noticeRound">공지</span>
-					<span class="noticeBody">${noticeList[0].title }</span>
+					<span class="noticeRound">공지</span> <span class="noticeBody">${noticeList[0].title }</span>
 				</button>
 			</h2>
 			<c:forEach var="notice" items="${noticeList }">
 				<div id="accordionOne" class="accordion-collapse collapse"
 					data-bs-parent="#accordionExample" style="">
 					<div class="accordion-body" style="padding-block: 0;">
-						<span class="noticeFont">공지</span> 
-						<span class="noticeBody">
-						 	<a href="${contextPath }/detailNotice?noticeId=${notice.noticeId}">${notice.title }</a>
-						 </span>
+						<span class="noticeFont">공지</span> <span class="noticeBody">
+							<a
+							href="${contextPath }/detailNotice?noticeId=${notice.noticeId}">${notice.title }</a>
+						</span>
 						<hr style="margin-block: 8px;">
 					</div>
 				</div>
@@ -251,7 +250,7 @@
 					<div class="card">
 						<c:if test="${not empty list.thumbnail }">
 							<img class="card-img-top"
-								style="height: 100px; object-fit: cover;"
+								style="height: 130px; object-fit: cover;"
 								src="${contextPath }/feed/thumbnails?thumbnail=${list.thumbnail}"
 								onclick="location.href='${contextPath }/feed/detailPost?id=${list.id}&postId=${list.postId}'">
 						</c:if>
@@ -262,7 +261,8 @@
 								style="margin: 0.7rem; margin-right: 0.2rem;"> <a
 								href="${contextPath}/feed?id=${list.id }" class="id">${list.nickname }</a>
 						</div>
-						<div class="card-body" style="padding: 1rem 1rem; padding-top: 0;">
+						<div class="card-body"
+							style="padding-inline: 1rem 1rem; padding-block: 0;">
 							<a
 								href="${contextPath }/feed/detailPost?id=${list.id}&postId=${list.postId}">
 								<h5 class="card-title postTitle">${list.title }</h5>
@@ -270,7 +270,7 @@
 									style="<c:if test="${empty list.thumbnail}">-webkit-line-clamp: 6;</c:if>">${list.content }</p>
 							</a>
 						</div>
-						<div style="padding: 1rem 1rem;">
+						<div style="padding: 1rem 1rem; padding-block: 0.6rem;">
 							<small class="text-muted">${list.regDate }</small>
 						</div>
 					</div>
@@ -331,7 +331,7 @@
 														$().ready(function(){
 															$.ajax({
 																type : "get",
-																url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=" + ${post.postId},
+																url : "${contextPath}/feed/getLikePost?memberId=" + memberId + "&postId=${post.postId}",
 																success : function(data){
 																	if(data){ document.getElementById("likeBtn${post.postId}").classList.replace('bx-heart', 'bxs-heart') } 
 																}

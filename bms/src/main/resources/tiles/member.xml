@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="member/login" extends="mainLayout"> <!-- 회원 로그인 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/client/member/login.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 로그인"></put-attribute>
+	</definition>
+
+	<definition name="member/register" extends="mainLayout">	<!-- 회원가입 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/client/member/register.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 회원가입"></put-attribute>
+	</definition>
+
+	<definition name="member/modify" extends="mainLayout">	<!-- 회원 정보 수정 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/client/member/modify.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 정보 수정"></put-attribute>
+	</definition>
+
+	<definition name="member/forgotPassword"
+		extends="mainLayout">	<!-- 비밀번호 찾기 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/client/member/forgotPassword.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 비밀번호 찾기"></put-attribute>
+	</definition>
+
+	<definition name="member/newPassword" extends="mainLayout">	<!-- 비밀번호 생성 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/client/member/newPassword.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그 새 비밀번호 생성"></put-attribute>
+	</definition>
+</tiles-definitions>

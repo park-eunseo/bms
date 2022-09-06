@@ -73,7 +73,7 @@
 }
 
 .postBody {
-	width: 85%;
+	width: 100%;
 	margin-top: -20px;
 	color: black;
 	min-height: 40rem;

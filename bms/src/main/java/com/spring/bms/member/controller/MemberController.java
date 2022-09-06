@@ -100,7 +100,7 @@ public class MemberController {
 	    
 		String jsScript = "<script>";
 			   jsScript += "alert('회원가입이 완료되었습니다.');";
-			   jsScript += "location.href='"+ request.getContextPath()+"/'";
+			   jsScript += "location.href='"+ request.getContextPath() + "/';";
 			   jsScript += "</script>";
 	
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
@@ -138,20 +138,24 @@ public class MemberController {
 				session.setAttribute("memberProfile", loginMember.getProfileName());
 				session.setAttribute("role", "client"); // 관리자인지 회원인지 구분하기 위해
 
-				jsScript = "<script>" + "location.href='" + request.getContextPath() + "/';" + "</script>";
+				jsScript = "<script>";
+				jsScript += "location.href='" + request.getContextPath() + "/';";
+				jsScript += "</script>";
 			}
 		} else if(memberService.adminCheck(memberDto)) { // admin 계정인지 확인, true면 admin 계정
 			session.setAttribute("memberId", memberDto.getId());
 			session.setAttribute("role", "admin"); // 관리자인지 회원인지 구분하기 위해
 			
-			jsScript = "<script>" + "location.href='" + request.getContextPath() + "/admin';" + "</script>";
+			jsScript = "<script>";
+			jsScript += "location.href='" + request.getContextPath() + "/admin';";
+			jsScript += "</script>";
 		}
 		
 		if(jsScript.equals("")) {
-			jsScript = "<script>"
-					 + "alert('아이디 또는 패스워드를 다시 입력해 주세요.');"
-					 + "history.go(-1);"
-					 + "</script>";
+			jsScript = "<script>";
+			jsScript += "alert('아이디 또는 패스워드를 다시 입력해 주세요.');";
+			jsScript += "history.go(-1);";
+			jsScript += "</script>";
 		}
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
@@ -165,10 +169,10 @@ public class MemberController {
 		HttpSession session = request.getSession();
 		session.invalidate();
 		
-		String jsScript = "<script>"
-						+ "alert('로그아웃되었습니다.');"
-						+ "location.href = '" + request.getContextPath() + "/';"
-						+ "</script>";			
+		String jsScript = "<script>";
+			   jsScript += "alert('로그아웃되었습니다.');";
+			   jsScript += "location.href = '" + request.getContextPath() + "/';";
+			   jsScript += "</script>";			
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
@@ -241,10 +245,10 @@ public class MemberController {
 		session.setAttribute("memberIntro", memberDto.getIntro());	
 		session.setAttribute("memberProfile", memberDto.getProfileName());
 		
-		String jsScript = "<script>"
-						+ "alert('수정이 완료되었습니다.');"
-						+ "location.href = '" + request.getContextPath() + "/';"
-						+ "</script>";
+		String jsScript = "<script>";
+			   jsScript	+= "alert('수정이 완료되었습니다.');";
+			   jsScript	+= "location.href = '" + request.getContextPath() + "/';";
+			   jsScript	+= "</script>";
 		
 		HttpHeaders responseHeaders = new HttpHeaders();
 	    responseHeaders.add("Content-Type", "text/html; charset=utf-8");
@@ -265,10 +269,10 @@ public class MemberController {
 		
 		session.invalidate();
 		
-		String jsScript = "<script>"
-				+ "alert('회원 탈퇴 완료되었습니다.');"
-				+ "location.href = '" + request.getContextPath() + "/';"
-				+ "</script>";
+		String jsScript = "<script>";
+				jsScript += "alert('회원 탈퇴 완료되었습니다.');";
+				jsScript += "location.href = '" + request.getContextPath() + "/';";
+				jsScript += "</script>";
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
@@ -324,10 +328,10 @@ public class MemberController {
 		memberDto.setPassword(pwEncoder.encode(memberDto.getPassword()));
 		memberService.updateNewPassword(memberDto);
 			
-		String jsScript = "<script>"
-				+ "alert('비밀번호 변경이 완료되었습니다.');"
-				+ "location.href = '" + request.getContextPath() + "/member/login';"
-				+ "</script>";
+		String jsScript = "<script>";
+				jsScript += "alert('비밀번호 변경이 완료되었습니다.');";
+				jsScript += "location.href = '" + request.getContextPath() + "/member/login';";
+				jsScript += "</script>";
 
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");

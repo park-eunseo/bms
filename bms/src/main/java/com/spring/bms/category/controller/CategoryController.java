@@ -43,13 +43,15 @@ public class CategoryController {
 		String jsScript = "";
 		
 		if(isCheck) {
-			jsScript = "<script>" + "alert('새 카테고리가 등록되었습니다.');" 
-					+ "location.href='" + request.getContextPath() + "/setCategory';"
-					+ "</script>";
+			jsScript = "<script>";
+			jsScript += "alert('새 카테고리가 등록되었습니다.');";
+			jsScript +=	"location.href='" + request.getContextPath() + "/setCategory';";
+			jsScript += "</script>";
 		} else {
-			jsScript = "<script>" + "alert('중복된 카테고리명입니다.');" 
-					+ "history.go(-1);"
-					+ "</script>";
+			jsScript = "<script>";
+			jsScript += "alert('중복된 카테고리명입니다.');";
+			jsScript +=	"history.go(-1);";
+			jsScript += "</script>";
 		}
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
@@ -65,20 +67,23 @@ public class CategoryController {
 		
 		if(action.equals("modify")) {
 			if(categoryService.modifyCategory(categoryDto)) { // 기존 카테고리명과 중복된 게 없다면 true
-				jsScript = "<script>" + "alert('카테고리명이 수정되었습니다.');" 
-							+ "location.href='" + request.getContextPath() + "/setCategory';"
-							+ "</script>";
+				jsScript = "<script>";
+				jsScript += "alert('카테고리명이 수정되었습니다.');";
+				jsScript += "location.href='" + request.getContextPath() + "/setCategory';";
+				jsScript +="</script>";
 			} else {
-					jsScript = "<script>" + "alert('중복된 카테고리명입니다.');" 
-						+ "history.go(-1);"
-						+ "</script>";
+				jsScript = "<script>";
+				jsScript += "alert('중복된 카테고리명입니다.');"; 
+				jsScript += "history.go(-1);";
+				jsScript +="</script>";
 			}
 		} else {
 			categoryService.deleteCategory(categoryDto);
 			
-			jsScript = "<script>" + "alert('카테고리가 삭제되었습니다.');" 
-					+ "location.href='" + request.getContextPath() + "/setCategory';"
-					+ "</script>";
+			jsScript = "<script>";
+			jsScript += "alert('카테고리가 삭제되었습니다.');";
+			jsScript += "location.href='" + request.getContextPath() + "/setCategory';";
+			jsScript += "</script>";
 		}
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);

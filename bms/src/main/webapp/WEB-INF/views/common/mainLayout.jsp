@@ -46,14 +46,20 @@
     <script src="${contextPath }/resources/bootstrap/js/config.js"></script>
 </head>
 <body>
-
+	<!-- Spinner Start -->
+	<div id="spinner"
+		class="show bg-white position-fixed translate-middle w-100 vh-100 top-50 start-50 d-flex align-items-center justify-content-center">
+		<div class="spinner-border text-secondary" role="status">
+			<span class="visually-hidden">Loading</span>
+		</div>
+	</div>
+	<!-- Spinner End -->
+	
 	<tiles:insertAttribute name="header"></tiles:insertAttribute>
 	<tiles:insertAttribute name="content"></tiles:insertAttribute>
 	<tiles:insertAttribute name="footer"></tiles:insertAttribute>
-	
 
 
-	
 	<!-- Core JS -->
     <!-- build:js assets/vendor/js/core.js -->
     <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
@@ -67,7 +73,6 @@
     <script src="${contextPath }/resources/bootstrap/libs/counterup/counterup.min.js"></script>
     <script src="${contextPath }/resources/bootstrap/libs/owlcarousel/owl.carousel.min.js"></script>
     <script src="${contextPath }/resources/bootstrap/libs/isotope/isotope.pkgd.min.js"></script>
-    <script src="${contextPath }/resources/bootstrap/libs/lightbox/js/lightbox.min.js"></script>
 
     <script src="${contextPath }/resources/bootstrap/js/menu.js"></script>
     <!-- endbuild -->

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="/adminHome" extends="mainLayout">	<!-- 관리자 홈페이지(회원 목록) -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/admin/member/memberList.jsp"></put-attribute>
+		<put-attribute name="title" value="관리자_심플로그"></put-attribute>
+	</definition>
+
+	<definition name="admin/memberPostList" extends="mainLayout">	<!-- 한 회원 게시글 목록 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/admin/member/memberPostList.jsp"></put-attribute>
+		<put-attribute name="title" value="관리자_심플로그"></put-attribute>
+	</definition>
+
+	<definition name="admin/writeNotice" extends="mainLayout">	<!-- 공지사항 작성 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/admin/notice/writeNotice.jsp"></put-attribute>
+		<put-attribute name="title" value="관리자_심플로그"></put-attribute>
+	</definition>
+
+	<definition name="admin/noticeList" extends="mainLayout">	<!-- 공지사항 목록 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/admin/notice/noticeList.jsp"></put-attribute>
+		<put-attribute name="title" value="관리자_심플로그"></put-attribute>
+	</definition>
+
+	<definition name="admin/detailNotice" extends="mainLayout">	<!-- 공지사항 게시글 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/admin/notice/detailNotice.jsp"></put-attribute>
+		<put-attribute name="title" value="관리자_심플로그"></put-attribute>
+	</definition>
+
+	<definition name="admin/modifyNotice" extends="mainLayout">	<!-- 공지사항 수정 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/admin/notice/modifyNotice.jsp"></put-attribute>
+		<put-attribute name="title" value="관리자_심플로그"></put-attribute>
+	</definition>
+</tiles-definitions>

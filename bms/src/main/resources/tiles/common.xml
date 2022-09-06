@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE tiles-definitions PUBLIC "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN" "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+
+<tiles-definitions>
+	<definition name="mainLayout"
+		template="/WEB-INF/views/common/mainLayout.jsp">	<!-- 메인 홈 레이아웃 -->
+		<put-attribute name="header"
+			value="/WEB-INF/views/common/mainHeader.jsp"></put-attribute>	<!-- 메인 홈 상단 -->
+		<put-attribute name="footer"
+			value="/WEB-INF/views/common/footer.jsp"></put-attribute>	<!-- 홈 하단 -->
+	</definition>
+
+	<definition name="detailLayout"
+		template="/WEB-INF/views/common/feedLayout.jsp"> <!-- 개인 블로그 메인 레이아웃 -->
+		<put-attribute name="header"
+			value="/WEB-INF/views/common/feedHeader.jsp"></put-attribute> <!-- 개인 블로그 헤더 -->
+		<put-attribute name="leftSide"
+			value="/WEB-INF/views/common/feedLeftSide.jsp"></put-attribute>
+		<put-attribute name="footer"
+			value="/WEB-INF/views/common/footer.jsp"></put-attribute>
+	</definition>
+
+	<definition name="/mainHome" extends="mainLayout">	<!-- 메인 홈페이지 -->
+		<put-attribute name="content"
+			value="/WEB-INF/views/common/mainHome.jsp"></put-attribute>
+		<put-attribute name="title" value="심플로그"></put-attribute>
+	</definition>
+</tiles-definitions>

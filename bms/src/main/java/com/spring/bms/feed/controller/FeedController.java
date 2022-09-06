@@ -164,8 +164,10 @@ public class FeedController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "alert('게시글이 등록되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/feed?id=" + postDto.getMemberId() + "';" + "</script>";
+		String jsScript = "<script>";
+			   jsScript += "alert('게시글이 등록되었습니다.');"; 
+			   jsScript += "location.href = '" + request.getContextPath() + "/feed?id=" + postDto.getMemberId() + "';"; 
+			   jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -228,8 +230,10 @@ public class FeedController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "alert('게시글이 수정되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/feed/detailPost?postId=" + postDto.getPostId() + "';" + "</script>";
+		String jsScript = "<script>"; 
+				jsScript += "alert('게시글이 수정되었습니다.');";
+				jsScript += "location.href = '" + request.getContextPath() + "/feed/detailPost?postId=" + postDto.getPostId() + "';";
+				jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -242,8 +246,10 @@ public class FeedController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "alert('게시글이 삭제되었습니다.');" + "location.href = '" + request.getContextPath()
-				+ "/feed?id=" + request.getSession().getAttribute("memberId") + "';" + "</script>";
+		String jsScript = "<script>";
+				jsScript += "alert('게시글이 삭제되었습니다.');";
+				jsScript += "location.href = '" + request.getContextPath() + "/feed?id=" + request.getSession().getAttribute("memberId") + "';";
+				jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -276,8 +282,9 @@ public class FeedController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
-								"/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';</script>";
+		String jsScript = "<script>";
+				jsScript +=	"location.href='" + request.getContextPath() + "/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';";
+				jsScript +=	"</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -289,8 +296,9 @@ public class FeedController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
-								"/feed/detailPost?postId=" + replyDto.getPostId() + "';</script>";
+		String jsScript = "<script>";
+				jsScript += "location.href='" + request.getContextPath() + "/feed/detailPost?postId=" + replyDto.getPostId() + "';";
+				jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -303,8 +311,9 @@ public class FeedController {
 		HttpHeaders responseHeaders = new HttpHeaders();
 		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
 
-		String jsScript = "<script>" + "location.href='" + request.getContextPath() + 
-								"/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';</script>";
+		String jsScript = "<script>";
+				jsScript += "location.href='" + request.getContextPath() + "/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';";
+				jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
@@ -343,7 +352,7 @@ public class FeedController {
 	public void thumbnails(@RequestParam("thumbnail") String thumbnailName, HttpServletResponse response)
 			throws IOException {
 		OutputStream out = response.getOutputStream(); // 데이터를 출력할 메서드
-//		String filePath = "C:\\thumbnailFile\\" + thumbnailName;	   // window
+//		String filePath = "C:\\thumbnailFile\\" + thumbnailName;	   		 // window
 		String filePath = "/var/lib/tomcat9/thumbnailFile/" + thumbnailName; // linux
 
 		File file = new File(filePath);

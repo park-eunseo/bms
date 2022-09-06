@@ -17,7 +17,7 @@
 	padding-left: 1rem;
 	padding-right: 1rem;
 	color: #868686;
-	font-size: 10px"
+	font-size: 12px;
 }
 
 .profile {
@@ -27,8 +27,7 @@
 	width: 80px;
 }
 
-.nickname {
-	font-size: 12px;
+.asideNickname {
     font-size: 13px;
     font-weight: bold;
     color: #616161;
@@ -111,7 +110,7 @@
 		</div>
 		<div class="text-center mb-3">
 			<div style="padding-top: 10px;">
-				<a class="nav-link nickname" href="javascript:void(0)" id="modifyInfo" role="button" data-bs-toggle="dropdown">
+				<a class="nav-link asideNickname" href="javascript:void(0)" id="modifyInfo" role="button" data-bs-toggle="dropdown">
 					${memberInfo.nickname} </a>
 				<c:if test="${memberInfo.id eq sessionScope.memberId}">
 					<ul class="dropdown-menu" aria-labelledby="navbarDropdown"

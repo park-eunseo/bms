@@ -10,16 +10,16 @@
 <head>
 <style>
 .postTitle {
-    height: 25px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    display: -webkit-box;
-    -webkit-line-clamp: 1;
-    -webkit-box-orient: vertical;
-    font-size: 18px;
-    font-weight: 500;
-    color: black;
+	height: 25px;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	white-space: normal;
+	display: -webkit-box;
+	-webkit-line-clamp: 1;
+	-webkit-box-orient: vertical;
+	font-size: 18px;
+	font-weight: 500;
+	color: black;
 }
 
 .lock {
@@ -34,10 +34,10 @@
 }
 
 .title {
-    margin-block: 10px;
-    font-size: larger;
-    font-weight: 500;
-    color: #384d65;
+	margin-block: 10px;
+	font-size: larger;
+	font-weight: 500;
+	color: #384d65;
 }
 
 .contentText {
@@ -61,7 +61,6 @@
 	width: 95%;
 	object-fit: cover;
 }
-
 </style>
 <meta charset="utf-8" />
 <meta name="viewport"
@@ -78,9 +77,10 @@
 
 <body>
 	<!-- 블로그 카드 시작 부분 -->
-	<div class="container-xxl flex-grow-1 container-p-y" style="width: 90%; min-height: 500px;">
+	<div class="container-xxl flex-grow-1 container-p-y"
+		style="width: 90%; min-height: 500px;">
 		<div class="row" style="justify-content: center;">
-		<span style="padding-left: 20px">전체(${totalPostCount })</span>
+			<span style="padding-left: 20px">전체(${totalPostCount })</span>
 			<c:if test="${not empty postList }">
 				<c:forEach var="post" items="${postList }">
 					<hr style="margin: 0.2rem; width: 95%;">
@@ -97,7 +97,9 @@
 												<i class='bx bxs-lock-alt lock'></i>
 											</c:if>
 											${post.title }
-										</p><span class="card-text contentText" style="min-height: <c:if test="${not empty post.thumbnail }">70px</c:if>">
+										</p>
+										<span class="card-text contentText"
+										style="min-height: <c:if test="${not empty post.thumbnail }">70px</c:if>">
 											${post.content }</span>
 									</a>
 									<div class="sideText">
@@ -173,3 +175,5 @@
 			</ul>
 		</div>
 	</c:if>
+</body>
+</html>
