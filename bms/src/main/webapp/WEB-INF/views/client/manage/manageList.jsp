@@ -112,7 +112,7 @@
 											<tr >
 												<th style="padding-left: 35px;">번호</th>
 												<th>블로그명</th>
-												<th style="padding-left: 35px;">닉네임(ID)</th>
+												<th>닉네임(ID)</th>
 												<th>삭제</th>
 											</tr>
 										</thead>
@@ -125,8 +125,7 @@
 															<a href="${contextPath }/feed?id=${list.id}">
 																${list.blogName }
 															</a></td>		
-														<td><i class="fab fa-angular fa-lg text-danger me-3"></i>
-															<a href="${contextPath }/feed?id=${list.id}">
+														<td><a href="${contextPath }/feed?id=${list.id}">
 																<strong>${list.nickname }(${list.id })</strong>
 															</a>
 														</td>

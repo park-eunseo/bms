@@ -105,7 +105,7 @@
 
 	</select>
 	
-	<select id="selectToTalPostCount" parameterType="map" resultType="int">
+	<select id="selectTotalPostCount" parameterType="map" resultType="int">
 		<choose>
 			<when test='sessionId != id'> <!-- 내 계정이 아니라면 비공개 글 제외하고 -->
 				SELECT

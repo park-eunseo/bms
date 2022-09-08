@@ -17,11 +17,6 @@ import com.spring.bms.member.dto.MemberDto;
 public class FeedDaoImpl implements FeedDao {
 	@Autowired
 	private SqlSession sqlSession;
-	
-	@Override
-	public void insertPost(PostDto postDto) throws Exception {
-		sqlSession.insert("feed.insertPost", postDto);
-	}
 
 	@Override
 	public MemberDto selectOneMember(String id) throws Exception {
@@ -36,6 +31,11 @@ public class FeedDaoImpl implements FeedDao {
 	@Override
 	public PostDto selectOnePost(String postId) throws Exception {
 		return sqlSession.selectOne("feed.selectOnePost", postId);
+	}
+	
+	@Override
+	public void insertPost(PostDto postDto) throws Exception {
+		sqlSession.insert("feed.insertPost", postDto);
 	}
 
 	@Override
@@ -113,8 +113,8 @@ public class FeedDaoImpl implements FeedDao {
 	}
 	
 	@Override
-	public int selectToTalPostCount(Map<String, Object> countMap) throws Exception {
-		return sqlSession.selectOne("feed.selectToTalPostCount", countMap);
+	public int selectTotalPostCount(Map<String, Object> countMap) throws Exception {
+		return sqlSession.selectOne("feed.selectTotalPostCount", countMap);
 	}
 
 }

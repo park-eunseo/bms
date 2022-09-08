@@ -19,13 +19,13 @@ public class NoticeController {
 	private NoticeService noticeService;
 	
 	@PostMapping("/addNotice")
-	public void insertNotice(NoticeDto noticeDto) throws Exception {
+	public void addNotice(NoticeDto noticeDto) throws Exception {
 		noticeService.addNotice(noticeDto);
 	}
 	
 	@ResponseBody
 	@GetMapping("/noticeList")
-	public List<NoticeDto> selectNoticeList(String id) throws Exception {
+	public List<NoticeDto> getNoticeList(String id) throws Exception {
 		List<NoticeDto> noticeList = noticeService.getNoticeList(id);
 		
 		for (NoticeDto noticeDto : noticeList) {
@@ -45,7 +45,7 @@ public class NoticeController {
 	}
 	
 	@GetMapping("/deleteNotice")
-	public void deleteNoticr(NoticeDto noticeDto) throws Exception {
+	public void deleteNotice(NoticeDto noticeDto) throws Exception {
 		noticeService.deleteNotice(noticeDto);
 	}
 }

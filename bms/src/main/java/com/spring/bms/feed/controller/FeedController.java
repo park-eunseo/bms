@@ -289,6 +289,21 @@ public class FeedController {
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 	
+	@PostMapping("/modifyReply")
+	public ResponseEntity<Object> modifyReply(HttpServletRequest request, ReplyDto replyDto,
+			@RequestParam("id") String id) throws Exception{
+		feedService.modifyReply(replyDto);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
+		String jsScript = "<script>";
+		jsScript += "location.href='" + request.getContextPath() + "/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';";
+		jsScript += "</script>";
+		
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
 	@GetMapping("/deleteReply") // 댓글 삭제
 	public ResponseEntity<Object> deleteReply(HttpServletRequest request, ReplyDto replyDto) throws Exception {
 		feedService.deleteReply(replyDto);
@@ -298,21 +313,6 @@ public class FeedController {
 
 		String jsScript = "<script>";
 				jsScript += "location.href='" + request.getContextPath() + "/feed/detailPost?postId=" + replyDto.getPostId() + "';";
-				jsScript += "</script>";
-
-		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
-	}
-
-	@PostMapping("/modifyReply")
-	public ResponseEntity<Object> modifyReply(HttpServletRequest request, ReplyDto replyDto,
-										@RequestParam("id") String id) throws Exception{
-		feedService.modifyReply(replyDto);
-		
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-
-		String jsScript = "<script>";
-				jsScript += "location.href='" + request.getContextPath() + "/feed/detailPost?id=" + id + "&postId=" + replyDto.getPostId() + "';";
 				jsScript += "</script>";
 
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);

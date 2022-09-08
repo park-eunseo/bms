@@ -19,11 +19,6 @@ public class FeedServiceImpl implements FeedService {
 	private FeedDao feedDao;
 	
 	@Override
-	public void addPost(PostDto postDto) throws Exception {	
-		feedDao.insertPost(postDto);
-	}
-	
-	@Override
 	public MemberDto getOneMember(String id) throws Exception {
 		return feedDao.selectOneMember(id);
 	}
@@ -39,6 +34,11 @@ public class FeedServiceImpl implements FeedService {
 	}
 
 	@Override
+	public void addPost(PostDto postDto) throws Exception {	
+		feedDao.insertPost(postDto);
+	}
+	
+	@Override
 	public void modifyPost(PostDto postDto) throws Exception {
 		feedDao.updatePost(postDto);
 	}
@@ -52,20 +52,20 @@ public class FeedServiceImpl implements FeedService {
 	public void writeReply(ReplyDto replyDto) throws Exception {
 		feedDao.insertReply(replyDto);
 	}
-
+	
 	@Override
-	public List<ReplyDto> getReplyList(String postId) throws Exception {
-		return feedDao.selectReplyList(postId);
+	public void modifyReply(ReplyDto replyDto) throws Exception {
+		feedDao.updateReply(replyDto);
 	}
 
 	@Override
 	public void deleteReply(ReplyDto replyDto) throws Exception {
 		feedDao.deleteReply(replyDto);
 	}
-
+	
 	@Override
-	public void modifyReply(ReplyDto replyDto) throws Exception {
-		feedDao.updateReply(replyDto);
+	public List<ReplyDto> getReplyList(String postId) throws Exception {
+		return feedDao.selectReplyList(postId);
 	}
 
 	@Override
@@ -90,7 +90,7 @@ public class FeedServiceImpl implements FeedService {
 
 	@Override
 	public int getTotalPostCount(Map<String, Object> countMap) throws Exception {
-		return feedDao.selectToTalPostCount(countMap);
+		return feedDao.selectTotalPostCount(countMap);
 	}
 
 }

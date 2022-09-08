@@ -84,8 +84,8 @@
 							<tbody class="table-border-bottom-0">
 								<tr>
 									<td><a href="#" onclick="return setCategory(this)"
-										data-value="${category.categoryId }"> <i
-											class="fab fa-angular fa-lg text-danger me-3"></i> <strong>${category.categoryTitle }</strong></a>
+										data-value="${category.categoryId }">
+										<strong>${category.categoryTitle }</strong></a>
 									</td>
 								</tr>
 							</tbody>

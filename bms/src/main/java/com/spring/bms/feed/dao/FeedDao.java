@@ -25,5 +25,5 @@ public interface FeedDao {
 	public boolean selectLikeMember(LikeMemberDto likeMemberDto) throws Exception;
 	public int selectReplyCount(String postId) throws Exception;
 	public int selectLikeCount(String postId) throws Exception;
-	public int selectToTalPostCount(Map<String, Object> countMap) throws Exception;
+	public int selectTotalPostCount(Map<String, Object> countMap) throws Exception;
 }

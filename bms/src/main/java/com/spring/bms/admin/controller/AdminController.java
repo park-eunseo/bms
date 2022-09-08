@@ -72,7 +72,7 @@ public class AdminController {
 	}
 	
 	@GetMapping("/memberPostList")
-	public ModelAndView postList(@RequestParam(name="currentPage", defaultValue = "1") int currentPage,
+	public ModelAndView getPostList(@RequestParam(name="currentPage", defaultValue = "1") int currentPage,
 								 @RequestParam("id") String memberId) throws Exception {
 		ModelAndView mv = new ModelAndView();
 		
@@ -153,6 +153,59 @@ public class AdminController {
 		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 	
+	@GetMapping("/modifyNotice")
+	public ModelAndView modifyNotice(HttpServletRequest request, 
+			@RequestParam("noticeId") String noticeId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("detailNotice", adminService.getOneNotice(noticeId));
+		mv.setViewName("admin/modifyNotice");
+		
+		return mv;
+	}
+	
+	@PostMapping("/modifyNotice")
+	public ResponseEntity<Object> modifyNotice(HttpServletRequest request, ManagerNoticeDto managerNoticeDto) throws Exception {
+		adminService.modifyNotice(managerNoticeDto);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+		
+		String jsScript = "<script>";
+		jsScript += "alert('공지사항이 수정되었습니다.');";
+		jsScript += "location.href = '" + request.getContextPath() + "/admin/detailNotice?noticeId=" + managerNoticeDto.getNoticeId() + "';";
+		jsScript += "</script>";
+		
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
+	@GetMapping("/detailNotice")
+	public ModelAndView detailNotice(HttpServletRequest request, 
+									@RequestParam("noticeId") String noticeId) throws Exception {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("detailNotice", adminService.getOneNotice(noticeId));
+		mv.setViewName("admin/detailNotice");
+		
+		return mv;
+	}
+	
+	@GetMapping("/deleteNotice")
+	public ResponseEntity<Object> deleteNotice(HttpServletRequest request, 
+											  @RequestParam("noticeId") String noticeId) throws Exception{
+		adminService.deleteNotice(noticeId);
+		
+		HttpHeaders responseHeaders = new HttpHeaders();
+		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
+
+		String jsScript = "<script>";
+				jsScript += "alert('공지사항이 삭제되었습니다.');";
+				jsScript +="location.href = '" + request.getContextPath() + "/admin/noticeList';";
+				jsScript +="</script>";
+
+		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
+	}
+	
 	@GetMapping("/noticeList") // 공지사항 목록
 	public ModelAndView noticeList(@RequestParam(name = "currentPage", defaultValue = "1") int currentPage) throws Exception {
 		ModelAndView mv = new ModelAndView();
@@ -199,58 +252,5 @@ public class AdminController {
 		mv.setViewName("admin/noticeList");
 		
 		return mv;
-	}
-	
-	@GetMapping("/detailNotice")
-	public ModelAndView detailNotice(HttpServletRequest request, 
-									@RequestParam("noticeId") String noticeId) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("detailNotice", adminService.getOneNotice(noticeId));
-		mv.setViewName("admin/detailNotice");
-		
-		return mv;
-	}
-	
-	@GetMapping("/deleteNotice")
-	public ResponseEntity<Object> deleteNotice(HttpServletRequest request, 
-											  @RequestParam("noticeId") String noticeId) throws Exception{
-		adminService.deleteNotice(noticeId);
-		
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-
-		String jsScript = "<script>";
-				jsScript += "alert('공지사항이 삭제되었습니다.');";
-				jsScript +="location.href = '" + request.getContextPath() + "/admin/noticeList';";
-				jsScript +="</script>";
-
-		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
-	}
-	
-	@GetMapping("/modifyNotice")
-	public ModelAndView modifyNotice(HttpServletRequest request, 
-									@RequestParam("noticeId") String noticeId) throws Exception {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("detailNotice", adminService.getOneNotice(noticeId));
-		mv.setViewName("admin/modifyNotice");
-		
-		return mv;
-	}
-	
-	@PostMapping("/modifyNotice")
-	public ResponseEntity<Object> modifyNotice(HttpServletRequest request, ManagerNoticeDto managerNoticeDto) throws Exception {
-		adminService.modifyNotice(managerNoticeDto);
-
-		HttpHeaders responseHeaders = new HttpHeaders();
-		responseHeaders.add("Content-Type", "text/html; charset=utf-8");
-
-		String jsScript = "<script>";
-			   jsScript += "alert('공지사항이 수정되었습니다.');";
-			   jsScript += "location.href = '" + request.getContextPath() + "/admin/detailNotice?noticeId=" + managerNoticeDto.getNoticeId() + "';";
-			   jsScript += "</script>";
-
-		return new ResponseEntity<Object>(jsScript, responseHeaders, HttpStatus.OK);
 	}
 }

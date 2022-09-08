@@ -257,7 +257,7 @@ public class MemberController {
 	}
 	
 	@GetMapping("/delete")
-	public ResponseEntity<Object> delete(HttpServletRequest request, @RequestParam("id") String id) throws Exception {
+	public ResponseEntity<Object> deleteMember(HttpServletRequest request, @RequestParam("id") String id) throws Exception {
 		HttpSession session = request.getSession();
 		
 		if(!session.getAttribute("memberProfile").equals("basicImg.jpg")) {

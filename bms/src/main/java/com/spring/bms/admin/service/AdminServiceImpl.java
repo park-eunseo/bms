@@ -50,6 +50,16 @@ public class AdminServiceImpl implements AdminService {
 	public void writeNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
 		adminDao.insertNotice(managerNoticeDto);
 	}
+	
+	@Override
+	public void modifyNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
+		adminDao.updateNotice(managerNoticeDto);
+	}
+	
+	@Override
+	public void deleteNotice(String noticeId) throws Exception {
+		adminDao.deleteNotice(noticeId);
+	}
 
 	@Override
 	public int getTotalNoticeCount() throws Exception {
@@ -64,15 +74,5 @@ public class AdminServiceImpl implements AdminService {
 	@Override
 	public ManagerNoticeDto getOneNotice(String noticeId) throws Exception {
 		return adminDao.selectOneNotice(noticeId);
-	}
-
-	@Override
-	public void deleteNotice(String noticeId) throws Exception {
-		adminDao.deleteNotice(noticeId);
-	}
-
-	@Override
-	public void modifyNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
-		adminDao.updateNotice(managerNoticeDto);
 	}
 }

@@ -50,6 +50,16 @@ public class AdminDaoImpl implements AdminDao {
 	public void insertNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
 		sqlSession.insert("admin.insertNotice", managerNoticeDto);
 	}
+	
+	@Override
+	public void deleteNotice(String noticeId) throws Exception {
+		sqlSession.delete("admin.deleteNotice", noticeId);
+	}
+	
+	@Override
+	public void updateNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
+		sqlSession.update("admin.updateNotice", managerNoticeDto);
+	}
 
 	@Override
 	public int selectTotalNoticeCount() throws Exception {
@@ -64,15 +74,5 @@ public class AdminDaoImpl implements AdminDao {
 	@Override
 	public ManagerNoticeDto selectOneNotice(String noticeId) throws Exception {
 		return sqlSession.selectOne("admin.selectOneNotice", noticeId);
-	}
-
-	@Override
-	public void deleteNotice(String noticeId) throws Exception {
-		sqlSession.delete("admin.deleteNotice", noticeId);
-	}
-
-	@Override
-	public void updateNotice(ManagerNoticeDto managerNoticeDto) throws Exception {
-		sqlSession.update("admin.updateNotice", managerNoticeDto);
 	}
 }
