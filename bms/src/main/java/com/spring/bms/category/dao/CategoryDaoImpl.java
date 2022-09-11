@@ -44,6 +44,7 @@ public class CategoryDaoImpl implements CategoryDao {
 
 	@Override
 	public void deleteCategory(CategoryDto categoryDto) throws Exception {
+		sqlsession.update("category.updateBasicCategory", categoryDto);
 		sqlsession.delete("category.deleteCategory", categoryDto);
 	}
 

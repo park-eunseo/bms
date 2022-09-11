@@ -133,7 +133,7 @@
 			<div class="navbar-nav align-items-center"
 				style="display: -webkit-inline-box; margin-left: auto; margin-right: -15px;">
 				<c:choose>
-					<c:when test="${memberInfo.id eq  sessionScope.memberId}">
+					<c:when test="${not empty sessionScope.memberId && memberInfo.id eq sessionScope.memberId}">
 						<button type="button" class="btn rounded-pill headerBtn"
 							onclick="location.href='${contextPath}/feed/writePost'">
 							<span class="tf-icons bx bx-pencil"></span>
@@ -146,24 +146,32 @@
 						</button>
 					</c:when>
 					<c:otherwise>
-						<button type="button" class="btn rounded-pill headerBtn"
-							onclick="location.href='${contextPath}/feed?id=${sessionScope.memberId }'">
-							<span class="tf-icons bx bxs-home"></span>
-						</button>
+						<c:if test="${not empty sessionScope.memberId && memberInfo.id ne sessionScope.memberId && sessionScope.role eq 'client'}">
+							<button type="button" class="btn rounded-pill headerBtn"
+								onclick="location.href='${contextPath}/feed?id=${sessionScope.memberId }'">
+								<span class="tf-icons bx bxs-home"></span>
+							</button>
+						</c:if>
 					</c:otherwise>
 				</c:choose>
-				<hr
-					style="width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px;">
+				
 				<!-- 알림 -->
-				<button type="button" class="btn rounded-pill headerBtn"
-					data-bs-toggle="dropdown" aria-expanded="false">
-					<span class="tf-icons bx bxs-bell"></span> 
-					<span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20"
-						style="top: -8px; margin-left: -5px;" id="noticeCount">0</span>
-				</button>
-				<ul class="dropdown-menu" style="left: auto; position: absolute; right: 0;" id="noticeList">
-
-				</ul>
+				<c:if test="${not empty sessionScope.memberId && sessionScope.role eq 'client'}">
+					<hr style="width: 0.7px; height: 30px; margin-left: 2px; margin-right: 2px;">
+					<button type="button" class="btn rounded-pill headerBtn"
+						data-bs-toggle="dropdown" aria-expanded="false">
+						<span class="tf-icons bx bxs-bell"></span> 
+						<span class="flex-shrink-0 badge badge-center rounded-pill bg-danger w-px-20 h-px-20"
+							style="top: -8px; margin-left: -5px;" id="noticeCount">0</span>
+					</button>
+					<ul class="dropdown-menu" style="left: auto; position: absolute; right: 0;" id="noticeList">
+					</ul>
+				</c:if>
+				<c:if test="${empty sessionScope.memberId}">
+					<button type="button" class="btn rounded-pill" onclick="location.href='${contextPath}/member/login'">
+						<i class='bx bx-power-off'></i>
+					</button>
+				</c:if>
 			</div>
 		</div>
 	</nav>

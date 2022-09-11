@@ -95,7 +95,7 @@
 								<!-- 추가 -->
 								<tr>
 									<td><input type="text" class="form-control categoryInput"
-										id="newCategory" name="categoryTitle"
+										id="newCategory" name="categoryTitle" style="box-shadow: none;"
 										placeholder="10자 이내로 입력해 주세요.">
 										<button type="submit"
 											class="btn rounded-pill btn-outline-dark"

@@ -23,11 +23,11 @@
 </style>
 <script src="${contextPath }/resources/bootstrap/libs/jquery/jquery.js"></script>
 <script>
-	function deleteNotice() {
-		var check = confirm("삭제하시겠습니까?")
+	function deleteNotice(noticeId) {
+		var check = confirm("공지사항을 삭제하시겠습니까?")
 
 		if (check) {
-			location.href = "${contextPath }/admin/deleteNotice?noticeId=${detailNotice.noticeId}"
+			location.href = "${contextPath }/admin/deleteNotice?noticeId=" + noticeId
 		} else {
 			history.go(0)
 		}
@@ -48,7 +48,7 @@
 						<ul class="dropdown-menu dropdown-menu-end"
 							style="text-align-last: start; min-inline-size: auto;">
 							<li><a class="dropdown-item" href="${contextPath }/admin/modifyNotice?noticeId=${detailNotice.noticeId}">수정하기</a></li>
-							<li><button class="dropdown-item" onclick="deleteNotice()">삭제하기</button></li>
+							<li><button class="dropdown-item" onclick="deleteNotice('${detailNotice.noticeId}')">삭제하기</button></li>
 						</ul>
 					</div>
 				</div>

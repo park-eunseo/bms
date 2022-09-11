@@ -41,6 +41,19 @@
 				CATEGORY_ID = #{categoryId}
 	</update>
 	
+	<update id="updateBasicCategory" parameterType="CategoryDto">
+		UPDATE
+				CATEGORY C
+						JOIN MEMBER M
+						  ON C.MEMBER_ID = M.ID AND C.CATEGORY_ID = #{categoryId}
+						JOIN POST P 
+						  ON C.MEMBER_ID = P.MEMBER_ID
+		SET 
+				P.CATEGORY_TITLE = '전체'
+		WHERE
+				P.CATEGORY_TITLE = C.CATEGORY_TITLE
+	</update>
+	
 	<delete id="deleteCategory" parameterType="CategoryDto">
 		DELETE FROM
 				CATEGORY

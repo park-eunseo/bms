@@ -28,6 +28,15 @@
 		$("#currentBlock${currentPage}").addClass("active")
 	})
 
+	function deleteNotice(noticeId) {
+		var check = confirm("공지사항을 삭제하시겠습니까?")
+
+		if (check) {
+			location.href = "${contextPath }/admin/deleteNotice?noticeId=" + noticeId
+		} else {
+			history.go(0)
+		}
+	}
 </script>
 </head>
 <body>

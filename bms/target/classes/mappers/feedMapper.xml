@@ -232,7 +232,7 @@
 		FROM
 				REPLY R
 					JOIN MEMBER M
-				ON R.MEMBER_ID = M.ID
+					  ON R.MEMBER_ID = M.ID
 		WHERE
 				POST_ID = #{postId}
 		ORDER BY
