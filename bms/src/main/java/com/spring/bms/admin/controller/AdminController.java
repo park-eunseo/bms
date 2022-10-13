@@ -90,10 +90,10 @@ public class AdminController {
 		
 		int startPageBlock = 1;
 		
-		if(currentPage % 5 == 0) startPageBlock = (currentPage / 5 - 1) * 5 + 1;
+		if(currentPage % 5 == 0) startPageBlock = (currentPage / 5 - 1) * 5 + 1; // 시작 블록 번호
 		else startPageBlock = (currentPage / 5) * 5 + 1;
 		
-		int endPageBlock = startPageBlock + 5 - 1;
+		int endPageBlock = startPageBlock + 5 - 1; // 마지막 블록 번호
 		
 		if(endPageBlock > totalPageBlock) endPageBlock = totalPageBlock; 
 		

@@ -69,6 +69,7 @@
 	padding: inheritl;
 	vertical-align: text-top;
 }
+
 </style>
 <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script>
@@ -93,7 +94,8 @@
 						test="${searchKeyword eq 'blogName'}">블로그명</c:if> <c:if
 						test="${searchKeyword eq 'post'}">게시글</c:if>
 					&ensp;·&ensp;${searchWord}
-				</span>&ensp;검색 결과 <span>&ensp;${totalResultCount}개</span>
+				</span>&ensp;검색 결과
+				<span>&ensp;${totalResultCount}개</span>
 			</div>
 			<c:if test="${searchKeyword eq 'post'}">
 				<div>
@@ -122,9 +124,10 @@
 								<div style="padding: 0.1rem;">
 									<img
 										src="${contextPath }/member/thumbnails?profileName=${member.profile}"
-										class="w-px-40 rounded-circle profileImg"> <a
-										href="${contextPath}/feed?id=${member.id }" class="id">
-										${member.nickname }(${member.id })</a> <span class="introText">${member.intro }</span>
+										class="w-px-40 rounded-circle profileImg"> 
+									<a href="${contextPath}/feed?id=${member.id }" class="id">
+										${member.nickname }(${member.id })</a>
+									<span class="introText">${member.intro }</span>
 								</div>
 							</div>
 						</div>
@@ -213,30 +216,31 @@
 			</c:if>
 		</div>
 	</div>
-	<c:if test="${totalResultCount gt 0 }">
-		<div>
-			<ul class="pagination pageBlock">
-				<c:if test="${startPageBlock gt 5 }">
-					<li class="page-item prev"><a class="page-link"
-						href="${contextPath }/search?currentPage=${startPageBlock-5}&searchKeyword=${searchKeyword}&searchWord=${searchWord}&sort=${sort}">
-							<i class="tf-icon bx bx-chevron-left"></i>
-					</a></li>
-				</c:if>
-				<c:forEach var="i" begin="${startPageBlock }" end="${endPageBlock }">
-					<li class="page-item" id="currentBlock${i }"><a
-						class="page-link"
-						href="${contextPath }/search?currentPage=${i}&searchKeyword=${searchKeyword}&searchWord=${searchWord}&sort=${sort}">${i }</a>
-					</li>
-				</c:forEach>
-				<c:if
-					test="${endPageBlock le totalResultCount && endPageBlock ge 5 && endPageBlock ne totalPageBlock}">
-					<li class="page-item next"><a class="page-link"
-						href="${contextPath }/search?currentPage=${startPageBlock+5}&searchKeyword=${searchKeyword}&searchWord=${searchWord}&sort=${sort}">
-							<i class="tf-icon bx bx-chevron-right"></i>
-					</a></li>
-				</c:if>
-			</ul>
-		</div>
-	</c:if>
+		<c:if test="${totalResultCount gt 0 }">
+			<div>
+					<ul class="pagination pageBlock">
+						<c:if test="${startPageBlock gt 5 }">
+							<li class="page-item prev">
+								<a class="page-link" href="${contextPath }/search?currentPage=${startPageBlock-5}&searchKeyword=${searchKeyword}&searchWord=${searchWord}&sort=${sort}"> 
+									<i class="tf-icon bx bx-chevron-left"></i>
+								</a>
+							</li>
+						</c:if>
+						<c:forEach var="i" begin="${startPageBlock }" end="${endPageBlock }">
+							<li class="page-item" id="currentBlock${i }">
+								<a class="page-link" 
+									href="${contextPath }/search?currentPage=${i}&searchKeyword=${searchKeyword}&searchWord=${searchWord}&sort=${sort}">${i }</a>
+							</li>
+						</c:forEach>
+						<c:if test="${endPageBlock le totalResultCount && endPageBlock ge 5 && endPageBlock ne totalPageBlock}">
+							<li class="page-item next">
+								<a class="page-link" href="${contextPath }/search?currentPage=${startPageBlock+5}&searchKeyword=${searchKeyword}&searchWord=${searchWord}&sort=${sort}"> 
+									<i class="tf-icon bx bx-chevron-right"></i>
+								</a>
+							</li>
+						</c:if>
+					</ul>
+			</div>
+		</c:if>
 </body>
 </html>
