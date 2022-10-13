@@ -42,9 +42,9 @@
 <body>
 	<div class="card"
 		style="width: 95%; min-height: 400px; margin-inline: auto;">
-		<a href="/bms/admin" style="padding-inline: 1rem;">
+		<a href="${contextPath }/admin" style="padding-inline: 1rem;">
 			<i class="bx bx-chevron-left"></i>회원 목록</a>
-		<a href="/bms/admin/writeNotice" style="padding-inline: 1rem;">
+		<a href="${contextPath }/admin/writeNotice" style="padding-inline: 1rem;">
 			<i class="bx bx-chevron-left"></i>공지사항 작성</a>
 		<h5 class="card-header">공지사항 목록</h5>
 		<div class="table-responsive text-nowrap"

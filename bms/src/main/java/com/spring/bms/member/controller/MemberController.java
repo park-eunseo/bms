@@ -262,7 +262,7 @@ public class MemberController {
 		
 		if(!session.getAttribute("memberProfile").equals("basicImg.jpg")) {
 			new File("/var/lib/tomcat9/profile/" + session.getAttribute("memberProfile")).delete(); // 프로필 파일 수정 전 파일 삭제
-		} // /var/lib/tomcat9/profile/ : libux, C:\\profile\\ : window
+		} // /var/lib/tomcat9/profile/ : linux, C:\\profile\\ : window
 		 
 		
 		memberService.deleteMember(id);
