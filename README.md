@@ -1,4 +1,4 @@
-# 📃 Sim8log
+# 📃 Sim8log(심플로그)
 > 일상 웹 블로그 사이트  
 > http://sim8log.com/ 
 
@@ -20,8 +20,9 @@
 </br>
 
 ## 3. ERD 설계
-![bms_erd](https://user-images.githubusercontent.com/98097222/195582218-017ddf93-43de-40e9-8061-b38af7623bb9.png)
+- 테이블 정의서  
 
+![bms_erd](https://user-images.githubusercontent.com/98097222/195607307-2de232bc-3903-47b3-b143-3e039f296808.png)
 
 ## 4. 핵심 기능
 이 서비스의 핵심 기능은 컨텐츠 등록 기능입니다.  
