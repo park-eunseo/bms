@@ -25,7 +25,7 @@
 </br>
 
 ## 3. ERD 설계
- - [테이블 정의서](https://www.notion.so/a0f5131983d44dd1889cfada26dc9b19)
+ - [테이블 정의서](https://freckle-web-d61.notion.site/a0f5131983d44dd1889cfada26dc9b19)
 
 ![bms_erd](https://user-images.githubusercontent.com/98097222/195607307-2de232bc-3903-47b3-b143-3e039f296808.png)
 
