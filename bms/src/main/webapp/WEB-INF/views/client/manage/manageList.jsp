@@ -29,7 +29,7 @@
 	function deleteLikePost(postId){
 		$.ajax({
 			type : "get",
-			url : "${contextPath}/feed/notLikePost?memberId=" + memberId + "&postId=" + postId,
+			url : "${contextPath}/manage/notLikePost?memberId=" + memberId + "&postId=" + postId,
 			success : function(){
 				history.go(0)
 			}			
@@ -42,7 +42,7 @@
 		if(dMember){
 			$.ajax({
 				type : "get",
-				url : "${contextPath}/feed/notLikeMember?memberId=" + memberId + "&favoriteId=" + favoriteId,
+				url : "${contextPath}/manage/notLikeMember?memberId=" + memberId + "&favoriteId=" + favoriteId,
 				success : function(){
 					history.go(0)
 				}			
