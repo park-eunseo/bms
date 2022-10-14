@@ -25,11 +25,14 @@
 </br>
 
 ## 3. ERD 설계
-- 테이블 정의서  
+ - [테이블 정의서](https://www.notion.so/a0f5131983d44dd1889cfada26dc9b19)
 
 ![bms_erd](https://user-images.githubusercontent.com/98097222/195607307-2de232bc-3903-47b3-b143-3e039f296808.png)
 
 ## 4. 주요 기능
+
+- [사용자 매뉴얼](https://www.notion.so/877fff312e2a4438905768bcc796e263)
+- [관리자 매뉴얼](https://www.notion.so/9e795512a37a4d1aa31317e9e0d9394c)
 </br>
 
 ## 5. 트러블 슈팅
