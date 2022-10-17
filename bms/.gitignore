@@ -1,3 +1,5 @@
+/build/
+
 # Created by https://www.toptal.com/developers/gitignore/api/eclipse
 # Edit at https://www.toptal.com/developers/gitignore?templates=eclipse
 
@@ -13,6 +15,12 @@ local.properties
 .settings/
 .loadpath
 .recommenders
+
+# Eclipse Core       
+.project 
+
+# JDT-specific (Eclipse Java Development Tools)      
+.classpath
 
 # External tool builders
 .externalToolBuilders/
