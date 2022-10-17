@@ -25,11 +25,12 @@
 
 </br>
 
-## 3. ERD 설계
- - [테이블 정의서](https://freckle-web-d61.notion.site/b774b1cf286d4bccb6b444394332f968)
-
-![bms_erd](https://user-images.githubusercontent.com/98097222/195607307-2de232bc-3903-47b3-b143-3e039f296808.png)
+## 3. 설계
+ - [테이블 정의서](https://freckle-web-d61.notion.site/b774b1cf286d4bccb6b444394332f968)  
+ - ERD  
+  ![bms_erd](https://user-images.githubusercontent.com/98097222/195607307-2de232bc-3903-47b3-b143-3e039f296808.png)
  
+ - [테이블 정의서](https://freckle-web-d61.notion.site/17e6f956ff0b4975903c9f4c2519e184)
 </br>
  
 ## 4. 주요 기능
