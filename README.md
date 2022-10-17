@@ -36,13 +36,34 @@
 </br>
 
 ## 5. 트러블 슈팅
-* Mysql timezone 설정 문제  
+* Mysql timezone 설정 에러  
+  
   - AWS RDS에서 파라미터 그룹을 새로 생성(AWS RDS의 기본 시간은 UTC, 기본 파라미터는 수정 불가)
-  - 새 파라미터 그룹의 time_zone 값을 'Asia/Seoul'로 변경 <br>
-  - 사용 중인 DB의 파라미터 그룹 변경 후 인스턴스 재부팅 <br>
-</div>
-</details>
-</br>
+  - 새 파라미터 그룹의 time_zone 값을 'Asia/Seoul'로 변경
+  - 사용 중인 DB의 파라미터 그룹 변경 후 인스턴스 재부팅
+  
+* 이미지 파일 출력 경로 에러
+  
+  - 이미지 파일 URL = /imgUpload/ + 파일명
+  - URL상의 폴더 경로를 다시 서버 폴더 경로로 변환
+  - PuTTY에서 tomcat9의 server.xml 접속 후  
+  ``` <Context docBase="서버의 업로드 폴더 경로" path="URL의 업로드 폴더 경로"/> ``` 작성  
+    
+  ![image](https://user-images.githubusercontent.com/98097222/196160138-1ba5c8b6-465a-4dda-92ab-24be04f49a32.png)
+  - [참고 블로그](https://kimfk567.tistory.com/m/85?category=1020109)
+    
+* AWS EC2 배포 후 서버 끊김 에러
+  - 프리티어 사용으로 낮은 성능(메모리 부족)
+    
+    1. 인스턴스 중지 및 시작
+       - 재시작 후 PuTTY에서 포트 포워딩 작업 필수  
+       ``` $ sudo iptables -A PREROUTING -t nat -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 8080 ```
+      
+    2. SWAP 메모리 할당  
+       - 프리티어 권장 SWAP 공간은 2G  
+       ``` $ sudo dd if=/dev/zero of=/swapfile bs=128M count=16 ```  
+       - [참고 블로그](https://velog.io/@chosj1526/%EC%84%9C%EB%B2%84-%EB%81%8A%EA%B9%80)
 
+  
 ## 6. 회고 / 느낀점
 > 
