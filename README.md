@@ -36,6 +36,12 @@
 </br>
 
 ## 5. 트러블 슈팅
+* Mysql timezone 설정 문제  
+  - AWS RDS에서 파라미터 그룹을 새로 생성(AWS RDS의 기본 시간은 UTC, 기본 파라미터는 수정 불가)
+  - 새 파라미터 그룹의 time_zone 값을 'Asia/Seoul'로 변경 <br>
+  - 사용 중인 DB의 파라미터 그룹 변경 후 인스턴스 재부팅 <br>
+</div>
+</details>
 </br>
 
 ## 6. 회고 / 느낀점
