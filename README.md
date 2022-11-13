@@ -17,6 +17,7 @@
   - Java (JDK 11)
 #### `Front-end`
   - JavaScript
+  - JSP
 #### `Framework`
   - spring framework 5.0.2
   - Mybatis-3.5.3
