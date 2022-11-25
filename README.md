@@ -16,7 +16,7 @@
 #### `Back-end`
   - Java (JDK 11)
 #### `Front-end`
-  - JavaScript
+  - JavaScript(jQuery)
   - JSP
 #### `Framework`
   - spring framework 5.0.2
